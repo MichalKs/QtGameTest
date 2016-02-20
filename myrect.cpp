@@ -16,9 +16,6 @@ void MyRect::keyPressEvent(QKeyEvent *event)
   // alerts the item that has focus on the scene. That item runs its keyPressEvent
   // function
 
-
-  qDebug() << "You pressed a key";
-
   if (event->key() == Qt::Key_Left)
   {
     setPos(x()-10, y());
@@ -27,14 +24,14 @@ void MyRect::keyPressEvent(QKeyEvent *event)
   {
     setPos(x()+10, y());
   }
-  else if (event->key() == Qt::Key_Up)
-  {
-    setPos(x(), y()-10);
-  }
-  else if (event->key() == Qt::Key_Down)
-  {
-    setPos(x(), y()+10);
-  }
+//  else if (event->key() == Qt::Key_Up)
+//  {
+//    setPos(x(), y()-10);
+//  }
+//  else if (event->key() == Qt::Key_Down)
+//  {
+//    setPos(x(), y()+10);
+//  }
   else if (event->key() == Qt::Key_Space)
   {
     // shoot bullet

@@ -10,6 +10,7 @@ class Bullet : public QObject, public QGraphicsRectItem
 
 public:
   Bullet();
+  ~Bullet();
 
 public slots:
   void move();
