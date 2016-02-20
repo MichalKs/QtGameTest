@@ -31,6 +31,10 @@ int main(int argc, char *argv[])
 
   // scene is invisible - create a view
   QGraphicsView * view = new QGraphicsView(scene);
+
+  view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
   view->setScene(scene);
 
   // show the view - it is invisible
