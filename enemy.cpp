@@ -2,8 +2,13 @@
 #include <QTimer>
 #include <QDebug>
 #include <QGraphicsScene>
+#include "game.h"
+#include "health.h"
+#include <stdlib.h>
 
-Enemy::Enemy()
+extern Game * game;
+
+Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsRectItem(parent)
 {
 
   // set random position
@@ -20,18 +25,15 @@ Enemy::Enemy()
   timer->start(50);
 }
 
-Enemy::~Enemy()
-{
-  qDebug() << "Enemy deleted";
-}
-
 void Enemy::move()
 {
   // move enemy down
   setPos(x(), y()+5);
 
-  if (pos().y() > 800)
+  if (pos().y() > 600)
   {
+    // decrease health
+    game->health->decrease();
     scene()->removeItem(this);
     delete this;
   }

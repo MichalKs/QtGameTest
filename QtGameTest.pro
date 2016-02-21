@@ -8,16 +8,22 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Tutorial1
+TARGET = GameOfRectangles
 TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    myrect.cpp \
     bullet.cpp \
-    enemy.cpp
+    enemy.cpp \
+    game.cpp \
+    player.cpp \
+    score.cpp \
+    health.cpp
 
 HEADERS  += \
-    myrect.h \
     bullet.h \
-    enemy.h
+    enemy.h \
+    game.h \
+    player.h \
+    score.h \
+    health.h

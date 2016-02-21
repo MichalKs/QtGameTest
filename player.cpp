@@ -1,16 +1,16 @@
-#include "myrect.h"
+#include "player.h"
 #include <QDebug>
 #include <QKeyEvent>
 #include <QGraphicsScene>
 #include "bullet.h"
 #include "enemy.h"
 
-MyRect::MyRect()
+Player::Player()
 {
 
 }
 
-void MyRect::keyPressEvent(QKeyEvent *event)
+void Player::keyPressEvent(QKeyEvent *event)
 {
 
   // if a key is pressed QGraphicsView alerts QGraphicsScene, which then
@@ -49,10 +49,9 @@ void MyRect::keyPressEvent(QKeyEvent *event)
 
 }
 
-void MyRect::spawn()
+void Player::spawn()
 {
   // create an enemy
-
   Enemy * enemy = new Enemy();
   scene()->addItem(enemy);
 

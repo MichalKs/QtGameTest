@@ -5,8 +5,12 @@
 #include <QList>
 #include "enemy.h"
 #include <typeinfo>
+#include "game.h"
+#include "score.h"
 
-Bullet::Bullet()
+extern Game * game;
+
+Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsRectItem(parent)
 {
 
   // draw rectangle
@@ -19,11 +23,6 @@ Bullet::Bullet()
   timer->start(50);
 }
 
-Bullet::~Bullet()
-{
-  qDebug() << "Bullet deleted";
-}
-
 void Bullet::move()
 {
 
@@ -34,6 +33,10 @@ void Bullet::move()
   {
     if(typeid(*(collidingItemsList[i])) == typeid(Enemy))
     {
+
+      // increase the score
+      game->score->increase();
+
       // remove both bullet and Enemy
       scene()->removeItem(collidingItemsList[i]);
       scene()->removeItem(this);

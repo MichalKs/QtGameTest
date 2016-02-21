@@ -9,8 +9,7 @@ class Bullet : public QObject, public QGraphicsRectItem
   Q_OBJECT
 
 public:
-  Bullet();
-  ~Bullet();
+  Bullet(QGraphicsItem *parent = 0);
 
 public slots:
   void move();
