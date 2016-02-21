@@ -2,6 +2,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QDebug>
+#include <QTimer>
+#include "enemy.h"
 #include "myrect.h"
 
 /**
@@ -44,6 +46,12 @@ int main(int argc, char *argv[])
   scene->setSceneRect(0, 0, 800, 600);
 
   player->setPos(view->width()/2, view->height() - player->rect().height());
+
+  // spawn enemies
+  QTimer * timer = new QTimer();
+  QObject::connect(timer, SIGNAL(timeout()), player, SLOT(spawn()));
+
+  timer->start(2000);
 
   // show the view - it is invisible
   view->show();
