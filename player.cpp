@@ -7,6 +7,8 @@
 
 Player::Player()
 {
+  bulletSound = new QMediaPlayer();
+  bulletSound->setMedia(QUrl("qrc:/sounds/explosion"));
 
 }
 
@@ -45,6 +47,23 @@ void Player::keyPressEvent(QKeyEvent *event)
     Bullet * bullet = new Bullet();
     bullet->setPos(x()+rect().width()/2-bullet->rect().width()/2, y());
     scene()->addItem(bullet);
+
+    // play bullet sound
+
+    if (bulletSound->state() == QMediaPlayer::PlayingState)
+    {
+      qDebug() << "Playing state";
+      bulletSound->stop();
+      bulletSound->setPosition(0);
+    }
+    else if (bulletSound->state() == QMediaPlayer::StoppedState)
+    {
+      qDebug() << "Stopped state";
+      bulletSound->setPosition(0);
+
+    }
+    bulletSound->play();
+
   }
 
 }

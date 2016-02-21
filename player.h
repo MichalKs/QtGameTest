@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <QGraphicsRectItem>
+#include <QMediaPlayer>
 
 class Player: public QObject, public QGraphicsRectItem
 {
@@ -15,6 +16,9 @@ public:
 
 public slots:
   void spawn();
+
+private:
+  QMediaPlayer * bulletSound;
 };
 
 #endif // PLAYER_H
