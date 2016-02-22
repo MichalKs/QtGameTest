@@ -5,10 +5,11 @@
 #include "game.h"
 #include "health.h"
 #include <stdlib.h>
+#include <QTransform>
 
 extern Game * game;
 
-Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsRectItem(parent)
+Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsPixmapItem(parent)
 {
 
   // set random position
@@ -16,7 +17,33 @@ Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsRectItem(parent)
   setPos(randomNumber, 0);
 
   // draw rectangle
-  setRect(0, 0, 100, 100);
+//  setRect(0, 0, 100, 100);
+
+  if (randomNumber % 2) {
+    QPixmap pixmap = QPixmap(":/images/graphics/spaceship1/ospaceship-main.png");
+    QTransform transform;
+    QTransform trans = transform.rotate(0);
+    QPixmap transPixmap = QPixmap(pixmap.transformed(trans));
+
+    transPixmap = transPixmap.scaled(QSize(100, 100),Qt::KeepAspectRatio);
+    setPixmap(transPixmap);
+  }
+  else
+  {
+    setPixmap(QPixmap(":/images/graphics/spaceship2/redshipr.png").
+              scaled(QSize(100, 100),Qt::KeepAspectRatio));
+  }
+
+  setTransformOriginPoint(50,50);
+  if (randomNumber % 2) {
+    setRotation(90);
+  }
+  else
+  {
+    setRotation(270);
+  }
+
+
 
   QTimer * timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(move()));

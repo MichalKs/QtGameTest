@@ -7,13 +7,18 @@
 #include <QSound>
 #include <QSoundEffect>
 
-Player::Player()
+Player::Player(QGraphicsItem * parent) : QGraphicsPixmapItem(parent)
 {
   bulletSound = new QMediaPlayer();
-  bulletSound->setMedia(QUrl("qrc:/sounds/explosion.wav"));
+  bulletSound->setMedia(QUrl("qrc:/sounds/sounds/explosion.wav"));
 
   effect = new QSoundEffect();
-  effect->setSource(QUrl("qrc:/sounds/explosion.wav"));
+  effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
+
+  // set graphics
+  setPixmap(
+        QPixmap(":/images/graphics/fighter/smallfighter0006.png").
+        scaled(QSize(100, 100),Qt::KeepAspectRatio));
 
 }
 
@@ -33,7 +38,7 @@ void Player::keyPressEvent(QKeyEvent *event)
   }
   else if (event->key() == Qt::Key_Right)
   {
-    if (pos().x() + rect().width() < 800)
+    if (pos().x() + 100 < 800)
     {
       setPos(x()+10, y());
     }
@@ -42,13 +47,13 @@ void Player::keyPressEvent(QKeyEvent *event)
   {
     // shoot bullet
     Bullet * bullet = new Bullet();
-    bullet->setPos(x()+rect().width()/2-bullet->rect().width()/2, y());
+    bullet->setPos(x()+50, y());
     scene()->addItem(bullet);
 
     // play bullet sound
     //QSound::play(":/sounds/explosion.wav");
 //    effect.setLoopCount(QSoundEffect::Infinite);
-//    effect.setVolume(0.25f);
+    effect->setVolume(0.5f);
     effect->play();
 
     // play bulletsound

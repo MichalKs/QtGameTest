@@ -7,12 +7,18 @@
 #include "score.h"
 #include "health.h"
 #include <QMediaPlayer>
+#include <QBrush>
+#include <QImage>
 
 Game::Game(QWidget * parent)
 {
   // create a scene
   scene = new QGraphicsScene();
   scene->setSceneRect(0, 0, 800, 600);
+
+  // set background
+  setBackgroundBrush(QBrush(QImage(
+    ":/images/graphics/background/all-703522_1920.jpg")));
 
   // scene is invisible - add to view
   setScene(scene);
@@ -24,8 +30,8 @@ Game::Game(QWidget * parent)
   // create a player
   player = new Player();
 
-  player->setRect(0, 0, 100, 100);
-  player->setPos(width()/2, height() - player->rect().height());
+//  player->setRect(0, 0, 100, 100);
+  player->setPos(width()/2, height() - 100);
 
   // make player focusable
   player->setFlag(QGraphicsItem::ItemIsFocusable);

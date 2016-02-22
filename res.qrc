@@ -1,6 +1,23 @@
 <RCC>
     <qresource prefix="/sounds">
-        <file>dark-ambient-background.mp3</file>
-        <file>explosion.wav</file>
+        <file>sounds/dark-ambient-background.mp3</file>
+        <file>sounds/explosion.wav</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>graphics/fighter/smallfighter0001.png</file>
+        <file>graphics/fighter/smallfighter0002.png</file>
+        <file>graphics/fighter/smallfighter0003.png</file>
+        <file>graphics/fighter/smallfighter0004.png</file>
+        <file>graphics/fighter/smallfighter0005.png</file>
+        <file>graphics/fighter/smallfighter0006.png</file>
+        <file>graphics/fighter/smallfighter0007.png</file>
+        <file>graphics/fighter/smallfighter0008.png</file>
+        <file>graphics/fighter/smallfighter0009.png</file>
+        <file>graphics/fighter/smallfighter0010.png</file>
+        <file>graphics/fighter/smallfighter0011.png</file>
+        <file>graphics/spaceship1/ospaceship-main.png</file>
+        <file>graphics/spaceship2/redshipr.png</file>
+        <file>graphics/missile/rocket-146109_640.png</file>
+        <file>graphics/background/all-703522_1920.jpg</file>
     </qresource>
 </RCC>
