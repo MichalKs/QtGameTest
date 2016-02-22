@@ -4,11 +4,16 @@
 #include <QGraphicsScene>
 #include "bullet.h"
 #include "enemy.h"
+#include <QSound>
+#include <QSoundEffect>
 
 Player::Player()
 {
   bulletSound = new QMediaPlayer();
-  bulletSound->setMedia(QUrl("qrc:/sounds/explosion"));
+  bulletSound->setMedia(QUrl("qrc:/sounds/explosion.wav"));
+
+  effect = new QSoundEffect();
+  effect->setSource(QUrl("qrc:/sounds/explosion.wav"));
 
 }
 
@@ -33,14 +38,6 @@ void Player::keyPressEvent(QKeyEvent *event)
       setPos(x()+10, y());
     }
   }
-//  else if (event->key() == Qt::Key_Up)
-//  {
-//    setPos(x(), y()-10);
-//  }
-//  else if (event->key() == Qt::Key_Down)
-//  {
-//    setPos(x(), y()+10);
-//  }
   else if (event->key() == Qt::Key_Space)
   {
     // shoot bullet
@@ -49,20 +46,18 @@ void Player::keyPressEvent(QKeyEvent *event)
     scene()->addItem(bullet);
 
     // play bullet sound
+    //QSound::play(":/sounds/explosion.wav");
+//    effect.setLoopCount(QSoundEffect::Infinite);
+//    effect.setVolume(0.25f);
+    effect->play();
 
-    if (bulletSound->state() == QMediaPlayer::PlayingState)
-    {
-      qDebug() << "Playing state";
-      bulletSound->stop();
-      bulletSound->setPosition(0);
-    }
-    else if (bulletSound->state() == QMediaPlayer::StoppedState)
-    {
-      qDebug() << "Stopped state";
-      bulletSound->setPosition(0);
-
-    }
-    bulletSound->play();
+    // play bulletsound
+//    if (bulletSound->state() == QMediaPlayer::PlayingState){
+//        bulletSound->setPosition(0);
+//    }
+//    else if (bulletSound->state() == QMediaPlayer::StoppedState){
+//        bulletSound->play();
+//    }
 
   }
 

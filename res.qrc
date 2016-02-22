@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/sounds">
         <file>dark-ambient-background.mp3</file>
-        <file>explosion</file>
+        <file>explosion.wav</file>
     </qresource>
 </RCC>

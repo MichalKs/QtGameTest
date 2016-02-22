@@ -4,6 +4,8 @@
 #include <QGraphicsRectItem>
 #include <QMediaPlayer>
 
+class QSoundEffect;
+
 class Player: public QObject, public QGraphicsRectItem
 {
 
@@ -19,6 +21,7 @@ public slots:
 
 private:
   QMediaPlayer * bulletSound;
+  QSoundEffect * effect;
 };
 
 #endif // PLAYER_H

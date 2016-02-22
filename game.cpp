@@ -51,7 +51,7 @@ Game::Game(QWidget * parent)
   timer->start(2000);
 
   // play background music
-  QMediaPlayer * music = new QMediaPlayer();
-  music->setMedia(QUrl("qrc:/sounds/dark-ambient-background.mp3"));
-  music->play();
+//  QMediaPlayer * music = new QMediaPlayer();
+//  music->setMedia(QUrl("qrc:/sounds/dark-ambient-background.mp3"));
+//  music->play();
 }
