@@ -71,7 +71,7 @@ void Player::keyPressEvent(QKeyEvent *event)
 void Player::spawn()
 {
   // create an enemy
-  Enemy * enemy = new Enemy();
+  Enemy * enemy = new Enemy(1);
   scene()->addItem(enemy);
 
 }

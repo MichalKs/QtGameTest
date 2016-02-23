@@ -9,8 +9,11 @@
 
 extern Game * game;
 
-Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsPixmapItem(parent)
+Enemy::Enemy(int initialHealth, QGraphicsItem * parent): QGraphicsPixmapItem(parent)
 {
+
+  // set initial health
+  health = initialHealth;
 
   // set random position
   int randomNumber = rand() % 700;
@@ -52,6 +55,11 @@ Enemy::Enemy(QGraphicsItem * parent): QObject(), QGraphicsPixmapItem(parent)
   timer->start(50);
 }
 
+void Enemy::decreaseHealth()
+{
+  health--;
+}
+
 void Enemy::move()
 {
   // move enemy down
@@ -60,7 +68,7 @@ void Enemy::move()
   if (pos().y() > 600)
   {
     // decrease health
-    game->health->decrease();
+    game->health->decrease(1);
     scene()->removeItem(this);
     delete this;
   }

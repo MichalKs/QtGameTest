@@ -1,19 +1,26 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <QGraphicsItem>
-#include <QObject>
 #include <QGraphicsPixmapItem>
 
-class Enemy : public QObject, public QGraphicsPixmapItem
+class Health;
+
+class Enemy: public QObject, public QGraphicsPixmapItem
 {
   Q_OBJECT
 
 public:
-  Enemy(QGraphicsItem * parent = 0);
+  Enemy(int initialHealth, QGraphicsItem * parent = NULL);
+
+  void die();
+  void decreaseHealth();
 
 public slots:
   void move();
+
+private:
+
+  int health;
 
 };
 

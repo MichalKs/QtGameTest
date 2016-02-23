@@ -1,27 +1,29 @@
 #include "health.h"
 
-#include <QFont>
+/**
+ * @brief Health::Health
+ * @param initialHealth Initial health level
+ * @param parent
+ */
+Health::Health(int initialHealth) {
 
-Health::Health(QGraphicsItem *parent): QGraphicsTextItem(parent)
-{
-  // initialize health to 0
-
-  health = 3;
-
-  // display the halth
-  setPlainText(QString("Health: ") + QString::number(health));
-  setDefaultTextColor(Qt::red);
-  setFont(QFont("times", 16));
-
+  // initialize health to
+  health = initialHealth;
+  // display th health
+//  setPlainText(QString("Health: ") + QString::number(health));
+//  setDefaultTextColor(Qt::red);
+//  setFont(QFont("times", 16));
 }
 
-void Health::decrease()
-{
-  health--;
-  setPlainText(QString("Health: ") + QString::number(health));
+
+/**
+ * @brief Health::decrease
+ * @param damage Damage inflicted (how much health decreases)
+ */
+void Health::decrease(int damage) {
+  health -= damage;
 }
 
-int Health::getHealth()
-{
+int Health::getHealth() {
   return health;
 }
