@@ -58,5 +58,11 @@ Game::Game(QWidget * parent)
   // play background music
 //  QMediaPlayer * music = new QMediaPlayer();
 //  music->setMedia(QUrl("qrc:/sounds/dark-ambient-background.mp3"));
-//  music->play();
+  //  music->play();
+}
+
+void Game::enemyKilled()
+{
+  // increase the score
+  score->increase();
 }

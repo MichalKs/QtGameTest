@@ -10,14 +10,18 @@ class Health;
 
 class Game: public QGraphicsView
 {
+  Q_OBJECT
+
 public:
   Game(QWidget * parent = NULL);
 
-public:
   QGraphicsScene * scene;
   Player * player;
   Score * score;
   Health * health;
+
+public slots:
+  void enemyKilled();
 
 };
 

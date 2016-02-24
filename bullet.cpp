@@ -8,39 +8,47 @@
 #include "game.h"
 #include "score.h"
 
+// remove this
 extern Game * game;
 
+/**
+ * @brief Bullet::Bullet
+ * @param parent
+ */
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 {
-
-  // draw rectangle
-//  setRect(0, 0, 10, 50);
   // draw graphics
   setPixmap(
         QPixmap(":/images/graphics/missile/rocket-146109_640.png").
-        scaled(QSize(100, 100),Qt::KeepAspectRatio));
+        scaled(QSize(width, height),Qt::KeepAspectRatio));
 
-
+  // create timer for moving
   QTimer * timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 
   // bullet moves every 50 ms
-  timer->start(50);
+  timer->start(moveTimeoutMs);
+
+  connect(this, SIGNAL(enemyKilled()), game, SLOT(enemyKilled()));
+
 }
 
-void Bullet::move()
-{
+/**
+ * @brief Bullet::move
+ */
+void Bullet::move() {
 
   // check for collision with enemy
   QList<QGraphicsItem *> collidingItemsList = collidingItems();
-  int n = collidingItemsList.size();
-  for (int i = 0; i < n; i++)
-  {
-    if(typeid(*(collidingItemsList[i])) == typeid(Enemy))
-    {
 
-      // increase the score
-      game->score->increase();
+  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
+    if(typeid(*(collidingItemsList[i])) == typeid(Enemy)) {
+
+      // signalize that enemy has been killed
+      emit enemyKilled();
+
+      // cast to Enemy and call die function which will play animation
+      // and destroy enemy
 
       // remove both bullet and Enemy
       scene()->removeItem(collidingItemsList[i]);
@@ -53,10 +61,10 @@ void Bullet::move()
   }
 
   // move bullet up
-  setPos(x(), y()-10);
+  setPos(x(), y()-speed);
 
-  if (pos().y() < 0)
-  {
+  // if out of screen destroy the bullet
+  if (pos().y() < 0) {
     scene()->removeItem(this);
     delete this;
   }

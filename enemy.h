@@ -21,6 +21,7 @@ public slots:
 private:
 
   int health;
+  static const int typesOfEnemies = 2;
 
 };
 
