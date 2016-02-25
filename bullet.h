@@ -4,19 +4,22 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 
-class Bullet : public QObject, public QGraphicsPixmapItem
-{
-  Q_OBJECT
-public:
-  Bullet(QGraphicsItem *parent = 0);
+class Bullet : public QObject, public QGraphicsPixmapItem {
 
-public slots:
-  void move();
+  Q_OBJECT
+
+public:
+  Bullet(int x, int y, QGraphicsItem *parent = 0);
 
 signals:
-  void enemyKilled();
+  void bulletHitTarget();
+
+private slots:
+  void move();
 
 private:
+  bool collisionDetected();
+
   static const int width = 100;
   static const int height = 100;
   static const int moveTimeoutMs = 50;

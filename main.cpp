@@ -1,20 +1,17 @@
 #include <QApplication>
 #include "game.h"
 
-Game * game;
-
 /**
  * @brief main
  * @param argc
  * @param argv
  * @return
  */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
-  game = new Game();
-// show the view - it is invisible
+  Game * game = new Game();
+  // show the game
   game->show();
 
   return a.exec();

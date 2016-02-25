@@ -6,72 +6,53 @@
 #include "enemy.h"
 #include <QSound>
 #include <QSoundEffect>
+#include <QGraphicsView>
 
-Player::Player(QGraphicsItem * parent) : QGraphicsPixmapItem(parent)
-{
-  bulletSound = new QMediaPlayer();
-  bulletSound->setMedia(QUrl("qrc:/sounds/sounds/explosion.wav"));
+/**
+ * @brief Player::Player
+ * @param parent
+ */
+Player::Player(int initialHealth, QGraphicsItem * parent):
+  QGraphicsPixmapItem(parent) {
 
-  effect = new QSoundEffect();
-  effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
+  health = initialHealth;
 
-  // set graphics
+  // set graphics for player
   setPixmap(
         QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-        scaled(QSize(100, 100),Qt::KeepAspectRatio));
+        scaled(QSize(width, height), Qt::KeepAspectRatio));
 
 }
 
-void Player::keyPressEvent(QKeyEvent *event)
-{
+/**
+ * @brief Player::keyPressEvent
+ * @param event
+ */
+void Player::keyPressEvent(QKeyEvent *event) {
 
-  // if a key is pressed QGraphicsView alerts QGraphicsScene, which then
-  // alerts the item that has focus on the scene. That item runs its keyPressEvent
-  // function
+  // If a key is pressed QGraphicsView alerts QGraphicsScene,
+  // which then alerts the item that has focus on the scene.
+  // That item runs its keyPressEvent function
 
-  if (event->key() == Qt::Key_Left)
-  {
-    if (pos().x() > 0)
-    {
-      setPos(x()-10, y());
+  // Get size of view to know bounds
+  QList<QGraphicsView *> viewList = scene()->views();
+  QGraphicsView *view = viewList.first();
+  qDebug() << "View width: " << view->width()
+           << " height: " << view->height();
+
+
+  if (event->key() == Qt::Key_Left) {
+
+    if (pos().x() > 0) {
+      setPos(x()-speed, y());
     }
-  }
-  else if (event->key() == Qt::Key_Right)
-  {
-    if (pos().x() + 100 < 800)
-    {
-      setPos(x()+10, y());
+  } else if (event->key() == Qt::Key_Right) {
+
+    if (pos().x() + width < view->width()) {
+      setPos(x()+speed, y());
     }
-  }
-  else if (event->key() == Qt::Key_Space)
-  {
+  } else if (event->key() == Qt::Key_Space) {
     // shoot bullet
-    Bullet * bullet = new Bullet();
-    bullet->setPos(x()+10, y()-50);
-    scene()->addItem(bullet);
-
-    // play bullet sound
-    //QSound::play(":/sounds/explosion.wav");
-//    effect.setLoopCount(QSoundEffect::Infinite);
-    effect->setVolume(0.5f);
-    effect->play();
-
-    // play bulletsound
-//    if (bulletSound->state() == QMediaPlayer::PlayingState){
-//        bulletSound->setPosition(0);
-//    }
-//    else if (bulletSound->state() == QMediaPlayer::StoppedState){
-//        bulletSound->play();
-//    }
-
+    emit shoot(x()+10, y()-50);
   }
-
-}
-
-void Player::spawn()
-{
-  // create an enemy
-  Enemy * enemy = new Enemy(1);
-  scene()->addItem(enemy);
-
 }

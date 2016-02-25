@@ -7,6 +7,7 @@ class Player;
 class QGraphicsScene;
 class Score;
 class Health;
+class QSoundEffect;
 
 class Game: public QGraphicsView
 {
@@ -22,6 +23,11 @@ public:
 
 public slots:
   void enemyKilled();
+  void createBullet(int x, int y);
+  void spawnEnemy();
+
+private:
+    QSoundEffect * effect;
 
 };
 

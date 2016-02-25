@@ -5,13 +5,17 @@
 #include "enemy.h"
 #include "player.h"
 #include "score.h"
-#include "health.h"
 #include <QMediaPlayer>
 #include <QBrush>
 #include <QImage>
+#include <QSoundEffect>
+#include <bullet.h>
 
-Game::Game(QWidget * parent)
-{
+/**
+ * @brief Game::Game
+ * @param parent
+ */
+Game::Game(QWidget * parent) {
   // create a scene
   scene = new QGraphicsScene();
   scene->setSceneRect(0, 0, 800, 600);
@@ -27,8 +31,8 @@ Game::Game(QWidget * parent)
   setWindowTitle("Game of Rectangles");
   setFixedSize(800, 600);
 
-  // create a player
-  player = new Player();
+  // create a player with an initial health of 3
+  player = new Player(3);
 
 //  player->setRect(0, 0, 100, 100);
   player->setPos(width()/2, height() - 100);
@@ -44,14 +48,9 @@ Game::Game(QWidget * parent)
   score = new Score();
   scene->addItem(score);
 
-  // create health
-  health = new Health(3);
-//  health->setPos(health->x(), health->y()+25);
-//  scene->addItem(health);
-
   // spawn enemies
   QTimer * timer = new QTimer();
-  QObject::connect(timer, SIGNAL(timeout()), player, SLOT(spawn()));
+  QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawnEnemy()));
 
   timer->start(2000);
 
@@ -59,10 +58,44 @@ Game::Game(QWidget * parent)
 //  QMediaPlayer * music = new QMediaPlayer();
 //  music->setMedia(QUrl("qrc:/sounds/dark-ambient-background.mp3"));
   //  music->play();
+
+  // create bullet sound effect
+  effect = new QSoundEffect();
+  effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
+
+  connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
+
 }
 
-void Game::enemyKilled()
-{
+void Game::enemyKilled() {
   // increase the score
   score->increase();
+}
+
+/**
+ * @brief Game::createBullet Slot for creating a bullet
+ * @param x Initial X position of the bullet
+ * @param y Initial Y position of the bullet
+ */
+void Game::createBullet(int x, int y) {
+
+  // create bullet object
+  Bullet * bullet = new Bullet(x,y);
+  // add it to the scene
+  scene->addItem(bullet);
+
+  // if bullet hits a target call enemyKilled slot of the game
+  connect(bullet, SIGNAL(bulletHitTarget()), this, SLOT(enemyKilled()));
+
+  // play bullet sound
+  effect->setVolume(0.5f);
+  effect->play();
+
+}
+
+void Game::spawnEnemy() {
+  // create an enemy
+  Enemy * enemy = new Enemy(1);
+  scene->addItem(enemy);
+
 }

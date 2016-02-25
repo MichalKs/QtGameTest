@@ -3,16 +3,12 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include "game.h"
-#include "health.h"
 #include <stdlib.h>
 #include <QTransform>
 
-extern Game * game;
-
 // make subclasses for different types of enemy
-
-Enemy::Enemy(int initialHealth, QGraphicsItem * parent): QGraphicsPixmapItem(parent)
-{
+Enemy::Enemy(int initialHealth, QGraphicsItem * parent):
+  QGraphicsPixmapItem(parent) {
 
   // set initial health
   health = initialHealth;
@@ -33,9 +29,7 @@ Enemy::Enemy(int initialHealth, QGraphicsItem * parent): QGraphicsPixmapItem(par
 
     transPixmap = transPixmap.scaled(QSize(100, 100),Qt::KeepAspectRatio);
     setPixmap(transPixmap);
-  }
-  else
-  {
+  } else {
     setPixmap(QPixmap(":/images/graphics/spaceship2/redshipr.png").
               scaled(QSize(100, 100),Qt::KeepAspectRatio));
   }
@@ -43,9 +37,7 @@ Enemy::Enemy(int initialHealth, QGraphicsItem * parent): QGraphicsPixmapItem(par
   setTransformOriginPoint(50,50);
   if (randomNumber % typesOfEnemies) {
     setRotation(90);
-  }
-  else
-  {
+  } else {
     setRotation(270);
   }
 
@@ -56,20 +48,16 @@ Enemy::Enemy(int initialHealth, QGraphicsItem * parent): QGraphicsPixmapItem(par
   timer->start(50);
 }
 
-void Enemy::decreaseHealth()
-{
+void Enemy::decreaseHealth() {
   health--;
 }
 
-void Enemy::move()
-{
+void Enemy::move() {
   // move enemy down
   setPos(x(), y()+5);
 
-  if (pos().y() > 600)
-  {
+  if (pos().y() > 600) {
     // decrease health
-    game->health->decrease(1);
     scene()->removeItem(this);
     delete this;
   }

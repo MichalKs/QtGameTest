@@ -2,27 +2,24 @@
 #define PLAYER_H
 
 #include <QGraphicsPixmapItem>
-#include <QGraphicsItem>
-#include <QMediaPlayer>
 
-class QSoundEffect;
-
-class Player: public QObject, public QGraphicsPixmapItem
-{
+class Player: public QObject, public QGraphicsPixmapItem {
 
   Q_OBJECT
 public:
 
-  Player(QGraphicsItem * parent = 0);
-
+  Player(int initialHealth, QGraphicsItem * parent = 0);
   void keyPressEvent(QKeyEvent * event);
 
-public slots:
-  void spawn();
+signals:
+  void shoot(int x, int y);
 
 private:
-  QMediaPlayer * bulletSound;
-  QSoundEffect * effect;
+  static const int width  = 100;
+  static const int height = 100;
+  static const int speed = 10;
+  int health;
+
 };
 
 #endif // PLAYER_H

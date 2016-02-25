@@ -18,16 +18,14 @@ SOURCES += main.cpp \
     enemy.cpp \
     game.cpp \
     player.cpp \
-    score.cpp \
-    health.cpp
+    score.cpp
 
 HEADERS  += \
     bullet.h \
     enemy.h \
     game.h \
     player.h \
-    score.h \
-    health.h
+    score.h
 
 RESOURCES += \
     res.qrc
