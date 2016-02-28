@@ -10,9 +10,10 @@ class Bullet : public QObject, public QGraphicsPixmapItem {
 
 public:
   Bullet(int x, int y, QGraphicsItem *parent = 0);
+  ~Bullet();
 
 signals:
-  void bulletHitTarget();
+  void bulletHitTarget(QGraphicsItem * casualty);
 
 private slots:
   void move();

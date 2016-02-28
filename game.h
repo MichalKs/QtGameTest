@@ -22,7 +22,7 @@ public:
   Health * health;
 
 public slots:
-  void enemyKilled();
+  void enemyKilled(QGraphicsItem * casualty);
   void createBullet(int x, int y);
   void spawnEnemy();
 

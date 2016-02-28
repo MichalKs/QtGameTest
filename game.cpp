@@ -67,9 +67,12 @@ Game::Game(QWidget * parent) {
 
 }
 
-void Game::enemyKilled() {
+void Game::enemyKilled(QGraphicsItem * casualty) {
   // increase the score
   score->increase();
+
+  Enemy * enemy = dynamic_cast<Enemy*>(casualty);
+  enemy->die();
 }
 
 /**
@@ -85,7 +88,7 @@ void Game::createBullet(int x, int y) {
   scene->addItem(bullet);
 
   // if bullet hits a target call enemyKilled slot of the game
-  connect(bullet, SIGNAL(bulletHitTarget()), this, SLOT(enemyKilled()));
+  connect(bullet, SIGNAL(bulletHitTarget(QGraphicsItem*)), this, SLOT(enemyKilled(QGraphicsItem*)));
 
   // play bullet sound
   effect->setVolume(0.5f);

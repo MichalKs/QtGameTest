@@ -20,11 +20,15 @@ public:
 public slots:
   void move();
 
+private slots:
+  void dieAnimation();
+
 private:
 
   int health;
   static const int typesOfEnemies = 2;
   QTimer * timer;
+  QTimer * explodeAnimationTimer;
 
 };
 

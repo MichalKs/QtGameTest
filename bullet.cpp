@@ -33,6 +33,10 @@ Bullet::Bullet(int x, int y, QGraphicsItem *parent):
 
 }
 
+Bullet::~Bullet() {
+  qDebug() << "Bullet removed";
+}
+
 /**
  * @brief Bullet::move
  */
@@ -62,16 +66,14 @@ bool Bullet::collisionDetected() {
     if(typeid(*(collidingItemsList[i])) == typeid(Enemy)) {
 
       // signalize that enemy has been killed
-      emit bulletHitTarget();
+      emit bulletHitTarget(collidingItemsList[i]);
 
       // TODO cast to Enemy and call die function which will play animation
       // and destroy enemy
 
-      // remove both bullet and enemy from scene
-      scene()->removeItem(collidingItemsList[i]);
+      // remove both bullet from scene
       scene()->removeItem(this);
       // delete the objects
-      delete collidingItemsList[i];
       delete this;
       return true;
     }
