@@ -19,21 +19,21 @@
         <file>graphics/spaceship2/redshipr.png</file>
         <file>graphics/missile/rocket-146109_640.png</file>
         <file>graphics/background/all-703522_1920.jpg</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_001.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_002.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_003.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_004.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_005.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_006.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_007.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_008.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_009.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_010.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_011.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_012.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_013.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_014.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_015.png</file>
-        <file>graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_016.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_001.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_002.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_003.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_004.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_005.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_006.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_007.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_008.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_009.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_010.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_011.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_012.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_013.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_014.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_015.png</file>
+        <file>graphics/explosion/greenexplosion/Explosion_016.png</file>
     </qresource>
 </RCC>

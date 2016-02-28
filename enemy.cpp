@@ -86,79 +86,22 @@ void Enemy::move() {
 
 void Enemy::dieAnimation() {
 
+  const int numberOfAnimationFrames = 16;
   static int animationCounter;
 
-  switch (animationCounter) {
-  case 0:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_001.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 1:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_002.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 2:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_003.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 3:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_004.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 4:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_005.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 5:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_006.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 6:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_007.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 7:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_008.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 8:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_009.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 9:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_010.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 10:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_011.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 11:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_012.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 12:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_013.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 13:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_014.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 14:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_015.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 15:
-    setPixmap(QPixmap(":/images/graphics/explosion/explosion/greenexplosion/greenexplosion/Explosion_016.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 16:
-//    explodeAnimationTimer->stop();
+  QString filename = QString(":/images/graphics/explosion/greenexplosion/Explosion_%1.png").
+      arg(animationCounter+1, 3, 10, QChar('0'));
+
+//  qDebug() << filename;
+
+  // if animation is done then remove object from scene and memory
+  if (animationCounter == numberOfAnimationFrames) {
     animationCounter = 0;
     scene()->removeItem(this);
     delete this;
-    return;
+  } else {
+    setPixmap(QPixmap(filename).
+              scaled(QSize(100, 100),Qt::KeepAspectRatio));
   }
 
   animationCounter++;
