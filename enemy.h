@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 
 class Health;
+class QTimer;
 
 class Enemy: public QObject, public QGraphicsPixmapItem
 {
@@ -11,6 +12,7 @@ class Enemy: public QObject, public QGraphicsPixmapItem
 
 public:
   Enemy(int initialHealth, QGraphicsItem * parent = NULL);
+  ~Enemy();
 
   void die();
   void decreaseHealth();
@@ -22,6 +24,7 @@ private:
 
   int health;
   static const int typesOfEnemies = 2;
+  QTimer * timer;
 
 };
 

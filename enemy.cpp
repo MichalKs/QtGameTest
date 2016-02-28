@@ -41,11 +41,16 @@ Enemy::Enemy(int initialHealth, QGraphicsItem * parent):
     setRotation(270);
   }
 
-  QTimer * timer = new QTimer();
+  timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 
   // bullet moves every 50 ms
   timer->start(50);
+}
+
+Enemy::~Enemy() {
+  // delete the move timer
+  delete timer;
 }
 
 void Enemy::decreaseHealth() {
