@@ -20,6 +20,8 @@ public:
 
   // ******************** Public functions ****************
 
+  void resize(QSize & size);
+
   /**
    * @brief keyPressEvent Event handler for key presses
    * @param event Key event
@@ -72,14 +74,6 @@ private:
 
   // ******************** Private constants ********************
   /**
-   * @brief width Maximum width of player
-   */
-  static const int width            = 100;
-  /**
-   * @brief height Maximum height of player
-   */
-  static const int height           = 100;
-  /**
    * @brief speed Spped of player movement
    */
   static const int speed            = 10;
@@ -99,6 +93,15 @@ private:
 
 
   // ******************** Private variables ********************
+
+  /**
+   * @brief width Maximum width of player
+   */
+  int width;
+  /**
+   * @brief height Maximum height of player
+   */
+  int height;
 
   /**
    * @brief moveDirection Current direction of movement used by animation functions

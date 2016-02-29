@@ -9,17 +9,13 @@ class Score;
 class Health;
 class QSoundEffect;
 
-class Game: public QGraphicsView
-{
+class Game: public QGraphicsView {
   Q_OBJECT
 
 public:
   Game(QWidget * parent = NULL);
 
-  QGraphicsScene * scene;
-  Player * player;
-  Score * score;
-  Health * health;
+  void resizeEvent(QResizeEvent * event);
 
 public slots:
   void enemyKilled(QGraphicsItem * casualty);
@@ -28,7 +24,10 @@ public slots:
 
 private:
     QSoundEffect * effect;
-
+    QGraphicsScene * scene;
+    Player * player;
+    Score * score;
+    Health * health;
 };
 
 #endif // GAME_H

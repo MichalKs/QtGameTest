@@ -29,6 +29,7 @@ Game::Game(QWidget * parent) {
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setWindowTitle("Game of Rectangles");
+
   setFixedSize(800, 600);
 
   // create a player with an initial health of 3
@@ -65,6 +66,18 @@ Game::Game(QWidget * parent) {
 
   connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
 
+}
+
+/**
+ * @brief Game::resizeEvent Event handler for resizing event
+ * @param event
+ */
+void Game::resizeEvent(QResizeEvent *event) {
+//  QRectF rect = scene->itemsBoundingRect();
+//  QSize size = QSize(rect.width(), rect.height());
+//  rect.setSize(size);
+//  fitInView(rect, Qt::IgnoreAspectRatio);
+//  player->resize(size);
 }
 
 void Game::enemyKilled(QGraphicsItem * casualty) {

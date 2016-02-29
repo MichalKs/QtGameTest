@@ -16,6 +16,8 @@
 Player::Player(int initialHealth, QGraphicsItem * parent):
   QGraphicsPixmapItem(parent) {
 
+  width = 100;
+  height = 100;
   // set initial health
   health = initialHealth;
   // initially player is standing still
@@ -38,6 +40,12 @@ Player::Player(int initialHealth, QGraphicsItem * parent):
 Player::~Player() {
   // delete all heap resources
   delete animationTimer;
+}
+
+void Player::resize(QSize &size) {
+  // set base graphics for player
+//  setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
+//        scaled(QSize(width, height), Qt::KeepAspectRatio));
 }
 
 /**
