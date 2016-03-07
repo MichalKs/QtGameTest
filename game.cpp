@@ -10,6 +10,7 @@
 #include <QImage>
 #include <QSoundEffect>
 #include <bullet.h>
+#include <QMouseEvent>
 
 /**
  * @brief Game::Game
@@ -77,7 +78,17 @@ void Game::resizeEvent(QResizeEvent *event) {
 //  QSize size = QSize(rect.width(), rect.height());
 //  rect.setSize(size);
 //  fitInView(rect, Qt::IgnoreAspectRatio);
-//  player->resize(size);
+  //  player->resize(size);
+}
+
+void Game::keyPressEvent(QKeyEvent *event) {
+  player->setFocus();
+  QGraphicsView::keyPressEvent(event);
+}
+
+void Game::mousePressEvent(QMouseEvent * event) {
+  qDebug() << "Mouse event";
+  QGraphicsView::mousePressEvent(event);
 }
 
 void Game::enemyKilled(QGraphicsItem * casualty) {

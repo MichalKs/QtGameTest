@@ -7,11 +7,8 @@
 #include <QTransform>
 
 // make subclasses for different types of enemy
-Enemy::Enemy(int initialHealth, QGraphicsItem * parent):
-  QGraphicsPixmapItem(parent) {
-
-  // set initial health
-  health = initialHealth;
+Enemy::Enemy(int initialHealth, int speed, int w, int h, QGraphicsItem * parent):
+  Sprite(initialHealth, speed, w, h, parent) {
 
   // set random position
   int randomNumber = rand() % 700;
@@ -67,10 +64,6 @@ void Enemy::die() {
   timer->stop();
   explodeAnimationTimer->start(50);
 
-}
-
-void Enemy::decreaseHealth() {
-  health--;
 }
 
 void Enemy::move() {

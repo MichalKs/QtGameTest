@@ -6,7 +6,6 @@
 class Player;
 class QGraphicsScene;
 class Score;
-class Health;
 class QSoundEffect;
 
 class Game: public QGraphicsView {
@@ -16,6 +15,8 @@ public:
   Game(QWidget * parent = NULL);
 
   void resizeEvent(QResizeEvent * event);
+  void keyPressEvent(QKeyEvent * event);
+  void mousePressEvent(QMouseEvent * event);
 
 public slots:
   void enemyKilled(QGraphicsItem * casualty);
@@ -27,7 +28,6 @@ private:
     QGraphicsScene * scene;
     Player * player;
     Score * score;
-    Health * health;
 };
 
 #endif // GAME_H

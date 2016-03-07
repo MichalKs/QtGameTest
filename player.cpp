@@ -93,6 +93,14 @@ void Player::keyPressEvent(QKeyEvent *event) {
   }
 }
 
+void Player::mousePressEvent(QGraphicsSceneMouseEvent * event) {
+
+  QRectF mRect = sceneBoundingRect();
+  qDebug() << "Mouse event in player";
+  emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+
+}
+
 void Player::keyReleaseEvent(QKeyEvent *event) {
   // if key is realeased the player should stand still
   moveDirection = PLAYER_STANDING;
@@ -161,7 +169,7 @@ void Player::moveRightAnimation(const int animationCounter) {
   QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
       arg(animationCounter+6, 4, 10, QChar('0'));
 
-  qDebug() << filename;
+//  qDebug() << filename;
 
   setPixmap(QPixmap(filename).
     scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
@@ -169,10 +177,12 @@ void Player::moveRightAnimation(const int animationCounter) {
 
 void Player::moveLeftAnimation(const int animationCounter) {
 
-  QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
-      arg(6-animationCounter, 4, 10, QChar('0'));
+  const int base = 10; // decimal base for QString
+  const QChar paddingChar = '0';
+  const int padNumber = 4;
 
-  qDebug() << filename;
+  QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
+      arg(6-animationCounter, padNumber, base, paddingChar);
 
   setPixmap(QPixmap(filename).
     scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));

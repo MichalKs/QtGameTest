@@ -14,7 +14,6 @@
  * TODO Add top score list
  * TODO Add class hierarchy for objects in game (many enemy classes with a bit different behaviour)
  *
- * FIXME Player loses keyboard focus after mouse click
  */
 
 /**
