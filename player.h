@@ -2,17 +2,18 @@
 #define PLAYER_H
 
 #include <QGraphicsPixmapItem>
+#include <sprite.h>
 
 class QTimer;
 
-class Player: public QObject, public QGraphicsPixmapItem {
+class Player: public Sprite {
 
   Q_OBJECT
 
 public:
 
   // ******************** Constructors ********************
-  Player(int initialHealth, QGraphicsItem * parent = 0);
+  Player(int initialHealth, int speed, int w = 100, int h = 100, QGraphicsItem * parent = 0);
 
 
   // ******************** Destructors *********************
@@ -32,6 +33,10 @@ public:
    * @param event Key event
    */
   void keyReleaseEvent(QKeyEvent * event);
+
+  void die() {
+
+  }
 
 
 signals:
@@ -74,10 +79,6 @@ private:
 
   // ******************** Private constants ********************
   /**
-   * @brief speed Spped of player movement
-   */
-  static const int speed            = 10;
-  /**
    * @brief animationPeriod Period in ms of movement animation
    */
   static const int animationPeriod  = 100;
@@ -91,17 +92,7 @@ private:
     PLAYER_STANDING,
   };
 
-
   // ******************** Private variables ********************
-
-  /**
-   * @brief width Maximum width of player
-   */
-  int width;
-  /**
-   * @brief height Maximum height of player
-   */
-  int height;
 
   /**
    * @brief moveDirection Current direction of movement used by animation functions
@@ -111,10 +102,6 @@ private:
    * @brief animationTimer Timer for performing animation of player moves
    */
   QTimer * animationTimer;
-  /**
-   * @brief health Health of player
-   */
-  int health;
 
 };
 

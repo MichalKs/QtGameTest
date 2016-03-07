@@ -8,24 +8,21 @@
 #include <QSoundEffect>
 #include <QGraphicsView>
 #include <QTimer>
+#include <sprite.h>
 
 /**
  * @brief Player::Player
  * @param parent
  */
-Player::Player(int initialHealth, QGraphicsItem * parent):
-  QGraphicsPixmapItem(parent) {
+Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * parent):
+  Sprite(initialHealth, speed, w, h, parent) {
 
-  width = 100;
-  height = 100;
-  // set initial health
-  health = initialHealth;
   // initially player is standing still
   moveDirection = PLAYER_STANDING;
 
   // set base graphics for player
   setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-        scaled(QSize(width, height), Qt::KeepAspectRatio));
+        scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
 
   // create a timer for player movement animation
   animationTimer = new QTimer();
@@ -71,7 +68,7 @@ void Player::keyPressEvent(QKeyEvent *event) {
   if (event->key() == Qt::Key_Left) {
 
     if (pos().x() > 0) {
-      setPos(x()-speed, y());
+      setPos(x()-getSpeed(), y());
     }
 
     if (moveDirection == PLAYER_STANDING || moveDirection == PLAYER_MOVING_RIGHT) {
@@ -81,8 +78,8 @@ void Player::keyPressEvent(QKeyEvent *event) {
 
   } else if (event->key() == Qt::Key_Right) {
 
-    if (x() + width < view->width()) {
-      setPos(x() + speed, y());
+    if (x() + getMaxWidth() < view->width()) {
+      setPos(x() + getSpeed(), y());
     }
 
     if (moveDirection == PLAYER_STANDING || moveDirection == PLAYER_MOVING_LEFT) {
@@ -109,7 +106,7 @@ void Player::movementAnimation() {
   if ((moveDirection == PLAYER_STANDING) && (previousMoveDirection == PLAYER_STANDING)) {
 
     setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
+      scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
     // do nothing
     return;
   } else if ((moveDirection == PLAYER_MOVING_LEFT) &&
@@ -161,71 +158,23 @@ void Player::movementAnimation() {
 
 void Player::moveRightAnimation(const int animationCounter) {
 
-  switch (animationCounter) {
+  QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
+      arg(animationCounter+6, 4, 10, QChar('0'));
 
-  case 1:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0007.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
+  qDebug() << filename;
 
-  case 2:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0008.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  case 3:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0009.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  case 4:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0010.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  case 5:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0011.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  default:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-  }
+  setPixmap(QPixmap(filename).
+    scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
 }
 
 void Player::moveLeftAnimation(const int animationCounter) {
 
-  switch (animationCounter) {
+  QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
+      arg(6-animationCounter, 4, 10, QChar('0'));
 
-  case 1:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0005.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
+  qDebug() << filename;
 
-  case 2:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0004.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
+  setPixmap(QPixmap(filename).
+    scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
 
-  case 3:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0003.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-  case 4:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0002.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  case 5:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0001.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-
-  default:
-    setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-      scaled(QSize(width, height), Qt::KeepAspectRatio));
-    break;
-  }
 }

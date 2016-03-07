@@ -33,7 +33,7 @@ Game::Game(QWidget * parent) {
   setFixedSize(800, 600);
 
   // create a player with an initial health of 3
-  player = new Player(3);
+  player = new Player(3, 10);
 
 //  player->setRect(0, 0, 100, 100);
   player->setPos(width()/2, height() - 100);
