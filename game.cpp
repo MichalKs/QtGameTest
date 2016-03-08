@@ -21,8 +21,12 @@
  * @param parent
  */
 Game::Game(QWidget * parent) {
+
+  // create a player with an initial health of 3
+  player = new Player(3, 10);
+
   // create a scene
-  scene = new GameScene();
+  scene = new GameScene(player);
   scene->setSceneRect(0, 0, 800, 600);
 
   // set background
@@ -37,8 +41,11 @@ Game::Game(QWidget * parent) {
 
   setFixedSize(800, 600);
 
-  // create a player with an initial health of 3
-  player = new Player(3, 10);
+  // hide cursor
+  setCursor(Qt::BlankCursor);
+
+//  QPoint glob = mapToGlobal(QPoint(width()/2,height()/2));
+//  QCursor::setPos(glob);
 
 //  player->setRect(0, 0, 100, 100);
   player->setPos(width()/2, height() - 100);
@@ -67,7 +74,7 @@ Game::Game(QWidget * parent) {
 
   scene->addSimpleText(QString("Hello world!!!"), QFont("Fantasy", 72, QFont::Bold));
 
-  QPushButton * b = new QPushButton(QString("LOL"));
+  QPushButton * b = new QPushButton(QString("Spawn enemy"));
 
   QGraphicsProxyWidget * p = scene->addWidget(b);
   p->setPos(500, 500);
@@ -77,6 +84,7 @@ Game::Game(QWidget * parent) {
   // create score
   score = new Score();
   scene->addItem(score);
+  //scene->clearFocus();
 
   // spawn enemies
   QTimer * timer = new QTimer();

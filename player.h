@@ -28,7 +28,8 @@ public:
    * @param event Key event
    */
   void keyPressEvent(QKeyEvent * event);
-  void mousePressEvent(QGraphicsSceneMouseEvent  * event);
+  void mousePressEvent(QGraphicsSceneMouseEvent * event);
+  void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
 
   /**
    * @brief keyReleaseEvent Event handler for key releases

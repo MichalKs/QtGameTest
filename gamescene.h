@@ -2,12 +2,20 @@
 #define GAMESCENE_H
 
 #include <QGraphicsScene>
+#include "player.h"
 
 class GameScene: public QGraphicsScene {
 
 public:
 
-  GameScene();
+  GameScene(Player * player);
+
+  bool event(QEvent * event);
+  void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
+  void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
+
+private:
+  Player * playerPtr;
 };
 
 #endif // GAMESCENE_H
