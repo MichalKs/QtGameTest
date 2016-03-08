@@ -1,5 +1,4 @@
 #include "game.h"
-#include <QGraphicsScene>
 #include <QDebug>
 #include <QTimer>
 #include "enemy.h"
@@ -11,6 +10,11 @@
 #include <QSoundEffect>
 #include <bullet.h>
 #include <QMouseEvent>
+#include <gamescene.h>
+#include <QPolygonF>
+#include <QPointF>
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
 
 /**
  * @brief Game::Game
@@ -18,11 +22,11 @@
  */
 Game::Game(QWidget * parent) {
   // create a scene
-  scene = new QGraphicsScene();
+  scene = new GameScene();
   scene->setSceneRect(0, 0, 800, 600);
 
   // set background
-  setBackgroundBrush(QBrush(QImage(
+  scene->setBackgroundBrush(QBrush(QImage(
     ":/images/graphics/background/all-703522_1920.jpg")));
 
   // scene is invisible - add to view
@@ -46,6 +50,30 @@ Game::Game(QWidget * parent) {
   // add the player to the scene
   scene->addItem(player);
 
+  // playing with items
+  scene->addEllipse(200, 200, 100, 200,
+                    QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
+                    QBrush(Qt::red, Qt::FDiagPattern));
+
+  scene->addLine(400, 200, 500, 580,
+                 QPen(Qt::cyan, 13, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+
+  QPolygonF poly;
+
+  poly << QPointF(700, 50) << QPointF(600, 150) << QPointF(800, 150);
+
+  scene->addPolygon(poly, QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
+                    QBrush(Qt::red, Qt::FDiagPattern));
+
+  scene->addSimpleText(QString("Hello world!!!"), QFont("Fantasy", 72, QFont::Bold));
+
+  QPushButton * b = new QPushButton(QString("LOL"));
+
+  QGraphicsProxyWidget * p = scene->addWidget(b);
+  p->setPos(500, 500);
+
+  connect(b, SIGNAL(clicked(bool)), this, SLOT(spawnEnemy()));
+
   // create score
   score = new Score();
   scene->addItem(score);
@@ -66,6 +94,9 @@ Game::Game(QWidget * parent) {
   effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
 
   connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
+
+  qDebug() << scene->focusItem();
+
 
 }
 
