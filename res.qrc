@@ -37,5 +37,6 @@
         <file>graphics/explosion/greenexplosion/Explosion_016.png</file>
         <file>graphics/spaceship3/tribase-u2-d0.png</file>
         <file>graphics/starbase/starbase-tex.png</file>
+        <file>graphics/background/science-fiction-441708_960_720.jpg</file>
     </qresource>
 </RCC>
