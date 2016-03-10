@@ -7,6 +7,7 @@ class Player;
 class QGraphicsScene;
 class Score;
 class QSoundEffect;
+class GameScene;
 
 class Game: public QGraphicsView {
   Q_OBJECT
@@ -25,9 +26,10 @@ public slots:
 
 private:
     QSoundEffect * effect;
-    QGraphicsScene * scene;
+    GameScene * scene;
     Player * player;
     Score * score;
+
 };
 
 #endif // GAME_H

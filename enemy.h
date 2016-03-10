@@ -25,7 +25,7 @@ private slots:
 
 private:
 
-  static const int typesOfEnemies = 2;
+  static const int typesOfEnemies = 4;
   QTimer * timer;
   QTimer * explodeAnimationTimer;
 

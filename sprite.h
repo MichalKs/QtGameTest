@@ -80,6 +80,14 @@ public:
     return maxHeight;
   }
 
+  void pause() {
+    paused = true;
+  }
+
+  void unpause() {
+    paused = false;
+  }
+
 private:
 
   /**
@@ -99,6 +107,11 @@ private:
    * @brief height Maximum height of sprite
    */
   int maxHeight;
+
+  /**
+   * @brief paused If true sprite is standing still
+   */
+  bool paused;
 
 };
 

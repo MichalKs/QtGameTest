@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     player.cpp \
     score.cpp \
     sprite.cpp \
-    gamescene.cpp
+    gamescene.cpp \
+    mainwindow.cpp
 
 HEADERS  += \
     bullet.h \
@@ -29,7 +30,8 @@ HEADERS  += \
     player.h \
     score.h \
     sprite.h \
-    gamescene.h
+    gamescene.h \
+    mainwindow.h
 
 RESOURCES += \
     res.qrc

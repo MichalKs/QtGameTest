@@ -13,6 +13,7 @@ public:
   bool event(QEvent * event);
   void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
   void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
+  void addItem(QGraphicsItem *item);
 
 private:
   Player * playerPtr;

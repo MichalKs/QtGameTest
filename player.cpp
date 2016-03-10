@@ -97,13 +97,13 @@ void Player::keyPressEvent(QKeyEvent *event) {
 void Player::mousePressEvent(QGraphicsSceneMouseEvent * event) {
 
   QRectF mRect = sceneBoundingRect();
-  qDebug() << "Mouse event in player";
+//  qDebug() << "Mouse event in player";
   emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
 
 }
 
 void Player::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-  qDebug() << "Mouse move event in player";
+//  qDebug() << "Mouse move event in player";
   if (event->scenePos().x() < 750) {
     setPos(event->scenePos().x(), y());
   }

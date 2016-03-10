@@ -42,7 +42,7 @@ Game::Game(QWidget * parent) {
   setFixedSize(800, 600);
 
   // hide cursor
-  setCursor(Qt::BlankCursor);
+  setCursor(Qt::CrossCursor);
 
 //  QPoint glob = mapToGlobal(QPoint(width()/2,height()/2));
 //  QCursor::setPos(glob);
@@ -104,8 +104,6 @@ Game::Game(QWidget * parent) {
   connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
 
   qDebug() << scene->focusItem();
-
-
 }
 
 /**
@@ -126,7 +124,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
 }
 
 void Game::mousePressEvent(QMouseEvent * event) {
-  qDebug() << "Mouse event";
+//  qDebug() << "Mouse event";
   QGraphicsView::mousePressEvent(event);
 }
 

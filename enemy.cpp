@@ -17,26 +17,39 @@ Enemy::Enemy(int initialHealth, int speed, int w, int h, QGraphicsItem * parent)
   // every enemy created will have to have its own drawing pattern
   // called in constructor - virtual draw() function
 
-  if (randomNumber % typesOfEnemies) {
-    QPixmap  pixmap = QPixmap
-        (":/images/graphics/spaceship1/ospaceship-main.png");
-//    QTransform transform;
-//    QTransform trans = transform.rotate(0);
-//    QPixmap transPixmap = QPixmap(pixmap.transformed(trans));
+  //    QTransform transform;
+  //    QTransform trans = transform.rotate(0);
+  //    QPixmap transPixmap = QPixmap(pixmap.transformed(trans));
+  //    transPixmap = transPixmap.scaled(QSize(100, 100),Qt::KeepAspectRatio);
+  //  setTransformOriginPoint(50,50);
+  //    setRotation(90);
 
-//    transPixmap = transPixmap.scaled(QSize(100, 100),Qt::KeepAspectRatio);
+
+  int temp = randomNumber % typesOfEnemies;
+  qDebug() << "Creating enemy number " << temp;
+
+  switch (temp) {
+
+  case 0:
     setPixmap(QPixmap(":/images/graphics/spaceship1/ospaceship-main.png").
               scaled(QSize(100, 100),Qt::KeepAspectRatio));
-  } else {
+    break;
+  case 1:
     setPixmap(QPixmap(":/images/graphics/spaceship2/redshipr.png").
               scaled(QSize(100, 100),Qt::KeepAspectRatio));
-  }
+    break;
+  case 2:
+    setPixmap(QPixmap(":/images/graphics/spaceship3/tribase-u2-d0.png").
+              scaled(QSize(200, 200),Qt::KeepAspectRatio));
+    break;
+  case 3:
+    setPixmap(QPixmap(":/images/graphics/starbase/starbase-tex.png").
+              scaled(QSize(200, 200),Qt::KeepAspectRatio));
+    break;
+  default:
+    setPixmap(QPixmap(":/images/graphics/spaceship1/ospaceship-main.png").
+              scaled(QSize(100, 100),Qt::KeepAspectRatio));
 
-//  setTransformOriginPoint(50,50);
-  if (randomNumber % typesOfEnemies) {
-//    setRotation(90);
-  } else {
-//    setRotation(270);
   }
 
   timer = new QTimer();

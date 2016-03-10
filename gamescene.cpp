@@ -16,12 +16,17 @@ bool GameScene::event(QEvent *event) {
 }
 
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent) {
-  qDebug() << "Mouse presss event received in scene";
+//  qDebug() << "Mouse presss event received in scene";
   playerPtr->mousePressEvent(mouseEvent);
 }
 
 void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-  qDebug() << "Mouse move event received in scene";
+//  qDebug() << "Mouse move event received in scene";
   playerPtr->mouseMoveEvent(mouseEvent);
 
+}
+
+void GameScene::addItem(QGraphicsItem *item) {
+  qDebug() << "Scene item added";
+  QGraphicsScene::addItem(item);
 }
