@@ -18,20 +18,24 @@ SOURCES += main.cpp \
     enemy.cpp \
     game.cpp \
     player.cpp \
-    score.cpp \
     sprite.cpp \
     gamescene.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    statusbar.cpp \
+    gamecontainer.cpp
 
 HEADERS  += \
     bullet.h \
     enemy.h \
     game.h \
     player.h \
-    score.h \
     sprite.h \
     gamescene.h \
-    mainwindow.h
+    mainwindow.h \
+    statusbar.h \
+    gamecontainer.h
 
 RESOURCES += \
     res.qrc
+
+DISTFILES +=

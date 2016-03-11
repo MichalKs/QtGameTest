@@ -3,7 +3,6 @@
 #include <QTimer>
 #include "enemy.h"
 #include "player.h"
-#include "score.h"
 #include <QMediaPlayer>
 #include <QBrush>
 #include <QImage>
@@ -81,9 +80,6 @@ Game::Game(QWidget * parent) {
 
   connect(b, SIGNAL(clicked(bool)), this, SLOT(spawnEnemy()));
 
-  // create score
-  score = new Score();
-  scene->addItem(score);
   //scene->clearFocus();
 
   // spawn enemies
@@ -130,7 +126,7 @@ void Game::mousePressEvent(QMouseEvent * event) {
 
 void Game::enemyKilled(QGraphicsItem * casualty) {
   // increase the score
-  score->increase();
+  emit increaseScore(1);
 
   Enemy * enemy = dynamic_cast<Enemy*>(casualty);
   enemy->die();

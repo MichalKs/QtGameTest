@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-class Game;
+class GameContainer;
 class QPushButton;
 class QWidget;
 class QHBoxLayout;
@@ -36,20 +36,29 @@ private:
 
   QHBoxLayout * hLayout1;
   QVBoxLayout * vLayout1;
-  Game * game;
+  QHBoxLayout * gameLayout;
   QStackedWidget * stackedWidget;
 
   QMenu * fileMenu;
   QMenu * aboutMenu;
+  QMenu * extrasMenu;
+  QMenu * optionsMenu;
 
   // actions
   QAction * newGameAction;
   QAction * loadGameAction;
   QAction * saveGameAction;
   QAction * exitAction;
+
+  QAction * mouseMoveAction;
+  QAction * audioToggleAction;
+
+  QAction * topScoreAction;
+
   QAction * aboutAction;
   QAction * aboutQtAction;
 
+  GameContainer * gameContainer;
 
 };
 

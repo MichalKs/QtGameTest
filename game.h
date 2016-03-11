@@ -5,7 +5,6 @@
 
 class Player;
 class QGraphicsScene;
-class Score;
 class QSoundEffect;
 class GameScene;
 
@@ -24,11 +23,13 @@ public slots:
   void createBullet(int x, int y);
   void spawnEnemy();
 
+signals:
+  void increaseScore(int increment);
+
 private:
     QSoundEffect * effect;
     GameScene * scene;
     Player * player;
-    Score * score;
 
 };
 

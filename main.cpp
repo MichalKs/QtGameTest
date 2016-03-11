@@ -4,10 +4,9 @@
 
 /*
  * TODO Decrease player health during impact
- * TODO Add main menu
  * TODO Add player die animation
+ * TODO Add missile counting
  * TODO Add bonuses (additional health, better weapons)
- * TODO Add statusbar
  * TODO Add rescaling
  * TODO Add levels
  * TODO Add enemy missiles

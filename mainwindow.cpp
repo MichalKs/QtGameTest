@@ -1,6 +1,6 @@
 
 #include "mainwindow.h"
-#include "game.h"
+#include "gamecontainer.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -60,6 +60,17 @@ MainWindow::MainWindow() {
   exitAction->setStatusTip("Exit game");
   connect(exitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
 
+  mouseMoveAction = new QAction("Enable &mouse movement", this);
+  mouseMoveAction->setCheckable(true);
+  mouseMoveAction->setChecked(true);
+  //connect(mouseMoveAction, SIGNAL(toggled(bool)), game, SLOT()
+
+  audioToggleAction = new QAction("Enable &audio", this);
+  audioToggleAction->setCheckable(true);
+  audioToggleAction->setChecked(true);
+
+  topScoreAction = new QAction("&Top scorers", this);
+
   aboutQtAction = new QAction("About &Qt", this);
   aboutQtAction->setStatusTip("Show info about Qt");
   connect(aboutQtAction, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
@@ -68,20 +79,28 @@ MainWindow::MainWindow() {
   fileMenu->addAction(newGameAction);
   fileMenu->addAction(exitAction);
 
+  optionsMenu = menuBar()->addMenu("&Options");
+  optionsMenu->addAction(mouseMoveAction);
+  optionsMenu->addAction(audioToggleAction);
+
+  extrasMenu = menuBar()->addMenu("&Extras");
+  extrasMenu->addAction(topScoreAction);
+
   aboutMenu = menuBar()->addMenu("&About");
   aboutMenu->addAction(aboutQtAction);
-
 
 }
 
 void MainWindow::createGame() {
 
+  newGameAction->setDisabled(true);
+
   // create a new game
-  game = new Game();
+  gameContainer = new GameContainer();
 //  backgroundLabel->hide();
 //  vLayout1->removeWidget(backgroundLabel);
 
-  stackedWidget->addWidget(game);
+  stackedWidget->addWidget(gameContainer);
   emit changeWidget(1);
 
   newGameButton->setDisabled(true);

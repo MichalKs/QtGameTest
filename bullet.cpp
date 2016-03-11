@@ -5,7 +5,6 @@
 #include <QList>
 #include "enemy.h"
 #include <typeinfo>
-#include "score.h"
 
 /**
  * @brief Bullet::Bullet

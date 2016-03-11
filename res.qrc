@@ -38,5 +38,7 @@
         <file>graphics/spaceship3/tribase-u2-d0.png</file>
         <file>graphics/starbase/starbase-tex.png</file>
         <file>graphics/background/science-fiction-441708_960_720.jpg</file>
+        <file>graphics/icons/statusbar/health.png</file>
+        <file>graphics/icons/statusbar/star.png</file>
     </qresource>
 </RCC>
