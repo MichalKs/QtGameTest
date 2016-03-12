@@ -10,6 +10,7 @@
 #include <QStackedWidget>
 #include <QMenuBar>
 #include <QApplication>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
@@ -57,17 +58,20 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   setCentralWidget(stackedWidget);
 
   setWindowIcon(QIcon(QPixmap(":/images/graphics/fighter/smallfighter0006.png")));
-  setWindowTitle("Starlight Cannon");
+  setWindowTitle("Ugly Invaders From Space");
   layout()->setSizeConstraint(QLayout::SetFixedSize);
 
   // create actions
   newGameAction = new QAction("&New game", this);
-//  newGameAction->setShortcut("Ctrl+N");
+  newGameAction->setShortcut(QKeySequence("Ctrl+N"));
   newGameAction->setStatusTip("Start a new game");
+  newGameAction->setIcon(QIcon(":/images/graphics/icons/menu/newgame.png"));
   connect(newGameAction, SIGNAL(triggered(bool)), this, SLOT(createGame()));
 
   exitAction = new QAction("&Exit", this);
   exitAction->setStatusTip("Exit game");
+  exitAction->setShortcut((QKeySequence("Ctrl+Q")));
+  exitAction->setIcon(QIcon(":/images/graphics/icons/menu/exit.png"));
   connect(exitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
 
   mouseMoveAction = new QAction("Enable &mouse movement", this);
@@ -84,6 +88,10 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   topScoreAction = new QAction("&Top scorers", this);
   topScoreAction->setStatusTip("Display top scorers");
 
+  aboutAction = new QAction("About", this);
+  aboutAction->setStatusTip("Show info about game");
+  connect(aboutAction, SIGNAL(triggered(bool)), this, SLOT(about()));
+
   aboutQtAction = new QAction("About &Qt", this);
   aboutQtAction->setStatusTip("Show info about Qt");
   connect(aboutQtAction, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
@@ -97,13 +105,15 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   optionsMenu = menuBar()->addMenu("&Options");
   optionsMenu->addAction(mouseMoveAction);
+  optionsMenu->addSeparator();
   optionsMenu->addAction(audioToggleAction);
 
   extrasMenu = menuBar()->addMenu("&Extras");
   extrasMenu->addAction(topScoreAction);
 
-  aboutMenu = menuBar()->addMenu("&About");
-  aboutMenu->addAction(aboutQtAction);
+  helpMenu = menuBar()->addMenu("&Help");
+  helpMenu->addAction(aboutAction);
+  helpMenu->addAction(aboutQtAction);
 
   // create statusbar
   statusBar();
@@ -130,11 +140,23 @@ void MainWindow::createGame() {
 
 }
 
+void MainWindow::about() {
+
+  QMessageBox::about(this, "About Ugly Invaders From Space",
+                     "The game tells the tale of a horrible invasion of ugly aliens that "
+                     "threaten humanity. In order to bring peace and aesthetics to the galaxy you must"
+                     " murder them all without mercy :)"
+                     "\nCreated in 2016");
+
+}
+
 MainWindow::~MainWindow() {
 
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
+
+  // add message box here asking if user wants to quit
 
   qDebug() << "Closing game";
   QMainWindow::closeEvent(event);

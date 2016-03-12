@@ -23,6 +23,7 @@ public:
 
 public slots:
   void createGame();
+  void about();
 
 signals:
   void changeWidget(int i);
@@ -36,7 +37,7 @@ private:
   QStackedWidget * stackedWidget;
 
   QMenu * fileMenu;
-  QMenu * aboutMenu;
+  QMenu * helpMenu;
   QMenu * extrasMenu;
   QMenu * optionsMenu;
 

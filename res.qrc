@@ -40,5 +40,7 @@
         <file>graphics/background/science-fiction-441708_960_720.jpg</file>
         <file>graphics/icons/statusbar/health.png</file>
         <file>graphics/icons/statusbar/star.png</file>
+        <file>graphics/icons/menu/newgame.png</file>
+        <file>graphics/icons/menu/exit.png</file>
     </qresource>
 </RCC>
