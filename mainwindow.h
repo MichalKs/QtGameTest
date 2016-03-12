@@ -16,7 +16,7 @@ class MainWindow: public QMainWindow {
     Q_OBJECT
 
 public:
-  MainWindow();
+  MainWindow(QWidget * parent = 0);
   ~MainWindow();
 
   void closeEvent(QCloseEvent * event);
@@ -33,10 +33,6 @@ private:
   QPushButton * newGameButton;
   QPushButton * quitButton;
   QLabel * backgroundLabel;
-
-  QHBoxLayout * hLayout1;
-  QVBoxLayout * vLayout1;
-  QHBoxLayout * gameLayout;
   QStackedWidget * stackedWidget;
 
   QMenu * fileMenu;

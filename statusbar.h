@@ -6,6 +6,7 @@
 class QLabel;
 class QHBoxLayout;
 class QVBoxLayout;
+class QProgressBar;
 
 class Statusbar: public QWidget {
   Q_OBJECT
@@ -14,6 +15,9 @@ public:
 
 public slots:
   void increaseScore(int increment);
+
+signals:
+  void healthUpdated(int health);
 
 private:
   QLabel * scoreLabel;
@@ -26,6 +30,7 @@ private:
   QVBoxLayout * healthLayout;
   QVBoxLayout * scoreLayout;
   QVBoxLayout * weaponLayout;
+  QProgressBar * healthBar;
 
   int score;
 };

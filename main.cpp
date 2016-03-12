@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "game.h"
 #include "mainwindow.h"
-
+#include <QCommonStyle>
 /*
  * TODO Decrease player health during impact
  * TODO Add player die animation

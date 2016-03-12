@@ -5,6 +5,8 @@
 #include <QGraphicsEffect>
 #include <QPixmap>
 #include <QTransform>
+#include <QProgressBar>
+#include <QPalette>
 
 Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
 
@@ -32,7 +34,21 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
                              scaled(64,64, Qt::KeepAspectRatio));
   healthIconLabel->setAlignment(Qt::AlignCenter);
 
+  healthBar = new QProgressBar();
+  healthBar->setMaximum(3);
+  healthBar->setMinimum(0);
+  healthBar->setMaximumWidth(healthLabel->sizeHint().width());
+  healthBar->setValue(3);
+  healthBar->setFont(QFont("Fantasy", 14, QFont::Bold));
+
+  QPalette pal1 = palette();
+  pal1.setColor(QPalette::Highlight, Qt::red);
+  healthBar->setPalette(pal1);
+  connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
+
   healthLayout->addWidget(healthIconLabel);
+  healthLayout->addWidget(healthBar);
+  healthLayout->addStretch();
   healthLayout->addWidget(healthLabel);
 
   // add score info
@@ -46,6 +62,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   scoreIconLabel->setAlignment(Qt::AlignCenter);
 
   scoreLayout->addWidget(scoreIconLabel);
+  scoreLayout->addStretch();
   scoreLayout->addWidget(scoreLabel);
 
   // add weapons info
@@ -63,6 +80,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   weaponIconLabel->setAlignment(Qt::AlignCenter);
 
   weaponLayout->addWidget(weaponIconLabel);
+  weaponLayout->addStretch();
   weaponLayout->addWidget(weaponLabel);
 
   hLayout1->addLayout(scoreLayout);
@@ -70,6 +88,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   hLayout1->addLayout(weaponLayout);
 
   setLayout(hLayout1);
+//  setTabOrder();
 
 }
 
