@@ -24,11 +24,15 @@ public:
 public slots:
   void createGame();
   void about();
+  void displayTopScorers();
 
 signals:
   void changeWidget(int i);
 
 private:
+
+  void writeSettings();
+  void readSettings();
 
   QWidget * mainMenuWidget;
   QPushButton * newGameButton;

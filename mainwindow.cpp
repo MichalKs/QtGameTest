@@ -1,5 +1,6 @@
 
 #include "mainwindow.h"
+#include "topscoresdialog.h"
 #include "gamecontainer.h"
 #include <QDebug>
 #include <QPushButton>
@@ -11,6 +12,9 @@
 #include <QMenuBar>
 #include <QApplication>
 #include <QMessageBox>
+#include <QCloseEvent>
+#include <QStatusBar>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
@@ -87,6 +91,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   topScoreAction = new QAction("&Top scorers", this);
   topScoreAction->setStatusTip("Display top scorers");
+  connect(topScoreAction, SIGNAL(triggered(bool)), this, SLOT(displayTopScorers()));
 
   aboutAction = new QAction("About", this);
   aboutAction->setStatusTip("Show info about game");
@@ -118,6 +123,8 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   // create statusbar
   statusBar();
 
+  readSettings();
+
 }
 
 void MainWindow::createGame() {
@@ -133,6 +140,7 @@ void MainWindow::createGame() {
   emit changeWidget(1);
 
   newGameButton->setDisabled(true);
+  statusBar()->showMessage("New game started", 2000);
 //  resize(800, 600);
 
   // set game as central widget
@@ -150,6 +158,35 @@ void MainWindow::about() {
 
 }
 
+void MainWindow::displayTopScorers() {
+
+  TopScoresDialog tsd;
+  tsd.exec();
+
+}
+
+void MainWindow::writeSettings() {
+  QSettings settings("Ugly Invaders and Co.", "Ugly Invaders From Space");
+
+  settings.setValue("geometry", geometry());
+  settings.setValue("mouseMove", mouseMoveAction->isChecked());
+  settings.setValue("audioOn", audioToggleAction->isChecked());
+}
+
+void MainWindow::readSettings() {
+  QSettings settings("Ugly Invaders and Co.", "Ugly Invaders From Space");
+
+  QRect rect = settings.value("geometry", QRect(200, 200, 640, 480)).toRect();
+  move(rect.topLeft());
+  resize(rect.size());
+
+  bool mouseMove = settings.value("mouseMove", true).toBool();
+  mouseMoveAction->setChecked(mouseMove);
+
+  bool audioOn = settings.value("audioOn", true).toBool();
+  audioToggleAction->setChecked(mouseMove);
+}
+
 MainWindow::~MainWindow() {
 
 }
@@ -158,7 +195,17 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
   // add message box here asking if user wants to quit
 
-  qDebug() << "Closing game";
-  QMainWindow::closeEvent(event);
+  int r = QMessageBox::question(this, "Ugly Invaders From Space",
+                        "Are you sure you want to quit?",
+                        QMessageBox::Yes | QMessageBox::Default,
+                        QMessageBox::Cancel | QMessageBox::Escape);
+  if (r == QMessageBox::Yes) {
+    qDebug() << "Closing game";
+    writeSettings();
+    event->accept();
+  } else {
+    event->ignore();
+    statusBar()->showMessage("Exit cancelled", 2000);
+  }
 
 }

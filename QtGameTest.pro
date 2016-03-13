@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     gamescene.cpp \
     mainwindow.cpp \
     statusbar.cpp \
-    gamecontainer.cpp
+    gamecontainer.cpp \
+    topscoresdialog.cpp
 
 HEADERS  += \
     bullet.h \
@@ -33,7 +34,8 @@ HEADERS  += \
     gamescene.h \
     mainwindow.h \
     statusbar.h \
-    gamecontainer.h
+    gamecontainer.h \
+    topscoresdialog.h
 
 RESOURCES += \
     res.qrc
