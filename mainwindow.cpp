@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   // create new game button
   newGameButton = new QPushButton("New game");
-  connect(newGameButton,SIGNAL(clicked(bool)), this, SLOT(createGame()));
+  connect(newGameButton, SIGNAL(clicked(bool)), this, SLOT(createGame()));
 
   // create quit button
   quitButton = new QPushButton("Quit game");
   connect(quitButton, SIGNAL(clicked(bool)), this, SLOT(close()));
 
 
-  // wil be reparented when added to MainWindow layout
+  // wil be reparented (and hence deleted when necessary) when added to MainWindow layout
   QHBoxLayout * buttonLayout = new QHBoxLayout;
   QVBoxLayout * vLayout = new QVBoxLayout;
 
@@ -60,7 +60,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   connect(this, SIGNAL(changeWidget(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
   setCentralWidget(stackedWidget);
-
   setWindowIcon(QIcon(QPixmap(":/images/graphics/fighter/smallfighter0006.png")));
   setWindowTitle("Ugly Invaders From Space");
   layout()->setSizeConstraint(QLayout::SetFixedSize);
@@ -101,9 +100,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   aboutQtAction->setStatusTip("Show info about Qt");
   connect(aboutQtAction, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
-
   // create menus
-
   fileMenu = menuBar()->addMenu("&File");
   fileMenu->addAction(newGameAction);
   fileMenu->addAction(exitAction);
@@ -123,28 +120,25 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   // create statusbar
   statusBar();
 
+  // read application settings once everything is created
   readSettings();
 
 }
 
 void MainWindow::createGame() {
 
+  // once game is started there is no point starting it again
   newGameAction->setDisabled(true);
+  newGameButton->setDisabled(true);
 
   // create a new game
   gameContainer = new GameContainer();
-//  backgroundLabel->hide();
-//  vLayout1->removeWidget(backgroundLabel);
 
   stackedWidget->addWidget(gameContainer);
+  // change widget that is displayed
   emit changeWidget(1);
 
-  newGameButton->setDisabled(true);
   statusBar()->showMessage("New game started", 2000);
-//  resize(800, 600);
-
-  // set game as central widget
-//  setCentralWidget(game);
 
 }
 
@@ -184,7 +178,7 @@ void MainWindow::readSettings() {
   mouseMoveAction->setChecked(mouseMove);
 
   bool audioOn = settings.value("audioOn", true).toBool();
-  audioToggleAction->setChecked(mouseMove);
+  audioToggleAction->setChecked(audioOn);
 }
 
 MainWindow::~MainWindow() {
@@ -193,7 +187,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
 
-  // add message box here asking if user wants to quit
+  // message box asking if user wants to quit
 
   int r = QMessageBox::question(this, "Ugly Invaders From Space",
                         "Are you sure you want to quit?",

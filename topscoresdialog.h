@@ -7,6 +7,9 @@ class QPushButton;
 class QLabel;
 class QTableWidget;
 
+/**
+ * @brief The TopScoresDialog class Dialog for displaying top scorers
+ */
 class TopScoresDialog : public QDialog {
 
 public:
@@ -15,9 +18,9 @@ public:
 private:
   QString topScoreFileName;
 
-  QPushButton * okButton;
-  QLabel * titleLabel;
-  QTableWidget * topScoresTable;
+  QPushButton   * okButton;
+  QLabel        * titleLabel;
+  QTableWidget  * topScoresTable;
 
 };
 

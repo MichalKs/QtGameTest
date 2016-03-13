@@ -3,18 +3,31 @@
 
 #include <QWidget>
 
-class QVBoxLayout;
 class Game;
 class Statusbar;
 
+/**
+ * @brief The GameContainer class The GameContainer class serves as only a container for
+ * the game widget and the status bar widget.
+ */
 class GameContainer: public QWidget {
+
 public:
-  GameContainer();
+  /**
+   * @brief GameContainer Constructor for game container
+   * @param parent Parent widget
+   */
+  GameContainer(QWidget * parent = 0);
 
 private:
+  /**
+   * @brief game Game view
+   */
   Game * game;
+  /**
+   * @brief statusbar Status bar widget
+   */
   Statusbar * statusbar;
-  QVBoxLayout * layout;
 };
 
 #endif // GAMECONTAINER_H
