@@ -15,6 +15,7 @@
 #include <QCloseEvent>
 #include <QStatusBar>
 #include <QSettings>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
@@ -154,7 +155,7 @@ void MainWindow::about() {
 
 void MainWindow::displayTopScorers() {
 
-  TopScoresDialog tsd;
+  TopScoresDialog tsd(topScoreList);
   tsd.exec();
 
 }
@@ -165,6 +166,7 @@ void MainWindow::writeSettings() {
   settings.setValue("geometry", geometry());
   settings.setValue("mouseMove", mouseMoveAction->isChecked());
   settings.setValue("audioOn", audioToggleAction->isChecked());
+  settings.setValue("topScoreList", topScoreList);
 }
 
 void MainWindow::readSettings() {
@@ -179,6 +181,10 @@ void MainWindow::readSettings() {
 
   bool audioOn = settings.value("audioOn", true).toBool();
   audioToggleAction->setChecked(audioOn);
+
+  topScoreList = settings.value("topScoreList", QStringList()).toStringList();
+
+
 }
 
 MainWindow::~MainWindow() {
@@ -187,8 +193,13 @@ MainWindow::~MainWindow() {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
 
-  // message box asking if user wants to quit
+  // FIXME move this to finish game
+  QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
+  if (playerName != "") {
+    topScoreList.append(playerName);
+  }
 
+  // message box asking if user wants to quit
   int r = QMessageBox::question(this, "Ugly Invaders From Space",
                         "Are you sure you want to quit?",
                         QMessageBox::Yes | QMessageBox::Default,
@@ -202,4 +213,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     statusBar()->showMessage("Exit cancelled", 2000);
   }
 
+}
+
+QStringList &MainWindow::getTopScoreList() {
+  return topScoreList;
 }

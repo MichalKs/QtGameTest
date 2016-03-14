@@ -6,7 +6,8 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
-TopScoresDialog::TopScoresDialog(QWidget *parent): QDialog(parent) {
+TopScoresDialog::TopScoresDialog(const QStringList & topScoreList, QWidget *parent):
+  QDialog(parent) {
 
   topScoreFileName = "top.tsc";
 
@@ -28,26 +29,30 @@ TopScoresDialog::TopScoresDialog(QWidget *parent): QDialog(parent) {
 //  topScoresTable->setFixedWidth(topScoresTable->sizeHint().width());
 //  topScoresTable->setViewportMargins(0,0,0,0);
 
-  QTableWidgetItem * item[2][10];
+//  QTableWidgetItem * item[2][10];
 
-
-
-  QString temp;
-  for (int i = 0; i < 2; i++) {
-    for (int j = 0; j < 10; j++) {
-      qDebug() << "Checking item " << j << " "<< i;
-      temp = QString("Item (%1,%2)").arg(j).arg(i);
-      topScoresTable->setItem(j, i, new QTableWidgetItem(temp));
-      item[i][j] = topScoresTable->itemAt(j,i);
-      if (item[i][j]) {
-        qDebug() << "item in non zero";
-        // FIXME Why the fuck doesn't this work?
-        item[i][j]->setFlags(Qt::NoItemFlags);
-        item[i][j]->setFont(QFont("Fantasy", 14, QFont::Bold));
-      }
-
-    }
+  int i = 0;
+  foreach (QString player, topScoreList) {
+    topScoresTable->setItem(i%10, 0, new QTableWidgetItem(player));
+    i++;
   }
+
+//  QString temp;
+//  for (int i = 0; i < 2; i++) {
+//    for (int j = 0; j < 10; j++) {
+//      qDebug() << "Checking item " << j << " "<< i;
+//      temp = QString("Item (%1,%2)").arg(j).arg(i);
+//      topScoresTable->setItem(j, i, new QTableWidgetItem(temp));
+//      item[i][j] = topScoresTable->itemAt(j,i);
+//      if (item[i][j]) {
+//        qDebug() << "item in non zero";
+//        // FIXME Why the fuck doesn't this work?
+//        item[i][j]->setFlags(Qt::NoItemFlags);
+//        item[i][j]->setFont(QFont("Fantasy", 14, QFont::Bold));
+//      }
+
+//    }
+//  }
 
 
   okButton = new QPushButton("OK");

@@ -31,6 +31,8 @@ public:
    */
   void closeEvent(QCloseEvent * event);
 
+  QStringList& getTopScoreList();
+
 public slots:
   /**
    * @brief createGame Slot for creating game (New game action triggered)
@@ -63,6 +65,8 @@ private:
    * @brief readSettings Read application settings from OS (registry or file)
    */
   void readSettings();
+
+  QStringList topScoreList;
 
   /**
    * @brief stackedWidget The stacked widget display the main menu widget or the
