@@ -13,6 +13,10 @@ class Statusbar: public QWidget {
 public:
   Statusbar(QWidget * parent = 0);
 
+  int getScore() {
+    return score;
+  }
+
 public slots:
   void increaseScore(int increment);
   void changeHealth(int h);

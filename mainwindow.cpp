@@ -1,9 +1,9 @@
-
 #include "mainwindow.h"
 #include "topscoresdialog.h"
 #include "gamecontainer.h"
 #include "gamescene.h"
 #include "game.h"
+#include "statusbar.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -21,7 +21,9 @@
 
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
-  // stacked widget - show main menu or game
+  // all widgets will be reparented to QMainWindow when they are added to layout
+
+  // stacked widget - shows main menu or game
   stackedWidget = new QStackedWidget();
 
   // create main menu widget
@@ -35,7 +37,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   quitButton = new QPushButton("Quit game");
   connect(quitButton, SIGNAL(clicked(bool)), this, SLOT(close()));
 
-
   // wil be reparented (and hence deleted when necessary) when added to MainWindow layout
   QHBoxLayout * buttonLayout = new QHBoxLayout;
   QVBoxLayout * vLayout = new QVBoxLayout;
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   buttonLayout->addWidget(newGameButton);
   buttonLayout->addWidget(quitButton);
 
-  // add backgroung
+  // add background label
   backgroundLabel = new QLabel();
   backgroundLabel->setPixmap(
         QPixmap(":/images/graphics/background/science-fiction-441708_960_720.jpg").
@@ -62,10 +63,107 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   connect(this, SIGNAL(changeWidget(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
+  // show the stacked widget as main widget
   setCentralWidget(stackedWidget);
+  // set window icon
   setWindowIcon(QIcon(QPixmap(":/images/graphics/fighter/smallfighter0006.png")));
+  // set window title
   setWindowTitle("Ugly Invaders From Space");
+  // window has fixed size
   layout()->setSizeConstraint(QLayout::SetFixedSize);
+  // create all user actions
+  createActions();
+  // create menus
+  createMenus();
+  // create statusbar
+  statusBar();
+  // read application settings once everything is created
+  readSettings();
+
+}
+
+void MainWindow::createGame() {
+
+  // once game is started there is no point starting it again
+  newGameAction->setDisabled(true);
+  newGameButton->setDisabled(true);
+
+  // create a new game
+  gameContainer = new GameContainer();
+  // scene has game logic, so we need it to connect GUI signals
+  const GameScene * scene = gameContainer->getGame()->getGameScene();
+
+  // connect various GUI options to game logic
+  connect(pauseGameAction,    SIGNAL(toggled(bool)), scene, SLOT(pauseGame(bool)));
+  connect(mouseMoveAction,    SIGNAL(toggled(bool)), scene, SLOT(mouseMoveEnable(bool)));
+  connect(audioToggleAction,  SIGNAL(toggled(bool)), scene, SLOT(audioEnable(bool)));
+
+  stackedWidget->addWidget(gameContainer);
+  // change widget that is displayed
+  emit changeWidget(1);
+
+  statusBar()->showMessage("New game started", 2000);
+
+}
+
+void MainWindow::returnToMainMenu() {
+
+  // get the score
+  int currentScore = gameContainer->getStatusbar()->getScore();
+  bool addTopScorer = false;
+
+  for (int i = 0; i < NUMBER_OF_SCORES; i++) {
+
+    if (topScores.count() == i) {
+      // if list is not complete we insert the score an end loop
+      topScores[i] = currentScore;
+      addTopScorer = true;
+      break;
+    } else if (topScores[i] < currentScore) {
+      // if the current score is bigger than the saved one
+      // we insert the score before it
+      topScores.insert(i, currentScore);
+
+      // if the list is too big remove last item
+      if (topScores.count() > NUMBER_OF_SCORES) {
+        topScores.removeLast();
+      }
+      addTopScorer = true;
+      break;
+    }
+  }
+
+  if (addTopScorer) {
+    // Ask for top score name
+    QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
+    if (playerName != "") {
+      topScoreList.append(playerName);
+    }
+  }
+
+  // once game is started there is no point starting it again
+//  newGameAction->setDisabled(true);
+//  newGameButton->setDisabled(true);
+}
+
+void MainWindow::about() {
+
+  QMessageBox::about(this, "About Ugly Invaders From Space",
+                     "The game tells the tale of a horrible invasion of ugly aliens that "
+                     "threaten humanity. In order to bring peace and aesthetics to the galaxy you must"
+                     " murder them all without mercy :)"
+                     "\nCreated in 2016");
+
+}
+
+void MainWindow::displayTopScorers() {
+
+  TopScoresDialog tsd(topScoreList);
+  tsd.exec();
+
+}
+
+void MainWindow::createActions() {
 
   // create actions
   newGameAction = new QAction("&New game", this);
@@ -73,6 +171,11 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   newGameAction->setStatusTip("Start a new game");
   newGameAction->setIcon(QIcon(":/images/graphics/icons/menu/newgame.png"));
   connect(newGameAction, SIGNAL(triggered(bool)), this, SLOT(createGame()));
+
+  toMainMenuAction = new QAction("&Return to main menu", this);
+  toMainMenuAction->setShortcut(QKeySequence("Ctrl+W"));
+  toMainMenuAction->setStatusTip("Returns to main menu");
+  connect(toMainMenuAction, SIGNAL(triggered(bool)), this, SLOT(returnToMainMenu()));
 
   exitAction = new QAction("&Exit", this);
   exitAction->setStatusTip("Exit game");
@@ -83,7 +186,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   mouseMoveAction = new QAction("Enable &mouse movement", this);
   mouseMoveAction->setCheckable(true);
   mouseMoveAction->setStatusTip("Move player with mouse");
-  //connect(mouseMoveAction, SIGNAL(toggled(bool)), game, SLOT()
 
   audioToggleAction = new QAction("Enable &audio", this);
   audioToggleAction->setCheckable(true);
@@ -105,6 +207,9 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   aboutQtAction = new QAction("About &Qt", this);
   aboutQtAction->setStatusTip("Show info about Qt");
   connect(aboutQtAction, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
+}
+
+void MainWindow::createMenus() {
 
   // create menus
   fileMenu = menuBar()->addMenu("&File");
@@ -123,57 +228,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   helpMenu = menuBar()->addMenu("&Help");
   helpMenu->addAction(aboutAction);
   helpMenu->addAction(aboutQtAction);
-
-  // create statusbar
-  statusBar();
-
-  // read application settings once everything is created
-  readSettings();
-
-}
-
-void MainWindow::createGame() {
-
-  // once game is started there is no point starting it again
-  newGameAction->setDisabled(true);
-  newGameButton->setDisabled(true);
-
-  // create a new game
-  gameContainer = new GameContainer();
-  const GameScene * scene = gameContainer->getGame()->getGameScene();
-
-  // connect various GUI options to game logic
-  connect(pauseGameAction, SIGNAL(toggled(bool)), scene, SLOT(pauseGame(bool)));
-  connect(mouseMoveAction, SIGNAL(toggled(bool)), scene, SLOT(mouseMoveEnable(bool)));
-  connect(audioToggleAction, SIGNAL(toggled(bool)), scene, SLOT(audioEnable(bool)));
-
-//  connect(aboutAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
-//  connect(aboutQtAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
-//  connect(topScoreAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
-
-  stackedWidget->addWidget(gameContainer);
-  // change widget that is displayed
-  emit changeWidget(1);
-
-  statusBar()->showMessage("New game started", 2000);
-
-}
-
-void MainWindow::about() {
-
-  QMessageBox::about(this, "About Ugly Invaders From Space",
-                     "The game tells the tale of a horrible invasion of ugly aliens that "
-                     "threaten humanity. In order to bring peace and aesthetics to the galaxy you must"
-                     " murder them all without mercy :)"
-                     "\nCreated in 2016");
-
-}
-
-void MainWindow::displayTopScorers() {
-
-  TopScoresDialog tsd(topScoreList);
-  tsd.exec();
-
 }
 
 void MainWindow::writeSettings() {
@@ -183,6 +237,7 @@ void MainWindow::writeSettings() {
   settings.setValue("mouseMove", mouseMoveAction->isChecked());
   settings.setValue("audioOn", audioToggleAction->isChecked());
   settings.setValue("topScoreList", topScoreList);
+//  settings.setValue("topScore", topScores);
 }
 
 void MainWindow::readSettings() {
@@ -199,21 +254,11 @@ void MainWindow::readSettings() {
   audioToggleAction->setChecked(audioOn);
 
   topScoreList = settings.value("topScoreList", QStringList()).toStringList();
-
-
-}
-
-MainWindow::~MainWindow() {
+//  topScore = settings.value("topScore", QList<int>()).toList();
 
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-
-  // FIXME move this to finish game
-//  QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
-//  if (playerName != "") {
-//    topScoreList.append(playerName);
-//  }
 
   // message box asking if user wants to quit
   int r = QMessageBox::question(this, "Ugly Invaders From Space",
@@ -229,8 +274,4 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     statusBar()->showMessage("Exit cancelled", 2000);
   }
 
-}
-
-QStringList &MainWindow::getTopScoreList() {
-  return topScoreList;
 }

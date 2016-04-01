@@ -3,7 +3,6 @@
 #include "mainwindow.h"
 
 /*
- * TODO Decrease player health during impact
  * TODO Add player die animation
  * TODO Add missile counting
  * TODO Add bonuses (additional health, better weapons)

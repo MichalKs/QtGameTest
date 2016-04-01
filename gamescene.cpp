@@ -10,7 +10,7 @@
 #include <QSoundEffect>
 #include <QObject>
 
-GameScene::GameScene(): QGraphicsScene() {
+GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
   spriteList = new QList<Sprite*>;
   gamePaused = false;

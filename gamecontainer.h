@@ -22,6 +22,9 @@ public:
   Game * getGame() {
     return game;
   }
+  Statusbar * getStatusbar() {
+    return statusbar;
+  }
 
 private:
   /**

@@ -13,7 +13,7 @@ class GameScene: public QGraphicsScene {
   Q_OBJECT
 public:
 
-  GameScene();
+  GameScene(QObject * parent = 0);
 
   bool event(QEvent * event);
   void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
