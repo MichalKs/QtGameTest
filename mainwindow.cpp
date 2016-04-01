@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #include "topscoresdialog.h"
 #include "gamecontainer.h"
+#include "gamescene.h"
+#include "game.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -80,14 +82,17 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   mouseMoveAction = new QAction("Enable &mouse movement", this);
   mouseMoveAction->setCheckable(true);
-  mouseMoveAction->setChecked(true);
   mouseMoveAction->setStatusTip("Move player with mouse");
   //connect(mouseMoveAction, SIGNAL(toggled(bool)), game, SLOT()
 
   audioToggleAction = new QAction("Enable &audio", this);
   audioToggleAction->setCheckable(true);
-  audioToggleAction->setChecked(true);
   audioToggleAction->setStatusTip("Mute all sounds");
+
+  pauseGameAction = new QAction("&Pause game", this);
+  pauseGameAction->setCheckable(true);
+  pauseGameAction->setChecked(false);
+  pauseGameAction->setStatusTip("Pause game");
 
   topScoreAction = new QAction("&Top scorers", this);
   topScoreAction->setStatusTip("Display top scorers");
@@ -108,8 +113,9 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
   optionsMenu = menuBar()->addMenu("&Options");
   optionsMenu->addAction(mouseMoveAction);
-  optionsMenu->addSeparator();
   optionsMenu->addAction(audioToggleAction);
+  optionsMenu->addSeparator();
+  optionsMenu->addAction(pauseGameAction);
 
   extrasMenu = menuBar()->addMenu("&Extras");
   extrasMenu->addAction(topScoreAction);
@@ -134,6 +140,16 @@ void MainWindow::createGame() {
 
   // create a new game
   gameContainer = new GameContainer();
+  const GameScene * scene = gameContainer->getGame()->getGameScene();
+
+  // connect various GUI options to game logic
+  connect(pauseGameAction, SIGNAL(toggled(bool)), scene, SLOT(pauseGame(bool)));
+  connect(mouseMoveAction, SIGNAL(toggled(bool)), scene, SLOT(mouseMoveEnable(bool)));
+  connect(audioToggleAction, SIGNAL(toggled(bool)), scene, SLOT(audioEnable(bool)));
+
+//  connect(aboutAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
+//  connect(aboutQtAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
+//  connect(topScoreAction, SIGNAL(triggered(bool)), scene, SLOT(pauseGame(bool)));
 
   stackedWidget->addWidget(gameContainer);
   // change widget that is displayed
@@ -194,10 +210,10 @@ MainWindow::~MainWindow() {
 void MainWindow::closeEvent(QCloseEvent *event) {
 
   // FIXME move this to finish game
-  QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
-  if (playerName != "") {
-    topScoreList.append(playerName);
-  }
+//  QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
+//  if (playerName != "") {
+//    topScoreList.append(playerName);
+//  }
 
   // message box asking if user wants to quit
   int r = QMessageBox::question(this, "Ugly Invaders From Space",

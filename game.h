@@ -14,20 +14,15 @@ class Game: public QGraphicsView {
 public:
   Game(QWidget * parent = NULL);
 
+  const GameScene* getGameScene() {
+    return scene;
+  }
+
   void resizeEvent(QResizeEvent * event);
   void keyPressEvent(QKeyEvent * event);
   void mousePressEvent(QMouseEvent * event);
 
-public slots:
-  void enemyKilled(QGraphicsItem * casualty);
-  void createBullet(int x, int y);
-  void spawnEnemy();
-
-signals:
-  void increaseScore(int increment);
-
 private:
-    QSoundEffect * effect;
     GameScene * scene;
     Player * player;
 

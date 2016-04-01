@@ -1,10 +1,12 @@
 #include "enemy.h"
 #include <QTimer>
 #include <QDebug>
-#include <QGraphicsScene>
 #include "game.h"
 #include <stdlib.h>
 #include <QTransform>
+#include "gamescene.h"
+#include <typeinfo>
+#include "player.h"
 
 // make subclasses for different types of enemy
 Enemy::Enemy(int initialHealth, int speed, int w, int h, QGraphicsItem * parent):
@@ -61,6 +63,8 @@ Enemy::Enemy(int initialHealth, int speed, int w, int h, QGraphicsItem * parent)
   explodeAnimationTimer = new QTimer();
   connect(explodeAnimationTimer, SIGNAL(timeout()), this, SLOT(dieAnimation()));
 
+
+
 }
 
 Enemy::~Enemy() {
@@ -71,6 +75,34 @@ Enemy::~Enemy() {
   delete timer;
   delete explodeAnimationTimer;
 }
+
+bool Enemy::collisionDetected() {
+  // check for collision with enemy
+  QList<QGraphicsItem*> collidingItemsList = collidingItems();
+
+  // scan list for enemies
+  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
+    // if an enemy is found
+    if(typeid(*(collidingItemsList[i])) == typeid(Player)) {
+
+      // signalize that enemy has been killed
+      emit enemyHitTarget();
+
+      // TODO cast to Enemy and call die function which will play animation
+      // and destroy enemy
+
+      // remove both bullet from scene
+//      scene()->removeItem(this);
+      // delete the objects
+//      delete this;
+      die();
+      return true;
+    }
+  }
+
+  return false;
+}
+
 
 void Enemy::die() {
   qDebug() << "Im dying. Help!";
@@ -85,9 +117,20 @@ void Enemy::move() {
 
   if (pos().y() > 600) {
     // decrease health
-    scene()->removeItem(this);
+    scene = dynamic_cast<GameScene*> (QGraphicsItem::scene());
+    scene->removeItem(this);
     delete this;
   }
+  collisionDetected();
+}
+
+void Enemy::pause() {
+  timer->stop();
+}
+
+void Enemy::unpause() {
+  // bullet moves every 50 ms
+  timer->start(50);
 }
 
 void Enemy::dieAnimation() {
@@ -103,7 +146,8 @@ void Enemy::dieAnimation() {
   // if animation is done then remove object from scene and memory
   if (animationCounter == numberOfAnimationFrames) {
     animationCounter = 0;
-    scene()->removeItem(this);
+    scene = dynamic_cast<GameScene*> (QGraphicsItem::scene());
+    scene->removeItem(this);
     delete this;
   } else {
     setPixmap(QPixmap(filename).

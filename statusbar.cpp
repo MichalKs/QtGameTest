@@ -98,3 +98,8 @@ void Statusbar::increaseScore(int increment) {
   scoreLabel->setText(QString("Score: ") + QString::number(score));
 
 }
+
+void Statusbar::changeHealth(int h) {
+  healthLabel->setText(QString("Health: ") + QString::number(h));
+  emit healthUpdated(h);
+}

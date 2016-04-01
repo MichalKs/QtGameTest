@@ -115,6 +115,10 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
   moveDirection = PLAYER_STANDING;
 }
 
+void Player::gotHit() {
+  decreaseHealth(1);
+}
+
 void Player::movementAnimation() {
 
   static MoveDirection previousMoveDirection = PLAYER_STANDING;

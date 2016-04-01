@@ -1,11 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <QGraphicsPixmapItem>
 #include <sprite.h>
 
-class Health;
 class QTimer;
+class GameScene;
 
 class Enemy: public Sprite {
   Q_OBJECT
@@ -19,15 +18,21 @@ public:
 
 public slots:
   void move();
+  void pause();
+  void unpause();
 
 private slots:
   void dieAnimation();
 
-private:
+signals:
+  void enemyHitTarget();
 
+private:
+  bool collisionDetected();
   static const int typesOfEnemies = 4;
   QTimer * timer;
   QTimer * explodeAnimationTimer;
+  GameScene * scene;
 
 };
 

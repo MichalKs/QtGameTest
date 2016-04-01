@@ -19,6 +19,10 @@ public:
    */
   GameContainer(QWidget * parent = 0);
 
+  Game * getGame() {
+    return game;
+  }
+
 private:
   /**
    * @brief game Game view

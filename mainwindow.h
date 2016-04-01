@@ -104,6 +104,7 @@ private:
   QAction * exitAction;
   QAction * mouseMoveAction;
   QAction * audioToggleAction;
+  QAction * pauseGameAction;
   QAction * topScoreAction;
   QAction * aboutAction;
   QAction * aboutQtAction;

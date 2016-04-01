@@ -15,6 +15,7 @@ public:
 
 public slots:
   void increaseScore(int increment);
+  void changeHealth(int h);
 
 signals:
   void healthUpdated(int health);

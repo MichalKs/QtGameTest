@@ -57,9 +57,11 @@ public:
    */
   void decreaseHealth(int damage) {
     health -= damage;
+    emit healthChanged(health);
     if (health <= 0) {
       die();
     }
+
   }
 
   int getSpeed() {
@@ -80,13 +82,16 @@ public:
     return maxHeight;
   }
 
-  void pause() {
+  virtual void pause() {
     paused = true;
   }
 
-  void unpause() {
+  virtual void unpause() {
     paused = false;
   }
+
+signals:
+  void healthChanged(int h);
 
 private:
 

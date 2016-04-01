@@ -41,6 +41,8 @@ public:
 
   }
 
+public slots:
+  void gotHit();
 
 signals:
 
