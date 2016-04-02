@@ -13,7 +13,8 @@ class QTableWidget;
 class TopScoresDialog : public QDialog {
 
 public:
-  TopScoresDialog(const QStringList & topScoreList, QWidget * parent = 0);
+  TopScoresDialog(const QStringList & topScoreList, const QStringList & topScores,
+                  QWidget * parent = 0);
 
 private:
   QString topScoreFileName;

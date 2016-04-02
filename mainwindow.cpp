@@ -108,36 +108,48 @@ void MainWindow::createGame() {
 
 void MainWindow::returnToMainMenu() {
 
-  // get the score
+  // get the score as int
   int currentScore = gameContainer->getStatusbar()->getScore();
-  bool addTopScorer = false;
 
   for (int i = 0; i < NUMBER_OF_SCORES; i++) {
 
     if (topScores.count() == i) {
+      qDebug() << __FUNCTION__ << ": We found empty room in list";
       // if list is not complete we insert the score an end loop
-      topScores[i] = currentScore;
-      addTopScorer = true;
+
+      QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
+      if (playerName != "") {
+        topScoreList.insert(i, playerName);
+        topScores.insert(i, QString::number(currentScore));
+
+        qDebug() << topScoreList;
+        qDebug() << topScores;
+
+      }
       break;
-    } else if (topScores[i] < currentScore) {
-      // if the current score is bigger than the saved one
-      // we insert the score before it
-      topScores.insert(i, currentScore);
+    } else if (topScores[i].toInt() < currentScore) {
+      qDebug() << __FUNCTION__ << ": Score is better";
+
+      QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
+      if (playerName != "") {
+
+        // if the current score is bigger than the saved one
+        // we insert the score before it
+        topScores.insert(i, QString::number(currentScore));
+        topScoreList.insert(i, playerName);
+      }
+      qDebug() << topScoreList;
+      qDebug() << topScores;
 
       // if the list is too big remove last item
       if (topScores.count() > NUMBER_OF_SCORES) {
         topScores.removeLast();
-      }
-      addTopScorer = true;
-      break;
-    }
-  }
+        topScoreList.removeLast();
 
-  if (addTopScorer) {
-    // Ask for top score name
-    QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
-    if (playerName != "") {
-      topScoreList.append(playerName);
+
+      }
+
+      break;
     }
   }
 
@@ -158,7 +170,7 @@ void MainWindow::about() {
 
 void MainWindow::displayTopScorers() {
 
-  TopScoresDialog tsd(topScoreList);
+  TopScoresDialog tsd(topScoreList, topScores);
   tsd.exec();
 
 }
@@ -214,6 +226,7 @@ void MainWindow::createMenus() {
   // create menus
   fileMenu = menuBar()->addMenu("&File");
   fileMenu->addAction(newGameAction);
+  fileMenu->addAction(toMainMenuAction);
   fileMenu->addAction(exitAction);
 
   optionsMenu = menuBar()->addMenu("&Options");
@@ -237,7 +250,7 @@ void MainWindow::writeSettings() {
   settings.setValue("mouseMove", mouseMoveAction->isChecked());
   settings.setValue("audioOn", audioToggleAction->isChecked());
   settings.setValue("topScoreList", topScoreList);
-//  settings.setValue("topScore", topScores);
+  settings.setValue("topScore", topScores);
 }
 
 void MainWindow::readSettings() {
@@ -254,7 +267,7 @@ void MainWindow::readSettings() {
   audioToggleAction->setChecked(audioOn);
 
   topScoreList = settings.value("topScoreList", QStringList()).toStringList();
-//  topScore = settings.value("topScore", QList<int>()).toList();
+  topScores = settings.value("topScore", QStringList()).toStringList();
 
 }
 

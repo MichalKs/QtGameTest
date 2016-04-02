@@ -96,13 +96,13 @@ private:
   void readSettings();
 
   /**
-   * @brief topScoreList List of top scorers
+   * @brief topScoreList List of top scorers (names)
    */
   QStringList topScoreList;
   /**
-   * @brief topScores List of top scores (numerical values)
+   * @brief topScores List of top scores (numerical values as strings)
    */
-  QList<int>  topScores;
+  QStringList  topScores;
 
   /**
    * @brief stackedWidget The stacked widget displays the main menu widget or the
