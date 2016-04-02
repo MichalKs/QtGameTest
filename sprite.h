@@ -55,7 +55,7 @@ public:
    * @brief decreaseHealth Inflict damage on sprite
    * @param damage The number of health points subtracted
    */
-  void decreaseHealth(int damage) {
+  void decreaseHealth(int damage = 1) {
     health -= damage;
     emit healthChanged(health);
     if (health <= 0) {

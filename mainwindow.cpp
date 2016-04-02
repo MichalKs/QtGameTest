@@ -87,6 +87,7 @@ void MainWindow::createGame() {
   // once game is started there is no point starting it again
   newGameAction->setDisabled(true);
   newGameButton->setDisabled(true);
+  toMainMenuAction->setEnabled(true);
 
   // create a new game
   gameContainer = new GameContainer();
@@ -153,9 +154,16 @@ void MainWindow::returnToMainMenu() {
     }
   }
 
-  // once game is started there is no point starting it again
-//  newGameAction->setDisabled(true);
-//  newGameButton->setDisabled(true);
+  // enable new game button
+  newGameAction->setDisabled(false);
+  newGameButton->setDisabled(false);
+  toMainMenuAction->setEnabled(false);
+
+  // destrou previous game
+  delete gameContainer;
+  emit changeWidget(0);
+
+  statusBar()->showMessage("Game finished", 2000);
 }
 
 void MainWindow::about() {
@@ -187,6 +195,7 @@ void MainWindow::createActions() {
   toMainMenuAction = new QAction("&Return to main menu", this);
   toMainMenuAction->setShortcut(QKeySequence("Ctrl+W"));
   toMainMenuAction->setStatusTip("Returns to main menu");
+  toMainMenuAction->setEnabled(false);
   connect(toMainMenuAction, SIGNAL(triggered(bool)), this, SLOT(returnToMainMenu()));
 
   exitAction = new QAction("&Exit", this);

@@ -22,7 +22,7 @@
 Game::Game(QWidget * parent) {
 
   // create a scene
-  scene = new GameScene();
+  scene = new GameScene(this);
 
   // scene is invisible - add to view
   setScene(scene);

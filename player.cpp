@@ -116,7 +116,7 @@ void Player::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Player::gotHit() {
-  decreaseHealth(1);
+  decreaseHealth();
 }
 
 void Player::movementAnimation() {
