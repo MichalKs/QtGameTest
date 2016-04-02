@@ -84,10 +84,6 @@ bool Enemy::collisionDetected() {
   for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
     // if an enemy is found
     if(typeid(*(collidingItemsList[i])) == typeid(Player)) {
-
-      // signalize that enemy has been killed
-      emit enemyHitTarget();
-
       // TODO cast to Enemy and call die function which will play animation
       // and destroy enemy
 
@@ -96,6 +92,8 @@ bool Enemy::collisionDetected() {
       // delete the objects
 //      delete this;
       die();
+      // signalize that enemy has been killed
+      emit enemyHitTarget();
       return true;
     }
   }

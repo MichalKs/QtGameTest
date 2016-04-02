@@ -29,6 +29,10 @@ public slots:
   void pauseGame(bool isPaused);
   void playerHealthDecreased(int h);
 
+  void playerDied() {
+    emit finishGame();
+  }
+
   void mouseMoveEnable(bool enable) {
     mouseMoveEnabled = enable;
   }
@@ -40,6 +44,7 @@ public slots:
 signals:
   void increaseScore(int increment);
   void playerHealthChanged(int h);
+  void finishGame();
 
 private:
   Player * player;

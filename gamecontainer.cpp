@@ -16,6 +16,7 @@ GameContainer::GameContainer(QWidget *parent): QWidget(parent) {
   connect(scene, SIGNAL(increaseScore(int)), statusbar, SLOT(increaseScore(int)));
   connect(scene, SIGNAL(playerHealthChanged(int)), statusbar, SLOT(changeHealth(int)));
 
+
   layout->addWidget(game);
   layout->addWidget(statusbar);
 

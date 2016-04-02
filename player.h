@@ -38,7 +38,7 @@ public:
   void keyReleaseEvent(QKeyEvent * event);
 
   void die() {
-
+    emit theKingIsDead();
   }
 
 public slots:
@@ -55,7 +55,7 @@ signals:
    * @param y Y position of new missile
    */
   void shoot(int x, int y);
-
+  void theKingIsDead();
 
 private slots:
 

@@ -98,6 +98,9 @@ void MainWindow::createGame() {
   connect(pauseGameAction,    SIGNAL(toggled(bool)), scene, SLOT(pauseGame(bool)));
   connect(mouseMoveAction,    SIGNAL(toggled(bool)), scene, SLOT(mouseMoveEnable(bool)));
   connect(audioToggleAction,  SIGNAL(toggled(bool)), scene, SLOT(audioEnable(bool)));
+  // if game finishes due to player death
+  connect(scene, SIGNAL(finishGame()), this, SLOT(returnToMainMenu()));
+
 
   stackedWidget->addWidget(gameContainer);
   // change widget that is displayed
@@ -111,6 +114,17 @@ void MainWindow::returnToMainMenu() {
 
   // get the score as int
   int currentScore = gameContainer->getStatusbar()->getScore();
+  // destrou previous game
+  delete gameContainer;
+  // enable new game button
+  newGameAction->setDisabled(false);
+  newGameButton->setDisabled(false);
+  toMainMenuAction->setEnabled(false);
+
+  emit changeWidget(0);
+
+  statusBar()->showMessage("Game finished", 2000);
+
 
   for (int i = 0; i < NUMBER_OF_SCORES; i++) {
 
@@ -153,17 +167,6 @@ void MainWindow::returnToMainMenu() {
       break;
     }
   }
-
-  // enable new game button
-  newGameAction->setDisabled(false);
-  newGameButton->setDisabled(false);
-  toMainMenuAction->setEnabled(false);
-
-  // destrou previous game
-  delete gameContainer;
-  emit changeWidget(0);
-
-  statusBar()->showMessage("Game finished", 2000);
 }
 
 void MainWindow::about() {

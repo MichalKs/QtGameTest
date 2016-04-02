@@ -71,6 +71,7 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
   connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
   connect(player, SIGNAL(healthChanged(int)), this, SLOT(playerHealthDecreased(int)));
+  connect(player, SIGNAL(theKingIsDead()), this, SLOT(playerDied()));
 
   qDebug() << focusItem();
 
