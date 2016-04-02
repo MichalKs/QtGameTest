@@ -1,51 +1,32 @@
-#include "game.h"
 #include <QDebug>
-#include <QTimer>
-#include "enemy.h"
-#include "player.h"
-#include <QMediaPlayer>
-#include <QBrush>
-#include <QImage>
-#include <QSoundEffect>
-#include <bullet.h>
-#include <QMouseEvent>
-#include <gamescene.h>
-#include <QPolygonF>
-#include <QPointF>
-#include <QPushButton>
-#include <QGraphicsProxyWidget>
+#include "game.h"
+#include "gamescene.h"
 
-/**
- * @brief Game::Game Constructor for Game view object
- * @param parent
- */
-Game::Game(QWidget * parent) {
+Game::Game(QWidget * parent): QGraphicsView(parent) {
 
-  // create a scene
+  // create a scene, make it a child of the view
   scene = new GameScene(this);
 
-  // scene is invisible - add to view
+  // scene is invisible - add it to view
   setScene(scene);
+  // disable scroll bars
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  setWindowTitle("Game of Rectangles");
 
+  // set fixed size
   setFixedSize(800, 600);
 
-  // hide cursor
+  // make the cursor a cross for aiming
   setCursor(Qt::CrossCursor);
 }
 
-/**
- * @brief Game::resizeEvent Event handler for resizing event
- * @param event
- */
 void Game::resizeEvent(QResizeEvent *event) {
 //  QRectF rect = scene->itemsBoundingRect();
 //  QSize size = QSize(rect.width(), rect.height());
 //  rect.setSize(size);
 //  fitInView(rect, Qt::IgnoreAspectRatio);
   //  player->resize(size);
+  QGraphicsView::resizeEvent(event);
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {

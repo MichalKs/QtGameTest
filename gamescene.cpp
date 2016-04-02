@@ -17,46 +17,23 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   mouseMoveEnabled = true;
   audioEnabled = true;
 
-  setSceneRect(0, 0, 800, 600);
+  // set scene dimensions
+  setSceneRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
 
-  // set background
+  // set background of the scene
   setBackgroundBrush(QBrush(QImage(
     ":/images/graphics/background/all-703522_1920.jpg")));
 
-  // create a player with an initial health of 3
-  player = new Player(3, 10);
+  // create a player with an initial health of 3 and a speed of 10
+  player = new Player(PLAYER_DEFAULT_HEALTH, PLAYER_DEFAULT_SPEED);
   player->setPos(width()/2, height() - 100);
 
-  // make player focusable
+  // make player focusable and set focus to it
   player->setFlag(QGraphicsItem::ItemIsFocusable);
   player->setFocus();
 
   // add the player to the scene
   addItem(player);
-
-  // playing with items
-  addEllipse(200, 200, 100, 200,
-                    QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
-                    QBrush(Qt::red, Qt::FDiagPattern));
-
-  addLine(400, 200, 500, 580,
-                 QPen(Qt::cyan, 13, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
-
-  QPolygonF poly;
-
-  poly << QPointF(700, 50) << QPointF(600, 150) << QPointF(800, 150);
-
-  addPolygon(poly, QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
-                    QBrush(Qt::red, Qt::FDiagPattern));
-
-  addSimpleText(QString("Hello world!!!"), QFont("Fantasy", 72, QFont::Bold));
-
-  QPushButton * b = new QPushButton(QString("Spawn enemy"));
-
-  QGraphicsProxyWidget * p = addWidget(b);
-  p->setPos(500, 500);
-
-  connect(b, SIGNAL(clicked(bool)), this, SLOT(pauseGame(bool)));
 
   // spawn enemies
   QTimer * timer = new QTimer();
@@ -74,6 +51,30 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   connect(player, SIGNAL(theKingIsDead()), this, SLOT(playerDied()));
 
   qDebug() << focusItem();
+
+  // playing with items
+//  addEllipse(200, 200, 100, 200,
+//                    QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
+//                    QBrush(Qt::red, Qt::FDiagPattern));
+
+//  addLine(400, 200, 500, 580,
+//                 QPen(Qt::cyan, 13, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+
+//  QPolygonF poly;
+
+//  poly << QPointF(700, 50) << QPointF(600, 150) << QPointF(800, 150);
+
+//  addPolygon(poly, QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
+//                    QBrush(Qt::red, Qt::FDiagPattern));
+
+//  addSimpleText(QString("Hello world!!!"), QFont("Fantasy", 72, QFont::Bold));
+
+//  QPushButton * b = new QPushButton(QString("Spawn enemy"));
+
+//  QGraphicsProxyWidget * p = addWidget(b);
+//  p->setPos(500, 500);
+
+//  connect(b, SIGNAL(clicked(bool)), this, SLOT(pauseGame(bool)));
 
 }
 
@@ -132,17 +133,6 @@ void GameScene::pauseGame(bool isPaused) {
       spriteList->at(i)->unpause();
     }
   }
-
-}
-
-void GameScene::playerHealthDecreased(int h) {
-  emit playerHealthChanged(h);
-}
-
-bool GameScene::event(QEvent *event) {
-
-//  event->type();
-  QGraphicsScene::event(event);
 
 }
 

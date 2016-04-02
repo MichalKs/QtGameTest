@@ -2,56 +2,162 @@
 #define GAMESCENE_H
 
 #include <QGraphicsScene>
-#include <QList>
-#include "sprite.h"
 
 class QSoundEffect;
 class Player;
+class Sprite;
 
+/**
+ * @brief The GameScene class contains the logic of the game - it interconnects
+ * the player with the enemy and the bullets, is responsible for creating enemies
+ * and bullets.
+ */
 class GameScene: public QGraphicsScene {
 
   Q_OBJECT
 public:
 
+  /**
+   * @brief GameScene Constructor for game widget
+   * @param parent The parent object
+   */
   GameScene(QObject * parent = 0);
 
-  bool event(QEvent * event);
+  bool event(QEvent *event) {
+  //  event->type();
+    QGraphicsScene::event(event);
+  }
+
+  /**
+   * @brief mousePressEvent Mouse press event
+   * @param mouseEvent Mouse press event
+   */
   void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
-  void keyPressEvent(QKeyEvent * event);
+  /**
+   * @brief mouseMoveEvent Mouse move event
+   * @param mouseEvent Mouse move event
+   */
   void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
+  /**
+   * @brief keyPressEvent Key press event
+   * @param event Key press event
+   */
+  void keyPressEvent(QKeyEvent * event);
+  /**
+   * @brief addItem Adds item to scene
+   * @param item The added item
+   */
   void addItem(QGraphicsItem *item);
+  /**
+   * @brief removeItem Removes item from scene
+   * @param item Removed item
+   */
   void removeItem(QGraphicsItem *item);
 
 public slots:
+  /**
+   * @brief enemyKilled Enemy killed slot (called whenever an enemy is hit)
+   * @param casualty The graphic item that represents the enemy
+   */
   void enemyKilled(QGraphicsItem * casualty);
+  /**
+   * @brief createBullet Crete bullet slot (called whenever player shoots)
+   * @param x X position of new bullet
+   * @param y Y position of new bullet
+   */
   void createBullet(int x, int y);
+  /**
+   * @brief spawnEnemy Called periodically to create new enemies
+   */
   void spawnEnemy();
+  /**
+   * @brief pauseGame Pause game slot - stops player and enemies
+   * @param isPaused true - pause game, false - unpause game
+   */
   void pauseGame(bool isPaused);
-  void playerHealthDecreased(int h);
-
+  /**
+   * @brief playerHealthDecreased Slot called when player's health gets decreased
+   * @param h New health value
+   */
+  void playerHealthDecreased(int h) {
+    // inform the statusbar that player health changed
+    emit playerHealthChanged(h);
+  }
+  /**
+   * @brief playerDied Slot called when player dies (health decreases to 0)
+   */
   void playerDied() {
+    // inform main window that game is to be deleted
     emit finishGame();
   }
-
+  /**
+   * @brief mouseMoveEnable Enables/disables mouse movement for player
+   * @param enable true - enables mouse, false - disables mouse
+   */
   void mouseMoveEnable(bool enable) {
     mouseMoveEnabled = enable;
   }
-
+  /**
+   * @brief audioEnable Enables/disables audio
+   * @param enable true - enable audio, false - disable audio
+   */
   void audioEnable(bool enable) {
     audioEnabled = enable;
   }
 
 signals:
+  /**
+   * @brief increaseScore Signal for informing statusbar that score is incremented
+   * @param increment The value by which score is incremented
+   */
   void increaseScore(int increment);
+  /**
+   * @brief playerHealthChanged Signal to inform the statubar that the health of the
+   * player is changed.
+   * @param h Change in health
+   */
   void playerHealthChanged(int h);
+  /**
+   * @brief finishGame Signal to inform the main windows that the game is to be
+   * deleted, because player died.
+   */
   void finishGame();
 
 private:
+
+  /**
+   * @brief Private constants
+   */
+  enum {
+    PLAYER_DEFAULT_SPEED = 10,  ///< Default speed of player
+    PLAYER_DEFAULT_HEALTH = 3,  ///< Default health of player
+    SCENE_WIDTH = 800,          ///< Scene widht
+    SCENE_HEIGHT = 600,         ///< Scene height
+  };
+
+  /**
+   * @brief player The player
+   */
   Player * player;
+  /**
+   * @brief effect This is used for playing sound effects for shooting, etc.
+   */
   QSoundEffect * effect;
+  /**
+   * @brief spriteList List of sprites present on the map
+   */
   QList<Sprite*> * spriteList;
+  /**
+   * @brief gamePaused Is game paused
+   */
   bool gamePaused;
+  /**
+   * @brief mouseMoveEnabled Is mouse movement of player enabled
+   */
   bool mouseMoveEnabled;
+  /**
+   * @brief audioEnabled Is audio enabled
+   */
   bool audioEnabled;
 
 };

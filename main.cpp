@@ -9,7 +9,6 @@
  * TODO Add rescaling
  * TODO Add levels
  * TODO Add enemy missiles
- * TODO Add top score list (reading file)
  *
  */
 
