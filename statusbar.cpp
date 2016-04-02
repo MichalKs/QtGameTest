@@ -19,14 +19,14 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
 
   score = 0;
 
-  hLayout1 = new QHBoxLayout();
-  healthLayout = new QVBoxLayout();
-  scoreLayout = new QVBoxLayout();
-  weaponLayout = new QVBoxLayout();
+  QHBoxLayout * hLayout1 = new QHBoxLayout();
+  QVBoxLayout * healthLayout = new QVBoxLayout();
+  QVBoxLayout * scoreLayout = new QVBoxLayout();
+  QVBoxLayout * weaponLayout = new QVBoxLayout();
 
   // add health info
   healthLabel = new QLabel("Health: 3");
-  healthLabel->setFont(QFont("Fantasy", 32, QFont::Bold));
+  healthLabel->setFont(QFont("Courier", 28, QFont::Bold));
   healthLabel->setAlignment(Qt::AlignCenter);
 
   healthIconLabel = new QLabel();
@@ -39,11 +39,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   healthBar->setMinimum(0);
   healthBar->setMaximumWidth(healthLabel->sizeHint().width());
   healthBar->setValue(3);
-  healthBar->setFont(QFont("Fantasy", 14, QFont::Bold));
-
-  QPalette pal1 = palette();
-  pal1.setColor(QPalette::Highlight, Qt::red);
-  healthBar->setPalette(pal1);
+  healthBar->setFont(QFont("Courier", 14, QFont::Bold));
   connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
 
   healthLayout->addWidget(healthIconLabel);
@@ -53,7 +49,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
 
   // add score info
   scoreLabel = new QLabel("Score: 0");
-  scoreLabel->setFont(QFont("Fantasy", 32, QFont::Bold));
+  scoreLabel->setFont(QFont("Courier", 28, QFont::Bold));
   scoreLabel->setAlignment(Qt::AlignCenter);
 
   scoreIconLabel = new QLabel();
@@ -67,7 +63,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
 
   // add weapons info
   weaponLabel = new QLabel("Count: 50");
-  weaponLabel->setFont(QFont("Fantasy", 32, QFont::Bold));
+  weaponLabel->setFont(QFont("Courier", 28, QFont::Bold));
   weaponLabel->setAlignment(Qt::AlignCenter);
 
   QPixmap pixmap(":/images/graphics/missile/rocket-146109_640.png");
@@ -88,15 +84,12 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   hLayout1->addLayout(weaponLayout);
 
   setLayout(hLayout1);
-//  setTabOrder();
 
 }
 
 void Statusbar::increaseScore(int increment) {
-
   score += increment;
   scoreLabel->setText(QString("Score: ") + QString::number(score));
-
 }
 
 void Statusbar::changeHealth(int h) {

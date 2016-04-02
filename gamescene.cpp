@@ -109,7 +109,7 @@ void GameScene::enemyKilled(QGraphicsItem * casualty) {
   if (enemy) {
     // increase the score
     emit increaseScore(scoreDelta);
-    enemy->die();
+    enemy->decreaseHealth();
   }
 
 }
@@ -138,7 +138,7 @@ void GameScene::spawnEnemy() {
       enemy = new AlienSpaceship();
       break;
     default:
-      enemy = new YellowEnemy();
+      enemy = new DarkInvader();
     }
 
     // create an enemy

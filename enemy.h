@@ -48,11 +48,11 @@ public slots:
     moveTimer->start(50);
   }
 
-private slots:
+protected slots:
   /**
    * @brief dieAnimation Called by animationTimer to perform animation of death
    */
-  void dieAnimation();
+  virtual void dieAnimation() = 0;
 
 signals:
   /**

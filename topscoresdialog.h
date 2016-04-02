@@ -13,14 +13,33 @@ class QTableWidget;
 class TopScoresDialog : public QDialog {
 
 public:
+
+  /**
+   * @brief TopScoresDialog Constructor for dialog
+   * @param topScoreList List of top scorers' names
+   * @param topScores List of top scores
+   * @param parent Parent widget
+   */
   TopScoresDialog(const QStringList & topScoreList, const QStringList & topScores,
                   QWidget * parent = 0);
 
 private:
-  QString topScoreFileName;
 
+  enum {
+    ROWS_NUMBER = 10, ///< Number of rows
+    COLS_NUMBER = 2,  ///< Number of columns
+  };
+  /**
+   * @brief okButton OK button
+   */
   QPushButton   * okButton;
+  /**
+   * @brief titleLabel Label
+   */
   QLabel        * titleLabel;
+  /**
+   * @brief topScoresTable Table widget for displaying top scores
+   */
   QTableWidget  * topScoresTable;
 
 };

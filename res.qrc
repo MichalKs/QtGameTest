@@ -42,5 +42,28 @@
         <file>graphics/icons/statusbar/star.png</file>
         <file>graphics/icons/menu/newgame.png</file>
         <file>graphics/icons/menu/exit.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_001.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_002.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_003.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_004.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_005.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_006.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_007.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_008.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_009.png</file>
+        <file>graphics/explosion/yellowexplosion/Explosion_010.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_001.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_002.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_003.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_004.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_005.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_006.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_007.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_008.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_009.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_010.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_011.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_012.png</file>
+        <file>graphics/explosion/purpleexplosion/Explosion_013.png</file>
     </qresource>
 </RCC>
