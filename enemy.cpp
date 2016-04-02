@@ -9,35 +9,9 @@ Enemy::Enemy(int initialHealth, int w, int h, int speed, QGraphicsItem * parent)
   Sprite(initialHealth, speed, w, h, parent) {
 
   // set random position
-  int randomNumber = rand() % 700;
+  int possiblePositions = 800 - w;
+  int randomNumber = rand() % possiblePositions;
   setPos(randomNumber, 0);
-
-  int enemyType = randomNumber % typesOfEnemies;
-//  qDebug() << "Creating enemy number " << temp;
-
-  switch (enemyType) {
-
-  case 0:
-    setPixmap(QPixmap(":/images/graphics/spaceship1/ospaceship-main.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 1:
-    setPixmap(QPixmap(":/images/graphics/spaceship2/redshipr.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-    break;
-  case 2:
-    setPixmap(QPixmap(":/images/graphics/spaceship3/tribase-u2-d0.png").
-              scaled(QSize(200, 200),Qt::KeepAspectRatio));
-    break;
-  case 3:
-    setPixmap(QPixmap(":/images/graphics/starbase/starbase-tex.png").
-              scaled(QSize(200, 200),Qt::KeepAspectRatio));
-    break;
-  default:
-    setPixmap(QPixmap(":/images/graphics/spaceship1/ospaceship-main.png").
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
-
-  }
 
   // create move timer
   moveTimer = new QTimer(this);
@@ -110,7 +84,7 @@ void Enemy::dieAnimation() {
     delete this;
   } else {
     setPixmap(QPixmap(filename).
-              scaled(QSize(100, 100),Qt::KeepAspectRatio));
+              scaled(QSize(getMaxWidth(), getMaxHeight()),Qt::KeepAspectRatio));
   }
 
   animationCounter++;

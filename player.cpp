@@ -94,7 +94,7 @@ void Player::keyPressEvent(QKeyEvent *event) {
   }
 }
 
-void Player::mousePressEvent(QGraphicsSceneMouseEvent * event) {
+void Player::mousePressEvent(QGraphicsSceneMouseEvent *) {
 
   QRectF mRect = sceneBoundingRect();
 //  qDebug() << "Mouse event in player";
@@ -102,7 +102,7 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent * event) {
 
 }
 
-void Player::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+void Player::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 //  qDebug() << "Mouse move event in player";
   if (event->scenePos().x() < 750) {
     setPos(event->scenePos().x(), y());
@@ -110,7 +110,7 @@ void Player::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 }
 
-void Player::keyReleaseEvent(QKeyEvent *event) {
+void Player::keyReleaseEvent(QKeyEvent *) {
   // if key is realeased the player should stand still
   moveDirection = PLAYER_STANDING;
 }

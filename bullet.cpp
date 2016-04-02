@@ -59,10 +59,13 @@ bool Bullet::collisionDetected() {
   // check for collision with enemy
   QList<QGraphicsItem*> collidingItemsList = collidingItems();
 
+  Enemy * enemy;
+
   // scan list for enemies
   for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
     // if an enemy is found
-    if(typeid(*(collidingItemsList[i])) == typeid(Enemy)) {
+    enemy = dynamic_cast<Enemy*>(collidingItemsList[i]);
+    if(enemy) {
 
       // signalize that enemy has been killed
       emit bulletHitTarget(collidingItemsList[i]);

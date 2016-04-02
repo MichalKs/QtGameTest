@@ -20,7 +20,8 @@ public:
    * @param h Maximum height of enemy
    * @param parent Parent of enemy
    */
-  Enemy(int initialHealth, int w = 100, int h = 100, int speed = 5, QGraphicsItem * parent = 0);
+  Enemy(int initialHealth = 1, int w = 100, int h = 100, int speed = 5,
+        QGraphicsItem * parent = 0);
 
   /**
    * @brief die Function performed before enemy death
@@ -65,10 +66,6 @@ private:
    * @return True if collision is detected
    */
   bool collisionDetected();
-  /**
-   * @brief typesOfEnemies Number of enemy types
-   */
-  static const int typesOfEnemies = 4;
   /**
    * @brief moveTimer Timer for moving
    */

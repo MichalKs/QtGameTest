@@ -1,7 +1,10 @@
 #include "gamescene.h"
 #include "bullet.h"
 #include "player.h"
-#include "enemy.h"
+#include "yellowenemy.h"
+#include "redenemy.h"
+#include "darkinvader.h"
+#include "alienspaceship.h"
 #include <QDebug>
 #include <QEvent>
 //#include <QPushButton>
@@ -114,8 +117,31 @@ void GameScene::enemyKilled(QGraphicsItem * casualty) {
 void GameScene::spawnEnemy() {
   // if game is unpaused create more enemies
   if (!gamePaused) {
+
+    int enemyType = rand() % 4;
+    qDebug() << "Creating enemy number " << enemyType;
+
+    Enemy * enemy;
+
+    switch (enemyType) {
+
+    case 0:
+      enemy = new YellowEnemy();
+      break;
+    case 1:
+      enemy = new RedEnemy();
+      break;
+    case 2:
+      enemy = new DarkInvader();
+      break;
+    case 3:
+      enemy = new AlienSpaceship();
+      break;
+    default:
+      enemy = new YellowEnemy();
+    }
+
     // create an enemy
-    Enemy * enemy = new Enemy(ENEMY_DEFAULT_HEALTH);
     addItem(enemy);
     // if enemy crashes into player then he takes damage
     connect(enemy, SIGNAL(enemyHitTarget()), player, SLOT(gotHit()));

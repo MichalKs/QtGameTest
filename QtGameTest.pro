@@ -24,7 +24,10 @@ SOURCES += main.cpp \
     statusbar.cpp \
     gamecontainer.cpp \
     topscoresdialog.cpp \
-    yellowenemy.cpp
+    yellowenemy.cpp \
+    redenemy.cpp \
+    darkinvader.cpp \
+    alienspaceship.cpp
 
 HEADERS  += \
     bullet.h \
@@ -37,7 +40,10 @@ HEADERS  += \
     statusbar.h \
     gamecontainer.h \
     topscoresdialog.h \
-    yellowenemy.h
+    yellowenemy.h \
+    redenemy.h \
+    darkinvader.h \
+    alienspaceship.h
 
 RESOURCES += \
     res.qrc
