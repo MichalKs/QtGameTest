@@ -4,18 +4,17 @@
 #include "enemy.h"
 #include <QDebug>
 #include <QEvent>
-#include <QPushButton>
+//#include <QPushButton>
 #include <QTimer>
-#include <QGraphicsProxyWidget>
+//#include <QGraphicsProxyWidget>
 #include <QSoundEffect>
-#include <QObject>
 
 GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
-  spriteList = new QList<Sprite*>;
-  gamePaused = false;
-  mouseMoveEnabled = true;
-  audioEnabled = true;
+  spriteList        = new QList<Sprite*>;
+  gamePaused        = false;
+  mouseMoveEnabled  = true;
+  audioEnabled      = true;
 
   // set scene dimensions
   setSceneRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
@@ -26,31 +25,30 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
   // create a player with an initial health of 3 and a speed of 10
   player = new Player(PLAYER_DEFAULT_HEALTH, PLAYER_DEFAULT_SPEED);
-  player->setPos(width()/2, height() - 100);
+  // add the player to the scene
+  addItem(player);
+  // place it at a reasonable position (middle of bottom)
+  player->setPos(width()/2, height() - player->boundingRect().width()*1.6);
 
-  // make player focusable and set focus to it
+  // make player focusable and set focus to it (keyboard focus)
   player->setFlag(QGraphicsItem::ItemIsFocusable);
   player->setFocus();
 
-  // add the player to the scene
-  addItem(player);
+  // when player shoots create bullet
+  connect(player, SIGNAL(shoot(int,int)),     this, SLOT(createBullet(int,int)));
+  // when player health is decreased inform statusbar
+  connect(player, SIGNAL(healthChanged(int)), this, SLOT(playerHealthDecreased(int)));
+  // when player dies inform main widnow
+  connect(player, SIGNAL(theKingIsDead()),    this, SLOT(playerDied()));
 
-  // spawn enemies
-  QTimer * timer = new QTimer();
+  // create timer to spawn enemies
+  QTimer * timer = new QTimer(this);
   QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawnEnemy()));
-
   timer->start(2000);
 
-
   // create bullet sound effect
-  effect = new QSoundEffect();
+  effect = new QSoundEffect(this);
   effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
-
-  connect(player, SIGNAL(shoot(int,int)), this, SLOT(createBullet(int,int)));
-  connect(player, SIGNAL(healthChanged(int)), this, SLOT(playerHealthDecreased(int)));
-  connect(player, SIGNAL(theKingIsDead()), this, SLOT(playerDied()));
-
-  qDebug() << focusItem();
 
   // playing with items
 //  addEllipse(200, 200, 100, 200,
@@ -78,12 +76,9 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
 }
 
-/**
- * @brief Game::createBullet Slot for creating a bullet
- * @param x Initial X position of the bullet
- * @param y Initial Y position of the bullet
- */
 void GameScene::createBullet(int x, int y) {
+
+  const float bulletSoundVolume = 0.5f;
 
   // create bullet object
   Bullet * bullet = new Bullet(x,y);
@@ -93,28 +88,36 @@ void GameScene::createBullet(int x, int y) {
   // if bullet hits a target call enemyKilled slot of the game
   connect(bullet, SIGNAL(bulletHitTarget(QGraphicsItem*)), this, SLOT(enemyKilled(QGraphicsItem*)));
 
+  // play bullet sound if audio is enabled
   if (audioEnabled) {
-    // play bullet sound
-    effect->setVolume(0.5f);
+    effect->setVolume(bulletSoundVolume);
     effect->play();
   }
-
 
 }
 
 void GameScene::enemyKilled(QGraphicsItem * casualty) {
-  // increase the score
-  emit increaseScore(1);
 
+  const int scoreDelta = 1; // increase score by 1
+
+  // cast casualty to Enemy object
   Enemy * enemy = dynamic_cast<Enemy*>(casualty);
-  enemy->die();
+  // if cast is successful
+  if (enemy) {
+    // increase the score
+    emit increaseScore(scoreDelta);
+    enemy->die();
+  }
+
 }
 
 void GameScene::spawnEnemy() {
+  // if game is unpaused create more enemies
   if (!gamePaused) {
     // create an enemy
-    Enemy * enemy = new Enemy(1);
+    Enemy * enemy = new Enemy(ENEMY_DEFAULT_HEALTH);
     addItem(enemy);
+    // if enemy crashes into player then he takes damage
     connect(enemy, SIGNAL(enemyHitTarget()), player, SLOT(gotHit()));
   }
 }
@@ -125,10 +128,12 @@ void GameScene::pauseGame(bool isPaused) {
 
   qDebug() << "Pause game slot";
   if (isPaused == true) {
+    // pause all sprites
     for (int i = 0; i < spriteList->size(); i++ ) {
       spriteList->at(i)->pause();
     }
   } else {
+    // unpause all sprites
     for (int i = 0; i < spriteList->size(); i++ ) {
       spriteList->at(i)->unpause();
     }
@@ -138,15 +143,15 @@ void GameScene::pauseGame(bool isPaused) {
 
 void GameScene::keyPressEvent(QKeyEvent * event) {
   if (!gamePaused) {
+    // change focus to player to get keyboard events
     player->setFocus();
+    // this will pass event to focus item
     QGraphicsScene::keyPressEvent(event);
   }
 }
 
-
-
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent) {
-//  qDebug() << "Mouse presss event received in scene";
+//  qDebug() << "Mouse press event received in scene";
   if (!gamePaused && mouseMoveEnabled) {
     player->mousePressEvent(mouseEvent);
   }
@@ -161,28 +166,24 @@ void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 }
 
 void GameScene::addItem(QGraphicsItem *item) {
-  qDebug() << "Scene item added";
+//  qDebug() << "Scene item added";
 
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
-
     spriteList->append(spr);
-    qDebug() << "Sprite added";
   }
 
   QGraphicsScene::addItem(item);
 }
 
 void GameScene::removeItem(QGraphicsItem *item) {
-  qDebug() << "Scene item removed";
+//  qDebug() << "Scene item removed";
 
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
-
     spriteList->removeAt(spriteList->indexOf(spr));
-    qDebug() << "Sprite removed";
   }
 
   QGraphicsScene::removeItem(item);

@@ -218,6 +218,7 @@ void MainWindow::createActions() {
   pauseGameAction = new QAction("&Pause game", this);
   pauseGameAction->setCheckable(true);
   pauseGameAction->setChecked(false);
+  pauseGameAction->setShortcut((QKeySequence("Ctrl+P")));
   pauseGameAction->setStatusTip("Pause game");
 
   topScoreAction = new QAction("&Top scorers", this);

@@ -42,6 +42,11 @@ public:
    * @param event Event
    */
   void mousePressEvent(QMouseEvent * event);
+  /**
+   * @brief mouseMoveEvent Mouse move event
+   * @param event Event
+   */
+  void mouseMoveEvent(QMouseEvent *event);
 
 private:
   /**

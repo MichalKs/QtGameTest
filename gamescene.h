@@ -23,9 +23,8 @@ public:
    */
   GameScene(QObject * parent = 0);
 
-  bool event(QEvent *event) {
-  //  event->type();
-    QGraphicsScene::event(event);
+  ~GameScene() {
+    delete spriteList;
   }
 
   /**
@@ -133,6 +132,7 @@ private:
     PLAYER_DEFAULT_HEALTH = 3,  ///< Default health of player
     SCENE_WIDTH = 800,          ///< Scene widht
     SCENE_HEIGHT = 600,         ///< Scene height
+    ENEMY_DEFAULT_HEALTH = 1,   ///< Default health for enemy
   };
 
   /**

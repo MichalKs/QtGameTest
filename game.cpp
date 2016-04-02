@@ -18,6 +18,10 @@ Game::Game(QWidget * parent): QGraphicsView(parent) {
 
   // make the cursor a cross for aiming
   setCursor(Qt::CrossCursor);
+
+  // track move events in view
+  setMouseTracking(true);
+
 }
 
 void Game::resizeEvent(QResizeEvent *event) {
@@ -30,9 +34,15 @@ void Game::resizeEvent(QResizeEvent *event) {
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
+//  qDebug() << "Key press event received in view";
   QGraphicsView::keyPressEvent(event);
 }
 
 void Game::mousePressEvent(QMouseEvent * event) {
+//  qDebug() << "Mouse press event received in view";
   QGraphicsView::mousePressEvent(event);
+}
+void Game::mouseMoveEvent(QMouseEvent *event) {
+//  qDebug() << "Mouse move event received in view";
+  QGraphicsView::mouseMoveEvent(event);
 }
