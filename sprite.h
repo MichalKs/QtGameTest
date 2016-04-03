@@ -36,7 +36,13 @@ public:
   /**
    * @brief die Virtual function for dying before being removed from screen
    */
-  virtual void die() = 0;
+  virtual void die() {
+
+  }
+  /**
+   * @brief move Move sprite on scene
+   */
+  virtual void move() = 0;
   /**
    * @brief ~Sprite Virtual desctructor
    */

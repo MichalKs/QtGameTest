@@ -40,6 +40,12 @@ public:
   void die() {
     emit theKingIsDead();
   }
+  /**
+   * @brief move Since player can move differently by mouse and keyboard we don't implement this
+   */
+  void move() {
+
+  }
 
 public slots:
   void gotHit();

@@ -1,16 +1,20 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <QGraphicsPixmapItem>
-#include <QObject>
+#include "sprite.h"
+#include <QDebug>
 
-class Bullet : public QObject, public QGraphicsPixmapItem {
+class Bullet : public Sprite {
 
   Q_OBJECT
 
 public:
-  Bullet(int x, int y, QGraphicsItem *parent = 0);
-  ~Bullet();
+
+  Bullet(int x, int y, int w = 100, int h = 100, int initialSpeed = 10, QGraphicsItem *parent = 0);
+
+  ~Bullet() {
+    qDebug() << "Bullet removed";
+  }
 
 signals:
   void bulletHitTarget(QGraphicsItem * casualty);
@@ -19,12 +23,13 @@ private slots:
   void move();
 
 private:
-  bool collisionDetected();
 
-  static const int width = 100;
-  static const int height = 100;
-  static const int moveTimeoutMs = 50;
-  static const int speed = 10;
+  enum {
+    BULLET_HEALTH = 1, ///< This is just because Sprite needs it
+    MOVE_TIMEOUT_MS = 50, ///< Move function called every x ms
+  };
+
+  bool collisionDetected();
 
 };
 

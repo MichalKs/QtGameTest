@@ -23,7 +23,7 @@ public:
    * @brief getGameScene Returns the scene of the game
    * @return Scene of the game
    */
-  const GameScene * getGameScene() {
+  GameScene * getGameScene() {
     return scene;
   }
 

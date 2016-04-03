@@ -88,11 +88,14 @@ void MainWindow::createGame() {
   newGameAction->setDisabled(true);
   newGameButton->setDisabled(true);
   toMainMenuAction->setEnabled(true);
+  pauseGameAction->setEnabled(true);
+  mouseMoveAction->setEnabled(true);
+  audioToggleAction->setEnabled(true);
 
   // create a new game
   gameContainer = new GameContainer();
   // scene has game logic, so we need it to connect GUI signals
-  const GameScene * scene = gameContainer->getGame()->getGameScene();
+  GameScene * scene = gameContainer->getGame()->getGameScene();
 
   // connect various GUI options to game logic
   connect(pauseGameAction,    SIGNAL(toggled(bool)), scene, SLOT(pauseGame(bool)));
@@ -101,6 +104,9 @@ void MainWindow::createGame() {
   // if game finishes due to player death
   connect(scene, SIGNAL(finishGame()), this, SLOT(returnToMainMenu()));
 
+  // set read settings
+  scene->audioEnable(audioToggleAction->isChecked());
+  scene->mouseMoveEnable(mouseMoveAction->isChecked());
 
   stackedWidget->addWidget(gameContainer);
   // change widget that is displayed
@@ -120,11 +126,13 @@ void MainWindow::returnToMainMenu() {
   newGameAction->setDisabled(false);
   newGameButton->setDisabled(false);
   toMainMenuAction->setEnabled(false);
+  pauseGameAction->setEnabled(false);
+  mouseMoveAction->setEnabled(false);
+  audioToggleAction->setEnabled(false);
 
   emit changeWidget(0);
 
   statusBar()->showMessage("Game finished", 2000);
-
 
   for (int i = 0; i < NUMBER_OF_SCORES; i++) {
 
@@ -172,10 +180,11 @@ void MainWindow::returnToMainMenu() {
 void MainWindow::about() {
 
   QMessageBox::about(this, "About Ugly Invaders From Space",
+                     "<h1>Ugly invaders from space</h1>\n"
                      "The game tells the tale of a horrible invasion of ugly aliens that "
                      "threaten humanity. In order to bring peace and aesthetics to the galaxy you must"
-                     " murder them all without mercy :)"
-                     "\nCreated in 2016");
+                     " murder them all without mercy."
+                     "\n\n<h2>Created in 2016</h2>");
 
 }
 
@@ -210,14 +219,17 @@ void MainWindow::createActions() {
   mouseMoveAction = new QAction("Enable &mouse movement", this);
   mouseMoveAction->setCheckable(true);
   mouseMoveAction->setStatusTip("Move player with mouse");
+  mouseMoveAction->setEnabled(false);
 
   audioToggleAction = new QAction("Enable &audio", this);
   audioToggleAction->setCheckable(true);
   audioToggleAction->setStatusTip("Mute all sounds");
+  audioToggleAction->setEnabled(false);
 
   pauseGameAction = new QAction("&Pause game", this);
   pauseGameAction->setCheckable(true);
   pauseGameAction->setChecked(false);
+  pauseGameAction->setEnabled(false);
   pauseGameAction->setShortcut((QKeySequence("Ctrl+P")));
   pauseGameAction->setStatusTip("Pause game");
 
