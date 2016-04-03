@@ -63,29 +63,45 @@ public:
     }
 
   }
-
+  /**
+   * @brief getSpeed Gets speed
+   * @return Speed
+   */
   int getSpeed() {
     return speed;
   }
-
+  /**
+   * @brief setSpeed Sets speed
+   * @param newSpeed new speed
+   */
   void setSpeed(int newSpeed) {
     if (newSpeed <= MAXIMUM_SPEED && newSpeed >= MINIMUM_SPEED) {
       speed = newSpeed;
     }
   }
-
+  /**
+   * @brief getMaxWidth Gets maximum width
+   * @return Maximum width
+   */
   int getMaxWidth() {
     return maxWidth;
   }
-
+  /**
+   * @brief getMaxHeight Gets maximum height
+   * @return Maximum height
+   */
   int getMaxHeight() {
     return maxHeight;
   }
-
+  /**
+   * @brief pause Pause sprite
+   */
   virtual void pause() {
     paused = true;
   }
-
+  /**
+   * @brief unpause Unpause sprite
+   */
   virtual void unpause() {
     paused = false;
   }
@@ -112,7 +128,6 @@ private:
    * @brief height Maximum height of sprite
    */
   int maxHeight;
-
   /**
    * @brief paused If true sprite is standing still
    */
