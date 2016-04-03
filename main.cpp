@@ -4,12 +4,10 @@
 
 /*
  * TODO Add player die animation
- * TODO Add missile counting
  * TODO Add bonuses (additional health, better weapons)
  * TODO Add rescaling
  * TODO Add levels
  * TODO Add enemy missiles
- *
  */
 
 /**
@@ -19,32 +17,47 @@
  * @return
  */
 int main(int argc, char *argv[]) {
-  QApplication a(argc, argv);
+  QApplication app(argc, argv);
 
-//  QSplashScreen * splash = new QSplashScreen;
-//  splash->setPixmap(
-//        QPixmap(":/images/graphics/background/science-fiction-441708_960_720.jpg").
-//        scaled(640, 480, Qt::KeepAspectRatio));
-//  splash->show();
-  //splash->showMessage("Loading graphics...",
-                      //Qt::AlignRight | Qt::AlignTop, Qt::white);
+  enum {
+    SPLASH_WIDTH = 640,
+    SPLASH_HEIGHT = 480,
+  };
 
-//  for (int i = 1000000000; i > 0; i--) {
+  // test splash screen functionality
+  QSplashScreen * splash = new QSplashScreen;
+  // set pixmpa for splash
+  splash->setPixmap(
+        QPixmap(":/images/graphics/background/science-fiction-441708_960_720.jpg").
+        scaled(SPLASH_WIDTH, SPLASH_HEIGHT, Qt::KeepAspectRatio));
+  splash->show();
+  // show message on splash screen
+  splash->showMessage("Loading graphics...",
+                      Qt::AlignRight | Qt::AlignTop, Qt::white);
 
-//  }
+  // emulate loading graphics
+  for (long long i = 500000L; i > 0; i--) {
+    app.processEvents();
+  }
 
+  // create main window
   MainWindow * window = new MainWindow();
 
-  //splash->showMessage("Setting up the main window...",
-               //       Qt::AlignRight | Qt::AlignTop, Qt::white);
+  // show message on splash screen
+  splash->showMessage("Setting up the main window...",
+                      Qt::AlignRight | Qt::AlignTop, Qt::white);
 
-//  for (int i = 1000000000; i > 0; i--) {
+  // emulate setting up main window
+  for (long long i = 500000L; i > 0; i--) {
+    app.processEvents();
+  }
 
-//  }
-
+  // show main window of program
   window->show();
-//  splash->finish(window);
-//  delete splash;
 
-  return a.exec();
+  // delete splash
+  splash->finish(window);
+  delete splash;
+
+  return app.exec();
 }
