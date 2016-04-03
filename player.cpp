@@ -21,6 +21,8 @@ Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * paren
   // initially player is standing still
   moveDirection = PLAYER_STANDING;
 
+  missileCount = INITIAL_MISSILE_COUNT;
+
   // set base graphics for player
   setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
         scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
@@ -32,7 +34,7 @@ Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * paren
   connect(animationTimer, SIGNAL(timeout()), this, SLOT(movementAnimation()));
 
   // animation changes every 100 ms
-  animationTimer->start(animationPeriod);
+  animationTimer->start(ANIMATION_PERIOD);
 }
 
 Player::~Player() {
@@ -90,7 +92,9 @@ void Player::keyPressEvent(QKeyEvent *event) {
 
   } else if (event->key() == Qt::Key_Space) {
     // shoot bullet
+    decreaseMissileCount();
     emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+
   }
 }
 
@@ -98,6 +102,7 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent *) {
 
   QRectF mRect = sceneBoundingRect();
 //  qDebug() << "Mouse event in player";
+  decreaseMissileCount();
   emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
 
 }

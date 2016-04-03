@@ -8,7 +8,8 @@
 #include <QProgressBar>
 #include <QPalette>
 
-Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
+Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
+  QWidget(parent) {
 
   QPalette pal(palette());
 
@@ -18,6 +19,8 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   setPalette(pal);
 
   score = 0;
+  health = initialHealth;
+  missileCount = initialMissiles;
 
   QHBoxLayout * hLayout1 = new QHBoxLayout();
   QVBoxLayout * healthLayout = new QVBoxLayout();
@@ -25,7 +28,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   QVBoxLayout * weaponLayout = new QVBoxLayout();
 
   // add health info
-  healthLabel = new QLabel("Health: 3");
+  healthLabel = new QLabel(QString("Health: ") + QString::number(health));
   healthLabel->setFont(QFont("Courier", 28, QFont::Bold));
   healthLabel->setAlignment(Qt::AlignCenter);
 
@@ -35,10 +38,10 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   healthIconLabel->setAlignment(Qt::AlignCenter);
 
   healthBar = new QProgressBar();
-  healthBar->setMaximum(3);
+  healthBar->setMaximum(health);
   healthBar->setMinimum(0);
   healthBar->setMaximumWidth(healthLabel->sizeHint().width());
-  healthBar->setValue(3);
+  healthBar->setValue(health);
   healthBar->setFont(QFont("Courier", 14, QFont::Bold));
   connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
 
@@ -62,7 +65,7 @@ Statusbar::Statusbar(QWidget * parent): QWidget(parent) {
   scoreLayout->addWidget(scoreLabel);
 
   // add weapons info
-  weaponLabel = new QLabel("Count: 50");
+  weaponLabel = new QLabel(QString("Count: ")+QString::number(missileCount));
   weaponLabel->setFont(QFont("Courier", 28, QFont::Bold));
   weaponLabel->setAlignment(Qt::AlignCenter);
 
@@ -93,6 +96,12 @@ void Statusbar::increaseScore(int increment) {
 }
 
 void Statusbar::changeHealth(int h) {
-  healthLabel->setText(QString("Health: ") + QString::number(h));
+  health = h;
+  healthLabel->setText(QString("Health: ") + QString::number(health));
   emit healthUpdated(h);
+}
+
+void Statusbar::changeMissileCount(int c) {
+  missileCount = c;
+  weaponLabel->setText(QString("Count: ") + QString::number(missileCount));
 }

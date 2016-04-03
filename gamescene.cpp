@@ -43,6 +43,8 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   connect(player, SIGNAL(healthChanged(int)), this, SLOT(playerHealthDecreased(int)));
   // when player dies inform main widnow
   connect(player, SIGNAL(theKingIsDead()),    this, SLOT(playerDied()));
+  // when player shoots inform statusbar
+  connect(player, SIGNAL(missileCountChanged(int)), this, SLOT(playerMissileCountChanged(int)));
 
   // create timer to spawn enemies
   QTimer * timer = new QTimer(this);

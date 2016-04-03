@@ -16,7 +16,7 @@ public:
    * @brief Statusbar Constructor
    * @param parent Parent widget
    */
-  Statusbar(QWidget * parent = 0);
+  Statusbar(int initialhealth, int initialMissiles, QWidget * parent = 0);
 
   /**
    * @brief getScore Get the final score
@@ -37,6 +37,10 @@ public slots:
    * @param h New health value
    */
   void changeHealth(int h);
+  /**
+   * @brief changeMissileCount Change missile count
+   */
+  void changeMissileCount(int c);
 
 signals:
   /**
@@ -78,6 +82,14 @@ private:
    * @brief score Current score
    */
   int score;
+  /**
+   * @brief missileCount Missile count
+   */
+  int missileCount;
+  /**
+   * @brief health Player health
+   */
+  int health;
 };
 
 #endif // STATUSBAR_H

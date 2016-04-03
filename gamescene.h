@@ -53,6 +53,10 @@ public:
    */
   void removeItem(QGraphicsItem *item);
 
+  Player * getPlayer() {
+    return player;
+  }
+
 public slots:
   /**
    * @brief enemyKilled Enemy killed slot (called whenever an enemy is hit)
@@ -82,6 +86,15 @@ public slots:
     // inform the statusbar that player health changed
     emit playerHealthChanged(h);
   }
+  /**
+   * @brief playerMissileCountChanged Inform status bar that number of
+   * missiles of player changed
+   * @param c New missile count
+   */
+  void playerMissileCountChanged(int c) {
+    emit changeMissileCount(c);
+  }
+
   /**
    * @brief playerDied Slot called when player dies (health decreases to 0)
    */
@@ -121,6 +134,10 @@ signals:
    * deleted, because player died.
    */
   void finishGame();
+  /**
+   * @brief changeMissileCount Change missile count on status bar
+   */
+  void changeMissileCount(int c);
 
 private:
 

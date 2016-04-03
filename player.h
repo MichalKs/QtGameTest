@@ -47,6 +47,10 @@ public:
 
   }
 
+  int getMissileCount() const {
+    return missileCount;
+  }
+
 public slots:
   void gotHit();
 
@@ -62,6 +66,7 @@ signals:
    */
   void shoot(int x, int y);
   void theKingIsDead();
+  void missileCountChanged(int c);
 
 private slots:
 
@@ -87,12 +92,12 @@ private:
    */
   void moveLeftAnimation(const int animationCounter);
 
+  void decreaseMissileCount() {
+    missileCount--;
+    emit missileCountChanged(missileCount);
+  }
 
   // ******************** Private constants ********************
-  /**
-   * @brief animationPeriod Period in ms of movement animation
-   */
-  static const int animationPeriod  = 100;
 
   /**
    * @brief The MoveDirection enum Specifies current movement of player
@@ -101,6 +106,11 @@ private:
     PLAYER_MOVING_RIGHT,
     PLAYER_MOVING_LEFT,
     PLAYER_STANDING,
+  };
+
+  enum {
+    INITIAL_MISSILE_COUNT = 50,
+    ANIMATION_PERIOD = 100,     ///< Period in ms of movement animation
   };
 
   // ******************** Private variables ********************
@@ -113,6 +123,10 @@ private:
    * @brief animationTimer Timer for performing animation of player moves
    */
   QTimer * animationTimer;
+  /**
+   * @brief missileCount Number of missiles player has
+   */
+  int missileCount;
 
 };
 
