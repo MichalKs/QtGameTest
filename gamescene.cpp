@@ -1,5 +1,6 @@
 #include "gamescene.h"
 #include "bullet.h"
+#include "bonus.h"
 #include "player.h"
 #include "yellowenemy.h"
 #include "redenemy.h"
@@ -45,11 +46,22 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   connect(player, SIGNAL(theKingIsDead()),    this, SLOT(playerDied()));
   // when player shoots inform statusbar
   connect(player, SIGNAL(missileCountChanged(int)), this, SLOT(playerMissileCountChanged(int)));
+  // when we run out of missiles - play an empty gun sound
+  connect(player, SIGNAL(emptyGun()), this, SLOT(fireEmptyGun()));
 
   // create timer to spawn enemies
-  QTimer * timer = new QTimer(this);
-  QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawnEnemy()));
-  timer->start(2000);
+  enemyTimer = new QTimer(this);
+  QObject::connect(enemyTimer, SIGNAL(timeout()), this, SLOT(spawnEnemy()));
+  enemyTimer->start(ENEMY_SPAWN_TIMEOUT);
+
+  bonusTimer = new QTimer(this);
+  QObject::connect(bonusTimer, SIGNAL(timeout()), this, SLOT(spawnBonuses()));
+  bonusTimer->start(BONUS_SPAWN_TIMEOUT);
+
+  QTimer * difficultyRiseTimer = new QTimer(this);
+  QObject::connect(difficultyRiseTimer, SIGNAL(timeout()), this, SLOT(increaseDifficulty()));
+  difficultyRiseTimer->start(GAME_DIFF_TIMEOUT);
+
 
   // create bullet sound effect
   effect = new QSoundEffect(this);
@@ -95,6 +107,7 @@ void GameScene::createBullet(int x, int y) {
 
   // play bullet sound if audio is enabled
   if (audioEnabled) {
+    effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
     effect->setVolume(bulletSoundVolume);
     effect->play();
   }
@@ -117,6 +130,7 @@ void GameScene::enemyKilled(QGraphicsItem * casualty) {
 }
 
 void GameScene::spawnEnemy() {
+
   // if game is unpaused create more enemies
   if (!gamePaused) {
 
@@ -147,6 +161,22 @@ void GameScene::spawnEnemy() {
     addItem(enemy);
     // if enemy crashes into player then he takes damage
     connect(enemy, SIGNAL(enemyHitTarget()), player, SLOT(gotHit()));
+  }
+}
+
+void GameScene::spawnBonuses() {
+  // if game is unpaused create more bonuses
+  if (!gamePaused) {
+
+    // set random position
+    int possiblePositions = 700;
+    int randomNumber = rand() % possiblePositions;
+
+    Bonus * bonus = new Bonus(randomNumber, 0);
+
+    // create an enemy
+    addItem(bonus);
+    connect(bonus, SIGNAL(playerGetsBonus()), player, SLOT(getBonus()));
   }
 }
 

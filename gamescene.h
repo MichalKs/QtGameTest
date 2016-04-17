@@ -2,8 +2,9 @@
 #define GAMESCENE_H
 
 #include <QGraphicsScene>
+#include <QSoundEffect>
+#include <QTimer>
 
-class QSoundEffect;
 class Player;
 class Sprite;
 
@@ -70,9 +71,28 @@ public slots:
    */
   void createBullet(int x, int y);
   /**
+   * @brief fireEmptyGun When we run out of bullets this function plays a
+   * sound of an empty gun
+   */
+  void fireEmptyGun() {
+
+    const float soundVolume = 0.5f;
+    // play empty gun click sound if audio is enabled
+    if (audioEnabled) {
+      effect->setSource(QUrl("qrc:/sounds/sounds/empty-gun-shot.wav"));
+      effect->setVolume(soundVolume);
+      effect->play();
+    }
+  }
+
+  /**
    * @brief spawnEnemy Called periodically to create new enemies
    */
   void spawnEnemy();
+  /**
+   * @brief spawnBonuses Called periodically to create bonuses
+   */
+  void spawnBonuses();
   /**
    * @brief pauseGame Pause game slot - stops player and enemies
    * @param isPaused true - pause game, false - unpause game
@@ -117,6 +137,18 @@ public slots:
     audioEnabled = enable;
   }
 
+  void increaseDifficulty() {
+    gameDifficulty += 0.1;
+    if (gameDifficulty >= 0.9) {
+      gameDifficulty = 0.9;
+    }
+    enemyTimer->stop();
+    enemyTimer->start(ENEMY_SPAWN_TIMEOUT*(1-gameDifficulty));
+    bonusTimer->stop();
+    bonusTimer->start(BONUS_SPAWN_TIMEOUT*(1-gameDifficulty));
+
+  }
+
 signals:
   /**
    * @brief increaseScore Signal for informing statusbar that score is incremented
@@ -150,6 +182,9 @@ private:
     SCENE_WIDTH = 800,          ///< Scene widht
     SCENE_HEIGHT = 600,         ///< Scene height
     ENEMY_DEFAULT_HEALTH = 1,   ///< Default health for enemy
+    ENEMY_SPAWN_TIMEOUT = 2000, ///< An enemy is created every x ms
+    BONUS_SPAWN_TIMEOUT = 30000, ///< A bonus is created every x ms
+    GAME_DIFF_TIMEOUT = 100000, ///< Game difficulty increases every x ms
   };
 
   /**
@@ -176,6 +211,19 @@ private:
    * @brief audioEnabled Is audio enabled
    */
   bool audioEnabled;
+  /**
+   * @brief gameDifficulty Level of difficulty of the game
+   * @details It increases as the game progresses.
+   */
+  int gameDifficulty;
+  /**
+   * @brief enemyTimer Timer for spawning enemies
+   */
+  QTimer * enemyTimer;
+  /**
+   * @brief bonusTimer Timer for creating bonuses
+   */
+  QTimer * bonusTimer;
 
 };
 

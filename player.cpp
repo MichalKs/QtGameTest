@@ -91,19 +91,29 @@ void Player::keyPressEvent(QKeyEvent *event) {
     }
 
   } else if (event->key() == Qt::Key_Space) {
-    // shoot bullet
-    decreaseMissileCount();
-    emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+
+    if (missileCount > 0) {
+      // shoot bullet
+      decreaseMissileCount();
+      emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+    } else {
+      emit emptyGun();
+    }
+
 
   }
 }
 
 void Player::mousePressEvent(QGraphicsSceneMouseEvent *) {
 
-  QRectF mRect = sceneBoundingRect();
-//  qDebug() << "Mouse event in player";
-  decreaseMissileCount();
-  emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+  if (missileCount > 0) {
+    QRectF mRect = sceneBoundingRect();
+  //  qDebug() << "Mouse event in player";
+    decreaseMissileCount();
+    emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
+  } else {
+    emit emptyGun();
+  }
 
 }
 
@@ -122,6 +132,11 @@ void Player::keyReleaseEvent(QKeyEvent *) {
 
 void Player::gotHit() {
   decreaseHealth();
+}
+
+void Player::getBonus() {
+  missileCount += 50;
+  emit missileCountChanged(missileCount);
 }
 
 void Player::movementAnimation() {

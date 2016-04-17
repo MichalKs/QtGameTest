@@ -53,6 +53,7 @@ public:
 
 public slots:
   void gotHit();
+  void getBonus();
 
 signals:
 
@@ -65,6 +66,7 @@ signals:
    * @param y Y position of new missile
    */
   void shoot(int x, int y);
+  void emptyGun();
   void theKingIsDead();
   void missileCountChanged(int c);
 
