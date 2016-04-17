@@ -29,35 +29,35 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
 
   // add health info
   healthLabel = new QLabel(QString("Health: ") + QString::number(health));
-  healthLabel->setFont(QFont("Courier", 28, QFont::Bold));
+  healthLabel->setFont(QFont("Courier", 18, QFont::Bold));
   healthLabel->setAlignment(Qt::AlignCenter);
 
   healthIconLabel = new QLabel();
   healthIconLabel->setPixmap(QPixmap(":/images/graphics/icons/statusbar/health.png").
-                             scaled(64,64, Qt::KeepAspectRatio));
+                             scaled(32,32, Qt::KeepAspectRatio));
   healthIconLabel->setAlignment(Qt::AlignCenter);
 
-  healthBar = new QProgressBar();
-  healthBar->setMaximum(health);
-  healthBar->setMinimum(0);
-  healthBar->setMaximumWidth(healthLabel->sizeHint().width());
-  healthBar->setValue(health);
-  healthBar->setFont(QFont("Courier", 14, QFont::Bold));
-  connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
+//  healthBar = new QProgressBar();
+//  healthBar->setMaximum(health);
+//  healthBar->setMinimum(0);
+//  healthBar->setMaximumWidth(healthLabel->sizeHint().width());
+//  healthBar->setValue(health);
+//  healthBar->setFont(QFont("Courier", 14, QFont::Bold));
+//  connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
 
   healthLayout->addWidget(healthIconLabel);
-  healthLayout->addWidget(healthBar);
+//  healthLayout->addWidget(healthBar);
   healthLayout->addStretch();
   healthLayout->addWidget(healthLabel);
 
   // add score info
   scoreLabel = new QLabel("Score: 0");
-  scoreLabel->setFont(QFont("Courier", 28, QFont::Bold));
+  scoreLabel->setFont(QFont("Courier", 18, QFont::Bold));
   scoreLabel->setAlignment(Qt::AlignCenter);
 
   scoreIconLabel = new QLabel();
   scoreIconLabel->setPixmap(QPixmap(":/images/graphics/icons/statusbar/star.png").
-                             scaled(64,64, Qt::KeepAspectRatio));
+                             scaled(32,32, Qt::KeepAspectRatio));
   scoreIconLabel->setAlignment(Qt::AlignCenter);
 
   scoreLayout->addWidget(scoreIconLabel);
@@ -66,7 +66,7 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
 
   // add weapons info
   weaponLabel = new QLabel(QString("Count: ")+QString::number(missileCount));
-  weaponLabel->setFont(QFont("Courier", 28, QFont::Bold));
+  weaponLabel->setFont(QFont("Courier", 18, QFont::Bold));
   weaponLabel->setAlignment(Qt::AlignCenter);
 
   QPixmap pixmap(":/images/graphics/missile/rocket-146109_640.png");
@@ -75,7 +75,7 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
   QPixmap transPixmap = QPixmap(pixmap.transformed(trans));
 
   weaponIconLabel = new QLabel();
-  weaponIconLabel->setPixmap(transPixmap.scaled(200,200, Qt::KeepAspectRatio));
+  weaponIconLabel->setPixmap(transPixmap.scaled(100,100, Qt::KeepAspectRatio));
   weaponIconLabel->setAlignment(Qt::AlignCenter);
 
   weaponLayout->addWidget(weaponIconLabel);

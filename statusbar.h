@@ -77,7 +77,7 @@ private:
   /**
    * @brief healthBar Progress bar for health
    */
-  QProgressBar * healthBar;
+//  QProgressBar * healthBar;
   /**
    * @brief score Current score
    */
