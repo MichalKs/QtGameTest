@@ -157,16 +157,19 @@ void GameScene::pauseGame(bool isPaused) {
   gamePaused = isPaused;
 
   if (isPaused == true) {
+    qDebug() << "Pausing game";
     // pause all sprites
     for (int i = 0; i < spriteList->size(); i++ ) {
       spriteList->at(i)->pause();
     }
   } else {
+    qDebug() << "Unpausing game";
     // unpause all sprites
     for (int i = 0; i < spriteList->size(); i++ ) {
       spriteList->at(i)->unpause();
     }
   }
+
 }
 
 void GameScene::increaseDifficulty() {
@@ -189,6 +192,7 @@ void GameScene::increaseDifficulty() {
 
 void GameScene::addItem(QGraphicsItem *item) {
 
+  qDebug() << "Adding item to list";
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
@@ -200,6 +204,7 @@ void GameScene::addItem(QGraphicsItem *item) {
 
 void GameScene::removeItem(QGraphicsItem *item) {
 
+  qDebug() << "Removing item from list";
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {

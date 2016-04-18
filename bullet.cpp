@@ -1,7 +1,7 @@
 #include "bullet.h"
 #include "enemy.h"
+#include "gamescene.h"
 #include <QTimer>
-#include <QGraphicsScene>
 #include <QDebug>
 #include <QList>
 #include <typeinfo>
@@ -60,8 +60,9 @@ bool Bullet::collisionDetected() {
 
       // signalize that enemy has been killed
       emit bulletHitTarget(collidingItemsList[i]);
+      GameScene * s = dynamic_cast<GameScene*> (QGraphicsItem::scene());
       // remove bullet from scene
-      scene()->removeItem(this);
+      s->removeItem(this);
       // delete the bullet
       delete this;
 
