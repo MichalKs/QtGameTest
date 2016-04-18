@@ -8,6 +8,7 @@
  * @brief The Enemy class represents enemies in the game
  */
 class Enemy: public Sprite {
+
   Q_OBJECT
 
 public:
@@ -20,9 +21,9 @@ public:
    * @param h Maximum height of enemy
    * @param parent Parent of enemy
    */
-  Enemy(int initialHealth = 1, int w = 100, int h = 100, int speed = 5,
+  Enemy(int initialHealth = ENEMY_HEALTH, int w = ENEMY_WIDTH,
+        int h = ENEMY_HEIGHT, int speed = ENEMY_SPEED,
         QGraphicsItem * parent = 0);
-
   /**
    * @brief die Function performed before enemy death
    */
@@ -34,23 +35,23 @@ public slots:
    */
   void move();
   /**
-   * @brief pause Pause is called when the game is paused
+   * @brief pause is called when the game is paused
    */
   void pause() {
     moveTimer->stop();
   }
-
   /**
-   * @brief unpause Unpasue is called when the game is unpaused
+   * @brief unpause is called when the game is unpaused
    */
   void unpause() {
     // bullet moves every 50 ms
-    moveTimer->start(50);
+    moveTimer->start(MOVE_TIMEOUT);
   }
 
 protected slots:
   /**
-   * @brief dieAnimation Called by animationTimer to perform animation of death
+   * @brief dieAnimation is called by animationTimer to perform animation of death.
+   * @details Since every enemy is different this is an abstract function
    */
   virtual void dieAnimation() = 0;
 
@@ -62,7 +63,19 @@ signals:
 
 private:
   /**
-   * @brief collisionDetected Help function for detecting collisions with other objects
+   * @brief Private constants
+   */
+  enum {
+    ENEMY_HEALTH  = 1,    ///< Health
+    ENEMY_WIDTH   = 100,  ///< Maximum widht
+    ENEMY_HEIGHT  = 100,  ///< Maximum height
+    ENEMY_SPEED   = 5,    ///< Speed
+    MOVE_TIMEOUT  = 50,   ///< Move timeout period in ms
+    ANIMATION_TIMEOUT = 50, ///< Animation period in ms
+  };
+
+  /**
+   * @brief collisionDetected is a help function for detecting collisions with other objects
    * @return True if collision is detected
    */
   bool collisionDetected();

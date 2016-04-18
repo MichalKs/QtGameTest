@@ -4,7 +4,6 @@
 #include "gamescene.h"
 #include "game.h"
 #include "statusbar.h"
-#include "backgroundlabel.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -47,7 +46,11 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   buttonLayout->addWidget(quitButton);
 
   // add background label
-  backgroundLabel = new BackgroundLabel();
+  backgroundLabel = new QLabel();
+  backgroundLabel->setPixmap(
+        QPixmap(":/images/graphics/background/science-fiction-441708_960_720.jpg").
+        scaled(640, 480));
+  backgroundLabel->setScaledContents(true);
 
   // add buttons and label
   vLayout->addWidget(backgroundLabel);

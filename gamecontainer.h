@@ -18,7 +18,6 @@ public:
    * @param parent Parent widget
    */
   GameContainer(QWidget * parent = 0);
-
   /**
    * @brief getGame Returns the game widget
    * @return Game widget

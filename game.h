@@ -2,14 +2,14 @@
 #define GAME_H
 
 #include <QGraphicsView>
-
-class GameScene;
+#include "gamescene.h"
 
 /**
  * @brief The Game class This class is the widget responsible for displaying
- * the game scene.
+ * the game scene - it is the view.
  */
 class Game: public QGraphicsView {
+
   Q_OBJECT
 
 public:
@@ -17,8 +17,7 @@ public:
    * @brief Game Default constructor of game view
    * @param parent The parent widget
    */
-  Game(QWidget * parent = NULL);
-
+  Game(QWidget * parent = 0);
   /**
    * @brief getGameScene Returns the scene of the game
    * @return Scene of the game
@@ -26,27 +25,14 @@ public:
   GameScene * getGameScene() {
     return scene;
   }
-
   /**
    * @brief resizeEvent Resize event
    * @param event Event
    */
-  void resizeEvent(QResizeEvent * event);
-  /**
-   * @brief keyPressEvent Key press event
-   * @param event Event
-   */
-  void keyPressEvent(QKeyEvent * event);
-  /**
-   * @brief mousePressEvent Mouse press event
-   * @param event Event
-   */
-  void mousePressEvent(QMouseEvent * event);
-  /**
-   * @brief mouseMoveEvent Mouse move event
-   * @param event Event
-   */
-  void mouseMoveEvent(QMouseEvent *event);
+  void resizeEvent(QResizeEvent * event) {
+    fitInView(0, 0, GameScene::SCENE_WIDTH, GameScene::SCENE_HEIGHT);
+    QGraphicsView::resizeEvent(event);
+  }
 
 private:
   /**

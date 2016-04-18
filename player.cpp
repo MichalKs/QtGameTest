@@ -28,24 +28,13 @@ Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * paren
         scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));
 
   // create a timer for player movement animation
-  animationTimer = new QTimer();
+  QTimer * animationTimer = new QTimer(this);
 
   // timeout of the timer causes execution of the animation function
   connect(animationTimer, SIGNAL(timeout()), this, SLOT(movementAnimation()));
 
   // animation changes every 100 ms
   animationTimer->start(ANIMATION_PERIOD);
-}
-
-Player::~Player() {
-  // delete all heap resources
-  delete animationTimer;
-}
-
-void Player::resize(QSize &size) {
-  // set base graphics for player
-//  setPixmap(QPixmap(":/images/graphics/fighter/smallfighter0006.png").
-//        scaled(QSize(width, height), Qt::KeepAspectRatio));
 }
 
 /**

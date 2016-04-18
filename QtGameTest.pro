@@ -27,8 +27,7 @@ SOURCES += main.cpp \
     redenemy.cpp \
     darkinvader.cpp \
     alienspaceship.cpp \
-    bonus.cpp \
-    backgroundlabel.cpp
+    bonus.cpp
 
 HEADERS  += \
     bullet.h \
@@ -45,8 +44,7 @@ HEADERS  += \
     redenemy.h \
     darkinvader.h \
     alienspaceship.h \
-    bonus.h \
-    backgroundlabel.h
+    bonus.h
 
 RESOURCES += \
     res.qrc

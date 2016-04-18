@@ -16,8 +16,8 @@ class Sprite;
 class GameScene: public QGraphicsScene {
 
   Q_OBJECT
-public:
 
+public:
   /**
    * @brief GameScene Constructor for game widget
    * @param parent The parent object
@@ -53,10 +53,21 @@ public:
    * @param item Removed item
    */
   void removeItem(QGraphicsItem *item);
-
+  /**
+   * @brief getPlayer Gets the player object
+   * @return Player object
+   */
   Player * getPlayer() {
     return player;
   }
+
+  /**
+   * @brief Public constants
+   */
+  enum {
+    SCENE_WIDTH = 800,          ///< Scene widht
+    SCENE_HEIGHT = 600,         ///< Scene height
+  };
 
 public slots:
   /**
@@ -84,7 +95,6 @@ public slots:
       effect->play();
     }
   }
-
   /**
    * @brief spawnEnemy Called periodically to create new enemies
    */
@@ -114,7 +124,6 @@ public slots:
   void playerMissileCountChanged(int c) {
     emit changeMissileCount(c);
   }
-
   /**
    * @brief playerDied Slot called when player dies (health decreases to 0)
    */
@@ -136,18 +145,11 @@ public slots:
   void audioEnable(bool enable) {
     audioEnabled = enable;
   }
-
-  void increaseDifficulty() {
-    gameDifficulty += 0.1;
-    if (gameDifficulty >= 0.9) {
-      gameDifficulty = 0.9;
-    }
-    enemyTimer->stop();
-    enemyTimer->start(ENEMY_SPAWN_TIMEOUT*(1-gameDifficulty));
-    bonusTimer->stop();
-    bonusTimer->start(BONUS_SPAWN_TIMEOUT*(1-gameDifficulty));
-
-  }
+  /**
+   * @brief increaseDifficulty increses the game difficulty
+   * @details It is called periodically as the game progresses
+   */
+  void increaseDifficulty();
 
 signals:
   /**
@@ -172,21 +174,18 @@ signals:
   void changeMissileCount(int c);
 
 private:
-
   /**
    * @brief Private constants
    */
   enum {
-    PLAYER_DEFAULT_SPEED = 10,  ///< Default speed of player
-    PLAYER_DEFAULT_HEALTH = 3,  ///< Default health of player
-    SCENE_WIDTH = 800,          ///< Scene widht
-    SCENE_HEIGHT = 600,         ///< Scene height
-    ENEMY_DEFAULT_HEALTH = 1,   ///< Default health for enemy
-    ENEMY_SPAWN_TIMEOUT = 2000, ///< An enemy is created every x ms
-    BONUS_SPAWN_TIMEOUT = 30000, ///< A bonus is created every x ms
-    GAME_DIFF_TIMEOUT = 100000, ///< Game difficulty increases every x ms
+    PLAYER_DEFAULT_SPEED  = 10,     ///< Default speed of player
+    PLAYER_DEFAULT_HEALTH = 3,      ///< Default health of player
+    ENEMY_DEFAULT_HEALTH  = 1,      ///< Default health for enemy
+    ENEMY_SPAWN_TIMEOUT   = 2000,   ///< An enemy is created every x ms
+    BONUS_SPAWN_TIMEOUT   = 30000,  ///< A bonus is created every x ms
+    GAME_DIFF_TIMEOUT     = 100000, ///< Game difficulty increases every x ms
+    ENEMY_TYPES           = 4,      ///< Number of enemy types
   };
-
   /**
    * @brief player The player
    */

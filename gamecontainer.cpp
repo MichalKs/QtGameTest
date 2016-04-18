@@ -25,18 +25,17 @@ GameContainer::GameContainer(QWidget *parent): QWidget(parent) {
   connect(scene, SIGNAL(changeMissileCount(int)), statusbar, SLOT(changeMissileCount(int)));
 
   // set proportions between game and statusbar
-
   QSizePolicy spSb = statusbar->sizePolicy();
   spSb.setVerticalStretch(1);
   statusbar->setSizePolicy(spSb);
 
+  // game takes 10 times more space than status bar
   QSizePolicy spGm = game->sizePolicy();
   spGm.setVerticalStretch(10);
   game->setSizePolicy(spGm);
 
   layout->addWidget(game);
   layout->addWidget(statusbar);
-
 
   setLayout(layout);
 }

@@ -10,19 +10,22 @@ class QProgressBar;
  * @brief The Statusbar class shows and controls the status bar of the game
  */
 class Statusbar: public QWidget {
+
   Q_OBJECT
+
 public:
   /**
-   * @brief Statusbar Constructor
+   * @brief Statusbar
+   * @param initialhealth Initial health displayed on the statusbar
+   * @param initialMissiles Initial number of missiles displayed on the status bar
    * @param parent Parent widget
    */
   Statusbar(int initialhealth, int initialMissiles, QWidget * parent = 0);
-
   /**
    * @brief getScore Get the final score
    * @return Score
    */
-  int getScore() {
+  int getScore() const {
     return score;
   }
 
@@ -74,10 +77,6 @@ private:
    * @brief weaponIconLabel Icon for weapon
    */
   QLabel * weaponIconLabel;
-  /**
-   * @brief healthBar Progress bar for health
-   */
-//  QProgressBar * healthBar;
   /**
    * @brief score Current score
    */

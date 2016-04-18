@@ -9,7 +9,7 @@ Enemy::Enemy(int initialHealth, int w, int h, int speed, QGraphicsItem * parent)
   Sprite(initialHealth, speed, w, h, parent) {
 
   // set random position
-  int possiblePositions = 800 - w;
+  int possiblePositions = GameScene::SCENE_WIDTH - w;
   int randomNumber = rand() % possiblePositions;
   setPos(randomNumber, 0);
 
@@ -17,7 +17,7 @@ Enemy::Enemy(int initialHealth, int w, int h, int speed, QGraphicsItem * parent)
   moveTimer = new QTimer(this);
   connect(moveTimer, SIGNAL(timeout()), this, SLOT(move()));
   // bullet moves every 50 ms
-  moveTimer->start(50);
+  moveTimer->start(MOVE_TIMEOUT);
 
   // create animation timer
   animationTimer = new QTimer(this);
@@ -26,7 +26,7 @@ Enemy::Enemy(int initialHealth, int w, int h, int speed, QGraphicsItem * parent)
 }
 
 bool Enemy::collisionDetected() {
-  // check for collision with enemy
+  // check for collision with player
   QList<QGraphicsItem*> collidingItemsList = collidingItems();
 
   // scan list for enemies
@@ -45,9 +45,8 @@ bool Enemy::collisionDetected() {
 }
 
 void Enemy::die() {
-  qDebug() << "Enemy died";
   moveTimer->stop();
-  animationTimer->start(50);
+  animationTimer->start(ANIMATION_TIMEOUT);
 
 }
 

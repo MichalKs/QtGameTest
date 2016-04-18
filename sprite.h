@@ -12,9 +12,12 @@ class Sprite: public QObject, public QGraphicsPixmapItem {
 
 public:
 
+  /**
+   * @brief Public constants
+   */
   enum {
-    MAXIMUM_SPEED = +100,
-    MINIMUM_SPEED = -100,
+    MAXIMUM_SPEED = +100, ///< Maximum speed
+    MINIMUM_SPEED = -100, ///< Minimum speed
   };
 
   /**
@@ -22,11 +25,11 @@ public:
    * @details Every sprite has a health that causes sprite to die if it reaches 0.
    * Every sprite has a required width and height (only one of them is respected due to
    * aspect ratio). A sprite also has a speed of movement (if speed is 0 the sprite does not move).
-   * @param initialHealth
-   * @param initialSpeed
-   * @param w
-   * @param h
-   * @param parent
+   * @param initialHealth Initial health
+   * @param initialSpeed Initial speed
+   * @param w Maximum width
+   * @param h Maximum height
+   * @param parent Parent item
    */
   Sprite(int initialHealth, int initialSpeed, int w, int h, QGraphicsItem * parent = 0):
     QGraphicsPixmapItem(parent), health(initialHealth), speed(initialSpeed),
@@ -49,7 +52,6 @@ public:
   virtual ~Sprite() {
 
   }
-
   /**
    * @brief getHealth Getter for health parameter
    * @return Current health of sprite
@@ -67,7 +69,6 @@ public:
     if (health <= 0) {
       die();
     }
-
   }
   /**
    * @brief getSpeed Gets speed
@@ -113,10 +114,13 @@ public:
   }
 
 signals:
+  /**
+   * @brief healthChanged Signal emitted when health changes
+   * @param h Changed health
+   */
   void healthChanged(int h);
 
 private:
-
   /**
    * @brief health Every sprite has some health
    * @details When health goes to zero, sprite dies

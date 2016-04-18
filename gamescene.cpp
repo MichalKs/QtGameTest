@@ -8,9 +8,7 @@
 #include "alienspaceship.h"
 #include <QDebug>
 #include <QEvent>
-//#include <QPushButton>
 #include <QTimer>
-//#include <QGraphicsProxyWidget>
 #include <QSoundEffect>
 
 GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
@@ -42,7 +40,7 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   connect(player, SIGNAL(shoot(int,int)),     this, SLOT(createBullet(int,int)));
   // when player health is decreased inform statusbar
   connect(player, SIGNAL(healthChanged(int)), this, SLOT(playerHealthDecreased(int)));
-  // when player dies inform main widnow
+  // when player dies inform main window
   connect(player, SIGNAL(theKingIsDead()),    this, SLOT(playerDied()));
   // when player shoots inform statusbar
   connect(player, SIGNAL(missileCountChanged(int)), this, SLOT(playerMissileCountChanged(int)));
@@ -62,34 +60,9 @@ GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
   QObject::connect(difficultyRiseTimer, SIGNAL(timeout()), this, SLOT(increaseDifficulty()));
   difficultyRiseTimer->start(GAME_DIFF_TIMEOUT);
 
-
   // create bullet sound effect
   effect = new QSoundEffect(this);
   effect->setSource(QUrl("qrc:/sounds/sounds/explosion.wav"));
-
-  // playing with items
-//  addEllipse(200, 200, 100, 200,
-//                    QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
-//                    QBrush(Qt::red, Qt::FDiagPattern));
-
-//  addLine(400, 200, 500, 580,
-//                 QPen(Qt::cyan, 13, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
-
-//  QPolygonF poly;
-
-//  poly << QPointF(700, 50) << QPointF(600, 150) << QPointF(800, 150);
-
-//  addPolygon(poly, QPen(Qt::green, 13, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin),
-//                    QBrush(Qt::red, Qt::FDiagPattern));
-
-//  addSimpleText(QString("Hello world!!!"), QFont("Fantasy", 72, QFont::Bold));
-
-//  QPushButton * b = new QPushButton(QString("Spawn enemy"));
-
-//  QGraphicsProxyWidget * p = addWidget(b);
-//  p->setPos(500, 500);
-
-//  connect(b, SIGNAL(clicked(bool)), this, SLOT(pauseGame(bool)));
 
 }
 
@@ -196,6 +169,24 @@ void GameScene::pauseGame(bool isPaused) {
       spriteList->at(i)->unpause();
     }
   }
+
+}
+
+void GameScene::increaseDifficulty() {
+
+  const double difficultyDelta = 0.1;
+  const double maximumDifficulty = 0.9;
+
+  gameDifficulty += difficultyDelta;
+  if (gameDifficulty >= maximumDifficulty) {
+    gameDifficulty = maximumDifficulty;
+  }
+  // Decrease enemy creation period
+  enemyTimer->stop();
+  enemyTimer->start(ENEMY_SPAWN_TIMEOUT*(1-gameDifficulty));
+  // Decrease bonus creation period
+  bonusTimer->stop();
+  bonusTimer->start(BONUS_SPAWN_TIMEOUT*(1-gameDifficulty));
 
 }
 

@@ -23,14 +23,12 @@ public:
    * @param parent Parent widget
    */
   MainWindow(QWidget * parent = 0);
-
   /**
    * @brief closeEvent Reimplementation of close event to ask the player
    * if he really wants to quit.
    * @param event Close event
    */
   void closeEvent(QCloseEvent * event);
-
   /**
    * @brief getTopScoreList Gets the top score list
    * @return QStringList of top scorers
@@ -40,22 +38,18 @@ public:
   }
 
 public slots:
-
   /**
    * @brief createGame Slot for creating game (New game action triggered)
    */
   void createGame();
-
   /**
    * @brief returnToMainMenu Returns to main menu once game is started
    */
   void returnToMainMenu();
-
   /**
    * @brief about Displays a dialog with info about the game
    */
   void about();
-
   /**
    * @brief displayTopScorers Displays a dialog with the list of top scores
    */
@@ -71,31 +65,28 @@ signals:
   void changeWidget(int i);
 
 private:
-
+  /**
+   * @brief Private constants
+   */
   enum {
-    NUMBER_OF_SCORES = 10,
+    NUMBER_OF_SCORES = 10, ///< Number of top scores
   };
-
   /**
    * @brief createActions Create all GUI actions
    */
   void createActions();
-
   /**
    * @brief createMenus Create all menu bars
    */
   void createMenus();
-
   /**
    * @brief writeSettings Write application settings to OS (registry or file)
    */
   void writeSettings();
-
   /**
    * @brief readSettings Read application settings from OS (registry or file)
    */
   void readSettings();
-
   /**
    * @brief topScoreList List of top scorers (names)
    */
@@ -104,37 +95,31 @@ private:
    * @brief topScores List of top scores (numerical values as strings)
    */
   QStringList  topScores;
-
   /**
    * @brief stackedWidget The stacked widget displays the main menu widget or the
    * game container
    */
   QStackedWidget  * stackedWidget;
-
   /**
    * @brief mainMenuWidget Widget with main menu
    */
   QWidget         * mainMenuWidget;
-
   /**
    * @brief gameContainer Game container contains the game view and the status bar of the game
    */
   GameContainer   * gameContainer;
-
   /**
    * @brief newGameButton Start a new game
    */
   QPushButton     * newGameButton;
-
   /**
    * @brief quitButton Quit game
    */
   QPushButton     * quitButton;
-
   /**
    * @brief backgroundLabel background image for main menu
    */
-  BackgroundLabel * backgroundLabel;
+  QLabel * backgroundLabel;
 
   // menus
   QMenu * fileMenu;     ///< File menu

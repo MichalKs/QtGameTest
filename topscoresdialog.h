@@ -13,7 +13,6 @@ class QTableWidget;
 class TopScoresDialog : public QDialog {
 
 public:
-
   /**
    * @brief TopScoresDialog Constructor for dialog
    * @param topScoreList List of top scorers' names
@@ -24,7 +23,9 @@ public:
                   QWidget * parent = 0);
 
 private:
-
+  /**
+   * @brief Private constants
+   */
   enum {
     ROWS_NUMBER = 10, ///< Number of rows
     COLS_NUMBER = 2,  ///< Number of columns

@@ -1,12 +1,11 @@
 #include "bullet.h"
+#include "enemy.h"
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QDebug>
 #include <QList>
-#include "enemy.h"
 #include <typeinfo>
 
-//Sprite(int initialHealth, int initialSpeed, int w, int h, QGraphicsItem * parent = 0)
 Bullet::Bullet(int x, int y, int w, int h, int initialSpeed, QGraphicsItem * parent):
   Sprite(BULLET_HEALTH, initialSpeed, w, h, parent) {
 
@@ -19,9 +18,8 @@ Bullet::Bullet(int x, int y, int w, int h, int initialSpeed, QGraphicsItem * par
   setPos(x,y);
 
   // create timer for moving the bullet
-  QTimer * timer = new QTimer();
+  QTimer * timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-
   // bullet moves every 50 ms
   timer->start(MOVE_TIMEOUT_MS);
 
