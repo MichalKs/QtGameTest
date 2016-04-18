@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
 
 void MainWindow::createGame() {
 
-  // once game is started there is no point starting it again
+  // once game is started actions are enabled/disabled
   newGameAction->setDisabled(true);
   newGameButton->setDisabled(true);
   toMainMenuAction->setEnabled(true);
@@ -123,7 +123,7 @@ void MainWindow::returnToMainMenu() {
   int currentScore = gameContainer->getStatusbar()->getScore();
   // destrou previous game
   delete gameContainer;
-  // enable new game button
+  // enable/disable various actions
   newGameAction->setDisabled(false);
   newGameButton->setDisabled(false);
   toMainMenuAction->setEnabled(false);
@@ -138,9 +138,8 @@ void MainWindow::returnToMainMenu() {
   for (int i = 0; i < NUMBER_OF_SCORES; i++) {
 
     if (topScores.count() == i) {
-      qDebug() << __FUNCTION__ << ": We found empty room in list";
-      // if list is not complete we insert the score an end loop
 
+      // if list is not complete we insert the score an end loop
       QString playerName = QInputDialog::getText(this, "Save score", "Enter name");
       if (playerName != "") {
         topScoreList.insert(i, playerName);
@@ -169,7 +168,6 @@ void MainWindow::returnToMainMenu() {
       if (topScores.count() > NUMBER_OF_SCORES) {
         topScores.removeLast();
         topScoreList.removeLast();
-
 
       }
 

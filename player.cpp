@@ -1,7 +1,6 @@
 #include "player.h"
 #include <QDebug>
 #include <QKeyEvent>
-#include <QGraphicsScene>
 #include "bullet.h"
 #include "enemy.h"
 #include <QSound>
@@ -9,12 +8,7 @@
 #include <QGraphicsView>
 #include <QTimer>
 #include <sprite.h>
-#include <QGraphicsSceneMouseEvent>
 
-/**
- * @brief Player::Player
- * @param parent
- */
 Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * parent):
   Sprite(initialHealth, speed, w, h, parent) {
 
@@ -37,25 +31,13 @@ Player::Player(int initialHealth, int speed, int w, int h, QGraphicsItem * paren
   animationTimer->start(ANIMATION_PERIOD);
 }
 
-/**
- * @brief Player::keyPressEvent
- * @param event
- */
 void Player::keyPressEvent(QKeyEvent *event) {
 
   // If a key is pressed QGraphicsView alerts QGraphicsScene,
   // which then alerts the item that has focus on the scene.
   // That item runs its keyPressEvent function
 
-  // Get size of view to know bounds
-  QList<QGraphicsView *> viewList = scene()->views();
-  QGraphicsView *view = viewList.first();
-//  qDebug() << "View width: " << view->width()
-//           << " height: " << view->height();
-
   QRectF mRect = sceneBoundingRect();
-//  qDebug() << "Item width: " << mRect.width()
-//           << " height: " << mRect.height();
 
   if (event->key() == Qt::Key_Left) {
 
@@ -70,7 +52,7 @@ void Player::keyPressEvent(QKeyEvent *event) {
 
   } else if (event->key() == Qt::Key_Right) {
 
-    if (x() + getMaxWidth() < view->width()) {
+    if (x() + boundingRect().width() < scene()->width()) {
       setPos(x() + getSpeed(), y());
     }
 
@@ -88,8 +70,6 @@ void Player::keyPressEvent(QKeyEvent *event) {
     } else {
       emit emptyGun();
     }
-
-
   }
 }
 
@@ -97,35 +77,12 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent *) {
 
   if (missileCount > 0) {
     QRectF mRect = sceneBoundingRect();
-  //  qDebug() << "Mouse event in player";
     decreaseMissileCount();
     emit shoot(x()+mRect.width()/8, y()-mRect.height()/2);
   } else {
     emit emptyGun();
   }
 
-}
-
-void Player::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
-//  qDebug() << "Mouse move event in player";
-  if (event->scenePos().x() < 750) {
-    setPos(event->scenePos().x(), y());
-  }
-
-}
-
-void Player::keyReleaseEvent(QKeyEvent *) {
-  // if key is realeased the player should stand still
-  moveDirection = PLAYER_STANDING;
-}
-
-void Player::gotHit() {
-  decreaseHealth();
-}
-
-void Player::getBonus() {
-  missileCount += 50;
-  emit missileCountChanged(missileCount);
 }
 
 void Player::movementAnimation() {
@@ -183,15 +140,12 @@ void Player::movementAnimation() {
 
   previousMoveDirection = moveDirection;
 
-  // animationTimer->stop();
 }
 
 void Player::moveRightAnimation(const int animationCounter) {
 
   QString filename = QString(":/images/graphics/fighter/smallfighter%1.png").
       arg(animationCounter+6, 4, 10, QChar('0'));
-
-//  qDebug() << filename;
 
   setPixmap(QPixmap(filename).
     scaled(QSize(getMaxWidth(), getMaxHeight()), Qt::KeepAspectRatio));

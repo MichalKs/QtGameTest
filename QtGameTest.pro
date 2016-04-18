@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     enemy.cpp \
     game.cpp \
     player.cpp \
-    sprite.cpp \
     gamescene.cpp \
     mainwindow.cpp \
     statusbar.cpp \

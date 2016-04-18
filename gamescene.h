@@ -4,8 +4,8 @@
 #include <QGraphicsScene>
 #include <QSoundEffect>
 #include <QTimer>
+#include "player.h"
 
-class Player;
 class Sprite;
 
 /**
@@ -32,17 +32,34 @@ public:
    * @brief mousePressEvent Mouse press event
    * @param mouseEvent Mouse press event
    */
-  void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
+  void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent) {
+
+    if (!gamePaused && mouseMoveEnabled) {
+      player->mousePressEvent(mouseEvent);
+    }
+
+  }
   /**
    * @brief mouseMoveEvent Mouse move event
    * @param mouseEvent Mouse move event
    */
-  void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
+  void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent) {
+    if (!gamePaused && mouseMoveEnabled) {
+      player->mouseMoveEvent(mouseEvent);
+    }
+  }
   /**
    * @brief keyPressEvent Key press event
    * @param event Key press event
    */
-  void keyPressEvent(QKeyEvent * event);
+  void keyPressEvent(QKeyEvent * event) {
+    if (!gamePaused) {
+      // change focus to player to get keyboard events
+      player->setFocus();
+      // this will pass event to focus item
+      QGraphicsScene::keyPressEvent(event);
+    }
+  }
   /**
    * @brief addItem Adds item to scene
    * @param item The added item

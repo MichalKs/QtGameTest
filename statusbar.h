@@ -2,8 +2,8 @@
 #define STATUSBAR_H
 
 #include <QWidget>
+#include <QLabel>
 
-class QLabel;
 class QProgressBar;
 
 /**
@@ -34,16 +34,26 @@ public slots:
    * @brief increaseScore Increase score
    * @param increment Amount of increase
    */
-  void increaseScore(int increment);
+  void increaseScore(int increment) {
+    score += increment;
+    scoreLabel->setText(QString("Score: ") + QString::number(score));
+  }
   /**
    * @brief changeHealth Update health
    * @param h New health value
    */
-  void changeHealth(int h);
+  void changeHealth(int h) {
+    health = h;
+    healthLabel->setText(QString("Health: ") + QString::number(health));
+    emit healthUpdated(h);
+  }
   /**
    * @brief changeMissileCount Change missile count
    */
-  void changeMissileCount(int c);
+  void changeMissileCount(int c) {
+    missileCount = c;
+    weaponLabel->setText(QString("Count: ") + QString::number(missileCount));
+  }
 
 signals:
   /**

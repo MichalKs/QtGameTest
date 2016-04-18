@@ -2,7 +2,9 @@
 #define PLAYER_H
 
 #include <QGraphicsPixmapItem>
-#include <sprite.h>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsScene>
+#include "sprite.h"
 
 class QTimer;
 
@@ -37,12 +39,20 @@ public:
    * @brief mouseMoveEvent Event handler for mouse moves
    * @param event Mouse move event
    */
-  void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
+  void mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
+    if (event->scenePos().x() < scene()->width() - boundingRect().width()) {
+      setPos(event->scenePos().x(), y());
+    }
+
+  }
   /**
    * @brief keyReleaseEvent Event handler for key releases
    * @param event Key event
    */
-  void keyReleaseEvent(QKeyEvent * event);
+  void keyReleaseEvent(QKeyEvent *) {
+    // if key is realeased the player should stand still
+    moveDirection = PLAYER_STANDING;
+  }
   /**
    * @brief die is called when the player dies
    */
@@ -68,11 +78,16 @@ public slots:
   /**
    * @brief gotHit Slot called when the player gets hit by an enemy
    */
-  void gotHit();
+  void gotHit() {
+    decreaseHealth();
+  }
   /**
    * @brief getBonus Slot called when the player gets hit by a bonus item
    */
-  void getBonus();
+  void getBonus() {
+    missileCount += INITIAL_MISSILE_COUNT;
+    emit missileCountChanged(missileCount);
+  }
 
 signals:
   /**

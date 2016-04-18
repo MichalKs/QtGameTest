@@ -107,8 +107,7 @@ void GameScene::spawnEnemy() {
   // if game is unpaused create more enemies
   if (!gamePaused) {
 
-    int enemyType = rand() % 4;
-    qDebug() << "Creating enemy number " << enemyType;
+    int enemyType = rand() % ENEMY_TYPES;
 
     Enemy * enemy;
 
@@ -130,7 +129,7 @@ void GameScene::spawnEnemy() {
       enemy = new DarkInvader();
     }
 
-    // create an enemy
+    // add enemy to scene
     addItem(enemy);
     // if enemy crashes into player then he takes damage
     connect(enemy, SIGNAL(enemyHitTarget()), player, SLOT(gotHit()));
@@ -142,12 +141,12 @@ void GameScene::spawnBonuses() {
   if (!gamePaused) {
 
     // set random position
-    int possiblePositions = 700;
+    int possiblePositions = SCENE_WIDTH - 100;
     int randomNumber = rand() % possiblePositions;
 
     Bonus * bonus = new Bonus(randomNumber, 0);
 
-    // create an enemy
+    // add bonus to scene
     addItem(bonus);
     connect(bonus, SIGNAL(playerGetsBonus()), player, SLOT(getBonus()));
   }
@@ -157,7 +156,6 @@ void GameScene::pauseGame(bool isPaused) {
 
   gamePaused = isPaused;
 
-  qDebug() << "Pause game slot";
   if (isPaused == true) {
     // pause all sprites
     for (int i = 0; i < spriteList->size(); i++ ) {
@@ -169,7 +167,6 @@ void GameScene::pauseGame(bool isPaused) {
       spriteList->at(i)->unpause();
     }
   }
-
 }
 
 void GameScene::increaseDifficulty() {
@@ -190,32 +187,7 @@ void GameScene::increaseDifficulty() {
 
 }
 
-void GameScene::keyPressEvent(QKeyEvent * event) {
-  if (!gamePaused) {
-    // change focus to player to get keyboard events
-    player->setFocus();
-    // this will pass event to focus item
-    QGraphicsScene::keyPressEvent(event);
-  }
-}
-
-void GameScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent) {
-//  qDebug() << "Mouse press event received in scene";
-  if (!gamePaused && mouseMoveEnabled) {
-    player->mousePressEvent(mouseEvent);
-  }
-
-}
-
-void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-//  qDebug() << "Mouse move event received in scene";
-  if (!gamePaused && mouseMoveEnabled) {
-    player->mouseMoveEvent(mouseEvent);
-  }
-}
-
 void GameScene::addItem(QGraphicsItem *item) {
-//  qDebug() << "Scene item added";
 
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
@@ -227,7 +199,6 @@ void GameScene::addItem(QGraphicsItem *item) {
 }
 
 void GameScene::removeItem(QGraphicsItem *item) {
-//  qDebug() << "Scene item removed";
 
   Sprite * spr = dynamic_cast<Sprite*>(item);
 

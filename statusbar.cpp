@@ -37,16 +37,7 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
                              scaled(32,32, Qt::KeepAspectRatio));
   healthIconLabel->setAlignment(Qt::AlignCenter);
 
-//  healthBar = new QProgressBar();
-//  healthBar->setMaximum(health);
-//  healthBar->setMinimum(0);
-//  healthBar->setMaximumWidth(healthLabel->sizeHint().width());
-//  healthBar->setValue(health);
-//  healthBar->setFont(QFont("Courier", 14, QFont::Bold));
-//  connect(this, SIGNAL(healthUpdated(int)), healthBar, SLOT(setValue(int)));
-
   healthLayout->addWidget(healthIconLabel);
-//  healthLayout->addWidget(healthBar);
   healthLayout->addStretch();
   healthLayout->addWidget(healthLabel);
 
@@ -86,24 +77,6 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
   hLayout1->addLayout(healthLayout);
   hLayout1->addLayout(weaponLayout);
 
-//  setSizePolicy();
-
   setLayout(hLayout1);
 
-}
-
-void Statusbar::increaseScore(int increment) {
-  score += increment;
-  scoreLabel->setText(QString("Score: ") + QString::number(score));
-}
-
-void Statusbar::changeHealth(int h) {
-  health = h;
-  healthLabel->setText(QString("Health: ") + QString::number(health));
-  emit healthUpdated(h);
-}
-
-void Statusbar::changeMissileCount(int c) {
-  missileCount = c;
-  weaponLabel->setText(QString("Count: ") + QString::number(missileCount));
 }

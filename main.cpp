@@ -2,14 +2,6 @@
 #include <QSplashScreen>
 #include "mainwindow.h"
 
-/*
- * TODO Add player die animation
- * TODO Add bonuses (additional health, better weapons, more missiles)
- * TODO Add rescaling
- * TODO Add levels
- * TODO Add enemy missiles
- */
-
 /**
  * @brief main Main function of game
  * @param argc
