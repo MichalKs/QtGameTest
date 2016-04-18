@@ -86,6 +86,8 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
   hLayout1->addLayout(healthLayout);
   hLayout1->addLayout(weaponLayout);
 
+//  setSizePolicy();
+
   setLayout(hLayout1);
 
 }

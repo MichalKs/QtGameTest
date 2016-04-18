@@ -1,20 +1,21 @@
 #include <QDebug>
 #include "game.h"
 #include "gamescene.h"
+#include <QResizeEvent>
 
 Game::Game(QWidget * parent): QGraphicsView(parent) {
 
   // create a scene, make it a child of the view
   scene = new GameScene(this);
-
   // scene is invisible - add it to view
   setScene(scene);
+//  scene->setSceneRect(0, 0, size().width(), size().height());
   // disable scroll bars
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  // set fixed size
-  setFixedSize(800, 600);
+//  // set fixed size
+//  setSize(800, 600);
 
   // make the cursor a cross for aiming
   setCursor(Qt::CrossCursor);
@@ -30,6 +31,12 @@ void Game::resizeEvent(QResizeEvent *event) {
 //  rect.setSize(size);
 //  fitInView(rect, Qt::IgnoreAspectRatio);
   //  player->resize(size);
+
+//  scene->setSceneRect(0, 0, event->size().width(), event->size().height());
+//
+//  fitInView(sceneRect());
+  fitInView(0, 0, 800, 600);
+
   QGraphicsView::resizeEvent(event);
 }
 

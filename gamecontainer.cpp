@@ -24,8 +24,19 @@ GameContainer::GameContainer(QWidget *parent): QWidget(parent) {
   // decrease bullet count
   connect(scene, SIGNAL(changeMissileCount(int)), statusbar, SLOT(changeMissileCount(int)));
 
+  // set proportions between game and statusbar
+
+  QSizePolicy spSb = statusbar->sizePolicy();
+  spSb.setVerticalStretch(1);
+  statusbar->setSizePolicy(spSb);
+
+  QSizePolicy spGm = game->sizePolicy();
+  spGm.setVerticalStretch(10);
+  game->setSizePolicy(spGm);
+
   layout->addWidget(game);
   layout->addWidget(statusbar);
+
 
   setLayout(layout);
 }

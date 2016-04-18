@@ -7,6 +7,7 @@ class GameContainer;
 class QPushButton;
 class QLabel;
 class QStackedWidget;
+class BackgroundLabel;
 
 /**
  * @brief The MainWindow class Main window for the application (it displays main menu or
@@ -133,7 +134,7 @@ private:
   /**
    * @brief backgroundLabel background image for main menu
    */
-  QLabel          * backgroundLabel;
+  BackgroundLabel * backgroundLabel;
 
   // menus
   QMenu * fileMenu;     ///< File menu

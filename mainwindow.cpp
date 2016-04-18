@@ -4,6 +4,7 @@
 #include "gamescene.h"
 #include "game.h"
 #include "statusbar.h"
+#include "backgroundlabel.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -46,10 +47,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   buttonLayout->addWidget(quitButton);
 
   // add background label
-  backgroundLabel = new QLabel();
-  backgroundLabel->setPixmap(
-        QPixmap(":/images/graphics/background/science-fiction-441708_960_720.jpg").
-        scaled(640, 480, Qt::KeepAspectRatio));
+  backgroundLabel = new BackgroundLabel();
 
   // add buttons and label
   vLayout->addWidget(backgroundLabel);
@@ -70,7 +68,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent) {
   // set window title
   setWindowTitle("Ugly Invaders From Space");
   // window has fixed size
-  layout()->setSizeConstraint(QLayout::SetFixedSize);
+//  layout()->setSizeConstraint(QLayout::SetFixedSize);
   // create all user actions
   createActions();
   // create menus
