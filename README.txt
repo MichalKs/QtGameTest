@@ -8,3 +8,6 @@ All the images have been downloaded from free image repositories such as:
 - https://pixabay.com/
 
 Most of the spaceship graphics are attributed to MillionthVector (http://millionthvector.blogspot.de). His work has been released under the Creative Commons BY License: https://creativecommons.org/licenses/by/4.0/
+
+All the sound were downloaded from: www.freesound.org/
+
