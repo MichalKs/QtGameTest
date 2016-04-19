@@ -21,7 +21,6 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     statusbar.cpp \
     gamecontainer.cpp \
-    topscoresdialog.cpp \
     yellowenemy.cpp \
     redenemy.cpp \
     darkinvader.cpp \
@@ -38,12 +37,12 @@ HEADERS  += \
     mainwindow.h \
     statusbar.h \
     gamecontainer.h \
-    topscoresdialog.h \
     yellowenemy.h \
     redenemy.h \
     darkinvader.h \
     alienspaceship.h \
-    bonus.h
+    bonus.h \
+    tabledialog.h
 
 RESOURCES += \
     res.qrc

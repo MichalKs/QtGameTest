@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "topscoresdialog.h"
+#include "tabledialog.h"
 #include "gamecontainer.h"
 #include "gamescene.h"
 #include "game.h"
@@ -189,7 +189,20 @@ void MainWindow::about() {
 
 void MainWindow::displayTopScorers() {
 
-  TopScoresDialog tsd(topScoreList, topScores);
+  QStringList labels;
+  labels << "Names" << "Top scores";
+
+//  QList<int> intList;
+//  for (int i = 0; i < 10; i++) {
+//    intList << i;
+//  }
+//  TableDialog<QStringList, QList<int>, 10> tsd(topScoreList, intList, labels,
+//                                   QString("Top scorers"),
+//                                   QString("Top scorers of the game:"));
+
+  TableDialog<QStringList, QStringList, 10> tsd(topScoreList, topScores, labels,
+                                   QString("Top scorers"),
+                                   QString("Top scorers of the game:"));
   tsd.exec();
 
 }
