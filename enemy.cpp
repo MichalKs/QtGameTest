@@ -28,36 +28,30 @@ Enemy::Enemy(int initialHealth, int w, int h, int speed, QGraphicsItem * parent)
 
 bool Enemy::collisionDetected() {
 
-//  GameScene * s = dynamic_cast<GameScene*> (scene());
-//  if (!s) {
-//    return false;
-//  }
-//  QList<Sprite*> collidingItemsList = s->getSpriteList();
-
-  // check for collision with player
-  QList<QGraphicsItem*> collidingItemsList = collidingItems();
-
-  // scan list for enemies
-  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
-    // if an enemy is found
-    QGraphicsItem * item = collidingItemsList[i];
-
-    if(dynamic_cast<Player*>(item)) {
-
-      die();
-      // signalize that enemy has hit player
-      emit enemyHitTarget();
-      return true;
-    }
+  GameScene * s = dynamic_cast<GameScene*> (scene());
+  if (!s) {
+    return false;
   }
 
-  return false;
-//  GameScene * s = dynamic_cast<GameScene*> (QGraphicsItem::scene());
+  if (collidesWithItem(s->getPlayer())) {
+    die();
+    // signalize that enemy has hit player
+    emit enemyHitTarget();
+    return true;
+  }
+
 //  QList<Sprite*> collidingItemsList = s->getSpriteList();
 
+
+  // check for collision with player
+//  QList<QGraphicsItem*> collidingItemsList = collidingItems();
+
+//  // scan list for enemies
 //  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
 //    // if an enemy is found
-//    if(typeid(collidingItemsList[i]) == typeid(Player*)) {
+//    QGraphicsItem * item = collidingItemsList[i];
+
+//    if(dynamic_cast<Player*>(item)) {
 
 //      die();
 //      // signalize that enemy has hit player
@@ -66,7 +60,8 @@ bool Enemy::collisionDetected() {
 //    }
 //  }
 
-//  return false;
+  return false;
+
 }
 
 void Enemy::die() {
