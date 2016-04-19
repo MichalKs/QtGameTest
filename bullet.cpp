@@ -50,18 +50,18 @@ bool Bullet::collisionDetected() {
   // check for collision with enemy
   QList<QGraphicsItem*> collidingItemsList = collidingItems();
 
-  Enemy * enemy;
-
   // scan list for enemies
-  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
+  for (QList<QGraphicsItem*>::Iterator it = collidingItemsList.begin();
+       it != collidingItemsList.end();
+       ++it) {
 
     // if an enemy is found
-    enemy = dynamic_cast<Enemy*>(collidingItemsList[i]);
+    Enemy * enemy = dynamic_cast<Enemy*>(*it);
 
     if(enemy) {
 
       // signalize that enemy has been killed
-      emit bulletHitTarget(collidingItemsList[i]);
+      emit bulletHitTarget(*it);
       GameScene * s = dynamic_cast<GameScene*> (QGraphicsItem::scene());
       // remove bullet from scene
       s->removeItem(this);

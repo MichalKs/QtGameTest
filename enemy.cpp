@@ -30,9 +30,13 @@ bool Enemy::collisionDetected() {
   QList<QGraphicsItem*> collidingItemsList = collidingItems();
 
   // scan list for enemies
-  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
-    // if an enemy is found
-    if(typeid(*(collidingItemsList[i])) == typeid(Player)) {
+  for (QList<QGraphicsItem*>::Iterator it = collidingItemsList.begin();
+       it != collidingItemsList.end();
+       ++it) {
+
+    // if a player is found
+    Player * player = dynamic_cast<Player*>(*it);
+    if(player) {
 
       die();
       // signalize that enemy has hit player

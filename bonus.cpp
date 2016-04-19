@@ -47,9 +47,14 @@ bool Bonus::collisionDetected() {
   QList<QGraphicsItem*> collidingItemsList = collidingItems();
 
   // scan list for player
-  for (int i = 0, n = collidingItemsList.size(); i < n; i++) {
-    // if an enemy is found
-    if(typeid(*(collidingItemsList[i])) == typeid(Player)) {
+  for (QList<QGraphicsItem*>::Iterator it = collidingItemsList.begin();
+       it != collidingItemsList.end();
+       ++it) {
+
+    // if an player is found
+    Player * player = dynamic_cast<Player*>(*it);
+
+    if(player) {
 
       // signalize that bonus has hit player
       emit playerGetsBonus();

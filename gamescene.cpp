@@ -192,7 +192,7 @@ void GameScene::increaseDifficulty() {
 
 void GameScene::addItem(QGraphicsItem *item) {
 
-  qDebug() << "Adding item to list";
+  qDebug() << "Adding item to list" << item;
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
