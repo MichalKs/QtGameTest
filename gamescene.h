@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QSoundEffect>
 #include <QTimer>
+#include <QList>
 #include "player.h"
 
 class Sprite;
@@ -24,9 +25,9 @@ public:
    */
   GameScene(QObject * parent = 0);
 
-  ~GameScene() {
-    delete spriteList;
-  }
+//  ~GameScene() {
+//    delete spriteList;
+//  }
 
   /**
    * @brief mousePressEvent Mouse press event
@@ -76,6 +77,10 @@ public:
    */
   Player * getPlayer() {
     return player;
+  }
+
+  QList<Sprite*> getSpriteList() {
+    return spriteList;
   }
 
   /**
@@ -214,7 +219,7 @@ private:
   /**
    * @brief spriteList List of sprites present on the map
    */
-  QList<Sprite*> * spriteList;
+  QList<Sprite*> spriteList;
   /**
    * @brief gamePaused Is game paused
    */

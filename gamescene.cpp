@@ -13,7 +13,7 @@
 
 GameScene::GameScene(QObject * parent): QGraphicsScene(parent) {
 
-  spriteList        = new QList<Sprite*>;
+//  spriteList        = new QList<Sprite*>;
   gamePaused        = false;
   mouseMoveEnabled  = true;
   audioEnabled      = true;
@@ -159,14 +159,14 @@ void GameScene::pauseGame(bool isPaused) {
   if (isPaused == true) {
     qDebug() << "Pausing game";
     // pause all sprites
-    for (int i = 0; i < spriteList->size(); i++ ) {
-      spriteList->at(i)->pause();
+    for (int i = 0; i < spriteList.size(); i++ ) {
+      spriteList.at(i)->pause();
     }
   } else {
     qDebug() << "Unpausing game";
     // unpause all sprites
-    for (int i = 0; i < spriteList->size(); i++ ) {
-      spriteList->at(i)->unpause();
+    for (int i = 0; i < spriteList.size(); i++ ) {
+      spriteList.at(i)->unpause();
     }
   }
 
@@ -196,7 +196,7 @@ void GameScene::addItem(QGraphicsItem *item) {
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
-    spriteList->append(spr);
+    spriteList.append(spr);
   }
 
   QGraphicsScene::addItem(item);
@@ -208,7 +208,7 @@ void GameScene::removeItem(QGraphicsItem *item) {
   Sprite * spr = dynamic_cast<Sprite*>(item);
 
   if (spr) {
-    spriteList->removeAt(spriteList->indexOf(spr));
+    spriteList.removeAt(spriteList.indexOf(spr));
   }
 
   QGraphicsScene::removeItem(item);
