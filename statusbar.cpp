@@ -15,6 +15,7 @@ Statusbar::Statusbar(int initialHealth, int initialMissiles, QWidget * parent):
 
   // set black background
   pal.setColor(QPalette::Background, Qt::black);
+  pal.setColor(QPalette::Foreground, Qt::white);
   setAutoFillBackground(true);
   setPalette(pal);
 

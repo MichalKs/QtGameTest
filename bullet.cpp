@@ -38,7 +38,9 @@ void Bullet::move() {
 
   // if out of screen destroy the bullet
   if (y() < 0) {
-    scene()->removeItem(this);
+    GameScene * s = dynamic_cast<GameScene*> (QGraphicsItem::scene());
+    // remove bullet from scene
+    s->removeItem(this);
     delete this;
   }
 }
