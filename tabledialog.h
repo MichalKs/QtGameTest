@@ -45,14 +45,14 @@ public:
     // add column
     int i = 0;
     foreach (typename T1::value_type obj, listCol1) {
-      table->setItem(i%10, 0, new QTableWidgetItem(QString("%1").arg(obj)));
+      table->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(obj)));
       i++;
     }
 
     // add column
     i = 0;
     foreach (typename T2::value_type obj, listCol2) {
-      table->setItem(i%10, 1, new QTableWidgetItem(QString("%1").arg(obj)));
+      table->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(obj)));
       i++;
     }
 

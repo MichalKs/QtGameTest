@@ -135,6 +135,9 @@ void MainWindow::returnToMainMenu() {
 
   statusBar()->showMessage("Game finished", 2000);
 
+  QMessageBox::information(this, "Game ended", "The game has ended.",
+                           QMessageBox::Ok | QMessageBox::Default);
+
   for (int i = 0; i < NUMBER_OF_SCORES; i++) {
 
     if (topScores.count() == i) {
@@ -193,7 +196,7 @@ void MainWindow::displayTopScorers() {
   labels << "Names" << "Top scores";
 
 //  QList<int> intList;
-//  for (int i = 0; i < 10; i++) {
+//  for (int i = 0; i < 20; i++) {
 //    intList << i;
 //  }
 //  TableDialog<QStringList, QList<int>, 10> tsd(topScoreList, intList, labels,
